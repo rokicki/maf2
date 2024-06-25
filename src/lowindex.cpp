@@ -328,7 +328,7 @@ class Low_Index_Subgroup_Finder
           if (!current)
           {
             root = 0;
-            return false;
+            return 0;
           }
         }
       }
