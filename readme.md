@@ -1,7 +1,11 @@
-* Monoid Automata Factory *
+# Monoid Automata Factory
 
 This is a fork of the 2010 Monoid Automata Factory.  I plan to make it compile
-with modern C++ compilers and possibly fix a bug.
+with modern C++ compilers and possibly fix a few obvious bugs (including one
+that returns the wrong value).
+
+The original code is written by Alun Williams; I'm trying to keep it working
+in the modern world since (in my experiments) it's extremely capable.
 
 Licence
 =======
