@@ -860,7 +860,7 @@ static bool parse_inner(Parse_Error_Handler & error_handler,
   int prev_length = -1;
   bool operand_expected = true;
   bool operand_allowed = true;
-  bool operator_allowed = false;
+  bool operator_allowed = false; // FIXME BUG this variable never used
   const Letter * start = s;
 
   while (*s && *s != ')')
@@ -1463,7 +1463,7 @@ int Alphabet::short_fptp_compare(const Word &lhs,const Word &rhs) const
   Ordinal max_level = PADDING_SYMBOL;
   int answer = 0;
   for (Word_Length i = 0; i <l;i++)
-    if (lbuffer[i] != rbuffer[i] && (lbuffer[i] > max_level || rbuffer[i] > max_level))
+    if (lbuffer[i] != rbuffer[i] && (lbuffer[i] > max_level || rbuffer[i] > max_level)) {
       if (lbuffer[i] > rbuffer[i])
       {
         max_level = lbuffer[i];
@@ -1474,6 +1474,7 @@ int Alphabet::short_fptp_compare(const Word &lhs,const Word &rhs) const
         max_level = rbuffer[i];
         answer = -1;
       }
+    }
   return answer;
 }
 
@@ -2546,7 +2547,7 @@ const void * Alphabet::gt_new_state(size_t * size,
         Ordinal max_level;
         new_key[0] = old_key[0];
         memcpy(&max_level,old_key+1,sizeof(Ordinal));
-        if (g1 != g2 && (g1 > max_level || g2 > max_level))
+        if (g1 != g2 && (g1 > max_level || g2 > max_level)) {
           if (g1 > g2)
           {
             new_key[0] = 1;
@@ -2557,6 +2558,7 @@ const void * Alphabet::gt_new_state(size_t * size,
             new_key[0] = (Byte) -1;
             max_level = g2;
           }
+        }
         memcpy(new_key+1,&max_level,sizeof(Ordinal));
       }
       return new_key;
@@ -2788,8 +2790,8 @@ const void * Alphabet::gt_new_state(size_t * size,
             return new_key;
           }
         }
-        else if (g1 == PADDING_SYMBOL && state.answer != 1 ||
-                 g2 == PADDING_SYMBOL && state.answer == 2)
+        else if ((g1 == PADDING_SYMBOL && state.answer != 1) ||
+                 (g2 == PADDING_SYMBOL && state.answer == 2))
         {
           *size = 0;
           return 0;
@@ -3082,8 +3084,8 @@ const void * Alphabet::gt_new_state(size_t * size,
             return new_key;
           }
         }
-        else if (g1 == PADDING_SYMBOL && state.answer != 1 ||
-                 g2 == PADDING_SYMBOL && state.answer == 2)
+        else if ((g1 == PADDING_SYMBOL && state.answer != 1) ||
+                 (g2 == PADDING_SYMBOL && state.answer == 2))
         {
           *size = 0;
           return 0;

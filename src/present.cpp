@@ -151,7 +151,7 @@ bool Presentation::relators(Word_Collection * wc) const
 {
   Ordinal_Word word(group_alphabet());
   wc->empty();
-  bool retcode = true;
+  bool retcode = true; // BUG FIXME this code clearly looks wrong; retcode is not returned
   const Ordinal nr_generators = group_alphabet().letter_count();
 
   for (const Linked_Packed_Equation * axiom = first_axiom();
@@ -159,11 +159,12 @@ bool Presentation::relators(Word_Collection * wc) const
        axiom = axiom->get_next())
   {
     Simple_Equation se(alphabet,*axiom);
-    if (se.last_letter() <  nr_generators)
+    if (se.last_letter() <  nr_generators) {
       if (se.relator(&word,*this))
         wc->add(word);
       else
         retcode = false;
+    }
   }
   return true;
 }
@@ -992,7 +993,7 @@ void Presentation::abelianise(Word * answer,const Word & word) const
       if (ig != INVALID_SYMBOL)
       {
         if (ig+1 < values[i] || values[i] < ig+1 ||
-            ig >= values[i] && values[i+1]==ig)
+            (ig >= values[i] && values[i+1]==ig))
         {
           ok = false;
           break;

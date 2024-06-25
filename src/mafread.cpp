@@ -127,7 +127,7 @@ class GAP_Reader : public Parse_Error_Handler
     }
     virtual ~GAP_Reader()
     {
-      delete string_buffer;
+      delete [] string_buffer;
     }
  protected:
 
@@ -1213,11 +1213,12 @@ class FSA_Reader : public GAP_Reader
 
     const Alphabet * select_alphabet(const Alphabet *a,MAF * maf)
     {
-      if (maf)
+      if (maf) {
         if (*a == maf->alphabet)
           a = &maf->alphabet;
         else if (*a == maf->group_alphabet())
           a = &maf->group_alphabet();
+      }
       return a;
     }
     FSA_Simple * parse_fsa(GAP_FSA & gap_fsa,MAF * maf)
@@ -1358,7 +1359,7 @@ class FSA_Reader : public GAP_Reader
             if (gap_fsa.initial.full())
               fsa->set_initial_all();
             else if (gap_fsa.initial.count() != 1 ||
-                gap_fsa.states.size != 1 && sli.first() != 1)
+                (gap_fsa.states.size != 1 && sli.first() != 1))
             {
               fsa->clear_initial(gap_fsa.initial.count()*sizeof(State_ID) > (size_t) fsa->state_count()/CHAR_BIT);
               for (State_ID si = sli.first(); si;si = sli.next())

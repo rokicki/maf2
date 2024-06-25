@@ -149,14 +149,16 @@ String String::make_filename(String_Buffer *buffer,String const prefix,
   /* copy base name to result */
   memcpy(answer+pl,nm,nl*sizeof(Letter));
   /* copy suffix to result */
-  if (*sf)
-    if (*sf == '.' || no_fix)
+  if (*sf) {
+    if (*sf == '.' || no_fix) {
       memcpy(answer+pl+nl,sf,sl*sizeof(Letter));
+    }
     else
     {
       answer[pl+nl] = '.';
       memcpy(answer+pl+nl+1,sf,(sl-1)*sizeof(Letter));
     }
+  }
   answer[len] = 0;
   return answer;
 }

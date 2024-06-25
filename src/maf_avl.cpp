@@ -32,10 +32,11 @@
 #include "awcc.h"
 #include "awdefs.h"
 #include "maf_avl.h"
+#include <cstdlib> // abort
 
 State_Count AVL_Node::depth() const
 {
-  if (!this)
+  if (!this)  // BUG FIXME:  this is always true in proper C++
     return 0;
   return max(left->depth(),right->depth())+1;
 }
@@ -48,7 +49,8 @@ void AVL_Node::check() const
     right->check();
     int answer = right->depth() - left->depth();
     if (answer != bf)
-      * (char *) 0 = 0;
+      std::abort() ;
+//    * (char *) 0 = 0;
   }
 }
 

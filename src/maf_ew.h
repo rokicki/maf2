@@ -165,10 +165,8 @@ class Equation_Word : public Word
     }
     Word & operator+=(const Word & other);
     Word_Length unpack(const Byte * packed_buffer);
-    operator Word &() { return *this;}
   public:
     //queries
-    operator const Word &() const { return *this;}
     Language get_language() const
     {
       return language;
