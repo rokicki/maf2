@@ -1,3 +1,8 @@
+* Monoid Automata Factory *
+
+This is a fork of the 2010 Monoid Automata Factory.  I plan to make it compile
+with modern C++ compilers and possibly fix a bug.
+
 Licence
 =======
 
