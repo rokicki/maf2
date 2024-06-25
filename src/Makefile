@@ -21,7 +21,7 @@
 #If any of the compilation flags cause trouble, then you can probably remove them
 #If you are not using GCC compilers then make sure you enable whatever flag
 #ensures char is unsigned by default.
-CPPFLAGS = -m64 -Os -Wall -Wextra -Wno-switch -Wno-reorder -Wno-char-subscripts  -funsigned-char -fpermissive -fno-rtti -fno-threadsafe-statics -fvisibility-inlines-hidden -fno-exceptions 
+CPPFLAGS = -fPIC -m64 -Os -Wall -Wextra -Wno-switch -Wno-reorder -Wno-char-subscripts  -funsigned-char -fpermissive -fno-rtti -fno-threadsafe-statics -fvisibility-inlines-hidden -fno-exceptions 
 LINKER = g++ -m64 
 BIN = ./../bin
 O=o
@@ -163,7 +163,7 @@ maf.a : $(MAFLIB)
 
 $(BIN)/libmaf.dylib : $(MAFLIB)
 	-mkdir $(BIN)
-	g++ -m64 -dynamiclib $(MAFLIB) -o $@
+	g++ -m64 -shared -dynamiclib $(MAFLIB) -o $@
 
 EXAMPLE = \
   example.$O \
