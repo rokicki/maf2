@@ -211,7 +211,7 @@ struct Heap_Node
   }
 };
 
-class Heap::Implementation;
+// class Heap::Implementation;
 static Heap::Implementation * global_heap;
 static bool leak_dump_allowed = true;
 

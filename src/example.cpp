@@ -989,7 +989,7 @@ int inner()
   return 0;
 }
 
-int main(int,unsigned char **)
+int main(int,char **)
 {
   inner();
   return 0;

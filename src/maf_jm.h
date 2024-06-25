@@ -56,7 +56,7 @@ Revision 1.7  2007/12/20 23:25:45Z  Alun
 #endif
 
 //Classes defined in this header file
-class Rewriter_Machine::Job_Manager;
+// class Rewriter_Machine::Job_Manager;
 class Equation_Queue;
 
 //Classes and types defined elsewhere
