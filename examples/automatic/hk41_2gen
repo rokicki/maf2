@@ -1,0 +1,12 @@
+#Hyperbolic Knot 4 1 presented with 2 generators
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [x,X,y,Y],
+        inverses := [X,x,Y,y],
+  equations :=
+  [
+    [Y*X*y*x*Y*x*y*X*Y*x,IdWord]
+  ]
+);

@@ -1,0 +1,12 @@
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [x,X,y,Y],
+#  level          := [1,1,2,2],
+  inverses       := [X,x,Y,y],
+  equations :=
+  [
+    [y*x^5,X^5*y]
+  ]
+);

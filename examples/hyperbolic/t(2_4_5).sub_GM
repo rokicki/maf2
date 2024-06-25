@@ -1,0 +1,7 @@
+#Subgroup of index 2 with one reflection axis knocked out.
+_RWS_Sub:= rec
+(
+  subGenerators:= [c,a*b,b*a,b*c*b],
+  subGeneratorNames :=        [m,t,T,n],
+  subGeneratorInverseNames := [m,T,t,n]
+);

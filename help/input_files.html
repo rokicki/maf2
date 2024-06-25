@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Reference : File formats : Input files</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="file_formats.html">
+<link rel="Next" type="text/html" href="substructure_files.html">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html">Reference</a> : <a href="file_formats.html">File names and formats</a> : Input files
+<h2>Input files</h2>
+<div class="xpanel"><h5>Tip:</h5>
+<p>When using MAF to analyse a group or monoid, the best method of creating an input rewriting system, and the one always employed by the author, is to copy an existing one and then edit it, using some editor that is happy to save files in plain text format. Doing this makes it much less likely that your file will contain syntax errors.</p>
+</div>
+<p>We describe here the format used by MAF and KBMAG for a file representing a rewriting system. Files in this format are the primary means of supplying input to MAF. MAF will also often generate files in this same format as part of its output. To distinguish between the two uses of this file format, the documentation will refer to a rewriting system used as input as an <dfn>input file</dfn>. A more formal, though still incomplete, definition of the syntax of these files than is given here can be found in the <a href="http://www.geom.uiuc.edu/~dfh/gasp.html">GASP Standard Format Document</a>.</p>
+<p>The example below is a typical example of an input file </p>
+<pre>
+#Free nilpotent group of rank 2 and class 2
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [c,C,b,B,a,A],
+  ordering := "recursive",
+  inverses := [C,c,B,b,A,a],
+  equations := 
+  [
+    [b*a,a*b*c],
+    [c*a,a*c],
+    [c*b,b*c]
+  ]
+);
+</pre>
+<h4>Comments</h4>
+<p>The first line is a comment, and is ignored by programs. Comments are preceded by the <code>#</code> symbol and last to the end of the line, and can appear anywhere in an input file. It is a good idea to add such comments to input files, especially if you are investigating a number of similar presentations, or investigating quotients of a group whose structure you don't know yet. When creating a new input file from an old one you should also remember to remove any comments that no longer apply! Comments are also useful if you are trying to find out whether the relations given as axioms for a presentation are all necessary: one "comments out" one or more relations, and then runs <tt>automata</tt> against the modified input file to see if MAF can still compute the same automata.
+</p>
+<h4>GAP record syntax</h4>
+<p>All MAF's input and output files are formatted as GAP records, (though GAP cannot actually parse the files
+directly). Line 2 of the input file, <code>_RWS := rec</code>, begins the definition of a GAP record, with the name of record being defined appearing on the left. To comply with the KBMAG GAP interface, we name our rewriting system <code>_RWS</code>.  A record definition consists of a number of comma-separated <dfn>field definitions</dfn>, which are enclosed by matching opening and closing parentheses <code>(</code>,<code>)</code>, and which describe the record in detail. In the present case the first field definition states that this is a definition of a rewriting system. This line must always be present. Note the use of <code>:=</code> rather than <code>=</code> in field definitions, and remember that each field within the object is separated from the next by a comma (but there is no comma after the last field definition). It is easy to forget these points, and neither MAF nor KBMAG are at all forgiving of syntax errors.</p>
+<h4>GAP lists</h4>
+<p>You will notice the use of square brackets <code>[]</code> in several places. Such brackets always enclose a list of similar items, possibly another list, as in the case of the <code>equations</code> field. A list can have gaps, which is indicated by there being no text other than spaces between two or more adjacent commas. A list can also be empty, which is indicated by there being nothing at all between the opening <code>[</code> and the closing <code>]</code>. Much of the most important information in an input file is contained in such lists.</p>
+<h4><code>generatorOrder</code></h4>
+<p>First comes a list of generators. These must generate the structure as a monoid, even if it is a group; this means inverses should be included in the generator list. The field is named <code>generatorOrder</code> to emphasize the fact that the order is relevant - it will affect the ordering of words in the alphabet, and hence which words are "reduced".</p>
+<h4><a name="name_syntax"></a>Generator names</h4>
+<p>The names of the generators that appear in the <code>generatorOrder</code> list should be alphanumeric strings, though they can also contain underscores ('_') and periods('.'). A generator name must begin with either an alphabetic character or an underscore, not a digit or period. Case is significant. It is recommended that, whenever possible, you use single letters, and use case-change for inversion, as in this example. Another policy is to use a common prefix followed by numbers; for example, a file output by GAP might have its generators named <code>G.1, G.2, ..., G.n</code> for some n &ge; 0. It is also permissible to name a generator <code><i>name</i>^-1</code>, where <i>name</i> is the name of another generator, and the two are mutually inverse. Any other use of <code>^-1</code>, or of the <code>^</code> and <code>-</code> characters, in a name is forbidden.</p>
+<h4><code>ordering</code></h4>
+<p>The <code>ordering</code> field specifies which ordering on words in the input alphabet is to be used. Although there is a default word-ordering, which is <code>"shortlex"</code>, this field is required by the KBMAG GAP interface, so it is recommended that it should always be included, although most of the time you probably <em>will</em> want to use <code>"shortlex"</code> ordering. The word-ordering options are discussed in detail in <a href="word_ordering_methods.html">Word-ordering methods</a>. Note that the double quotes are required around the value given for this field. The <code>ordering</code> field must come before the list of equations.</p>
+
+<h4><code>inverses</code></h4>
+<div class="xpanel"><h5>Tip</h5><p>It is important to specify inverses explicitly. If no inverse generator is specified for a generator, then, even when it is in fact invertible, MAF will not be able to compute its inverse. MAF cannot compute automatic structures unless inverses are specified for all group generators in the <code>inverses</code> field. MAF cannot "balance" equations involving non-invertible generators, and this can lead to instability. However, where inverses are not given, MAF will learn when generators can be cancelled on the left or right, as equations of the form <code>[<i>w</i>*g,IdWord]</code> or <code>[g*<i>w</i>,IdWord]</code> are encountered.</p></div>
+<p>The <code>inverses</code> field supplies the list of two-sided inverses of the generators, in the same order as the generators. This field must be present, but, in general, not all generators need have inverses, so the list could be empty, or contain gaps. For example, if only the first and third generators have inverses, and these are named <tt>i1</tt> and <tt>i2</tt>, then the list would be written as <tt>[i1,,i2]</tt>.  However, if generator <tt>A</tt> is listed as the inverse of <tt>a</tt>, then <tt>a</tt> must also be listed as the inverse of <tt>A</tt> (any mistakes here will result in generators you intended to be distinct elements being equal). One sided inverses must not be specified here, but can be specified using equations. Note that you need
+to change the order of the inverses if you change the order of the generators.</p>
+<h4><code>equations</code></h4>
+<p>Finally, there comes the <code>equations</code> field. This consists of a list of lists. Each inner list constitutes a defining relation for the monoid, and should have two entries, which are words in the generators, and are the left and right hand sides of a relation. If there are no defining relations then you must specify an empty list - MAF will not allow this field to be omitted altogether. The syntax to be used for words is explained below. It is not necessary, but not harmful, to include defining relations of type <code>[a*A,IdWord]</code> in the list of equations, where the generators <code>a</code> and <code>A</code> have been already been specified as mutually inverse in the <code>inverses</code> field. (If you do do this then MAF will issue a diagnostic noting that an axiom is redundant). In MAF, you do not need to worry about which of two terms should be on the left. Nor do you need to worry about "balancing" the equation (which means replacing a generator on the left or right by its inverse on the other side of the equation, usually with the aim of equalising so far as possible the number of generators on each side). In KBMAG this might make a difference, at least in the case of a recursive ordering being used, but it is unlikely to do so in MAF.</p>
+<h4><a name="word_syntax"></a>Syntax for words</h4>
+<p>The empty word is denoted by <code>IdWord</code>. <code>IdWord</code> must stand alone - it may not appear as part of an expression. Words may contain parentheses to any level, and positive powers. So, for example <tt>a*(b*(A*c)^4)^3*c^12</tt> is a valid word in the generators in the example above. Negative powers are permitted on generators for which an inverse has been specified. MAF also permits negative powers on expressions involving only invertible generators, but KBMAG does not. Neither KBMAG nor MAF accept  <code>a^b</code> as an abbreviation for <code>b^-1*a*b</code>.
+<h4>Optional fields</h4>
+<p>There are a number of other optional fields, which do not occur in this example. The most important of these are provide additional information required for some word-orderings and are discussed in <a href="word_ordering_methods.html">Word-ordering methods</a>. Some other optional fields provide further detailed instructions for <tt>automata</tt> or more particularly KBMAG's <tt>kbprog</tt>. Such optional fields are listed in the usage information for <a href="automata_usage.html#kbprog"><tt>kbprog</tt></a>.</p>
+</body>
+</html>

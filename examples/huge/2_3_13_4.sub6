@@ -1,0 +1,24 @@
+_RWS_Sub := rec
+(
+  subGenerators :=
+  [
+    a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B,
+    (a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B)^-1,
+    a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B,
+    (a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B)^-1,
+    a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b,
+    (a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b)^-1,
+    a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b,
+    (a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b)^-1,
+    a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b,
+    (a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b)^-1,
+    a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b,
+    (a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b)^-1,
+    a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B,
+    (a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*b*a*b*a*b*a*b*a*B)^-1,
+    a*B*a*b*a*B*a*B*a*B*a*b*a*b*a*B*a*B*a*b*a*b*a*B*a*B*a*b*a*b*a*B*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b,
+    (a*B*a*b*a*B*a*B*a*B*a*b*a*b*a*B*a*B*a*b*a*b*a*B*a*B*a*b*a*b*a*B*a*b*a*b*a*B*a*B*a*b*a*b*a*b*a*b)^-1,
+  ],
+  subGeneratorNames := [c,C,d,D,e,E,f,F,g,G,h,H,i,I,j,J],
+  subGeneratorInverseNames := [C,c,D,d,E,e,F,f,G,g,H,h,I,i,J,j]
+);

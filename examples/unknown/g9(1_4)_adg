@@ -1,0 +1,45 @@
+#Generated bd MAF
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [a,A,d,D,g,G],
+  ordering := "shortlex",
+  inverses :=       [A,a,D,d,G,g],
+  equations := 
+  [
+    [a^2*G*d*G,d*A*g*A],
+    [d^2*A*g*A,g*D*a*D],
+    [g^2*D*a*D,a*G*d*G],
+  ]
+);
+#ab=e
+#bc=f b=fC = aGdG
+#cd=g c=gD
+#de=h
+#ef=i e=iF  dAgA
+#fg=a f=aG
+#gh=b
+#hi=c h=cI = gDaD
+#ia=d i=dA
+
+    [a^27,IdWord],
+    [d^27,IdWord],
+    [g^27,IdWord],
+    [(a*d)^27,IdWord],
+    [(a*D)^27,IdWord],
+    [(a*g)^27,IdWord],
+    [(a*G)^27,IdWord],
+    [(d*g)^27,IdWord],
+    [(d*G)^27,IdWord],
+    [(a*d*A*D)^27,IdWord],
+    [(a*g*A*G)^27,IdWord],
+    [(d*g*D*G)^27,IdWord]
+  ]
+);
+    [a^8,IdWord],
+    [d^8,IdWord],
+    [g^8,IdWord],
+    [(g*D)^8,IdWord],
+    [(a*G)^8,IdWord],
+    [(d*A)^8,IdWord]

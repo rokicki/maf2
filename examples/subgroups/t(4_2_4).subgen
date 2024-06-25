@@ -1,0 +1,27 @@
+#Subgroup isomorphic to P2MM
+# x and y are reflections across the two legs of the base triangle.
+# z and w are reflections across the legs of the reflection of the base triangle in its hypotenuse
+_RWS_Sub:= rec
+(
+  subGenerators:=
+  [
+    c,
+    a,
+    b*a*b,
+    b*c*b
+  ],
+  subGeneratorNames :=
+  [
+    x,
+    y,
+    z,
+    w
+  ],
+  subGeneratorInverseNames :=
+  [
+    x,
+    y,
+    z,
+    w
+  ]
+);

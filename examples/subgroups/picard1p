@@ -1,0 +1,18 @@
+#This is a simpler presentation of PSL(2,Z[i]) found by MAF using a coset system
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [a,t,T,u,U,l],
+  ordering := "shortlex",
+  inverses :=       [a,T,t,U,u,l],
+  equations := 
+  [
+    [a*l,l*a],
+    [u*t,t*u],
+    [l*t,T*l],
+    [l*u,U*l],
+    [t*a*t,a*T*a],
+    [a*u*a*U,u*a*l]
+  ]
+);

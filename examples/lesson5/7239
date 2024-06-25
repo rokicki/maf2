@@ -1,0 +1,16 @@
+#An infinite quotient of the Von Dyck (7,2,3) group 
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,c,C],
+  inverses := [A,a,b,C,c],
+  equations :=
+  [
+    [a^7,IdWord],
+    [c^3,IdWord],
+    [a*b*c,IdWord],
+    [(b*c*b*C)^9,IdWord]
+  ] 
+);
+            

@@ -1,0 +1,15 @@
+#(7,2,3) Von Dyck group - infinite hyperbolic - confluent presentation
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,c,C],
+  inverses := [A,a,b,C,c],
+  equations :=
+  [
+    [a^7,IdWord],
+    [c^3,IdWord],
+    [a*b*c,IdWord]
+  ]
+);
+             

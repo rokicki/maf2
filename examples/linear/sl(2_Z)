@@ -1,0 +1,14 @@
+#SL(2,Z)
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [x,X,y,Y],
+  inverses := [X,x,Y,y],
+  equations :=
+  [
+    [x^4,IdWord],
+    [y^3,IdWord],
+    [x^2*y,y*x^2]
+  ]
+);

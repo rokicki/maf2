@@ -1,0 +1,18 @@
+#Fibonacci monoid F(3,6) - not same as group
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b,c,d,e,f],
+  equations :=
+  [
+    [a*b*c,d],
+    [b*c*d,e],
+    [c*d*e,f],
+    [d*e*f,a],
+    [e*f*a,b],
+    [f*a*b,c],
+    [b*c*e*f,IdWord],
+    [c*a*b*c*f*a,IdWord]
+  ]
+);

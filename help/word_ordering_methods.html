@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF :  Reference : Word-ordering methods</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Prev" type="text/html" href="cosets_FSA.html" title="Output files (coset systems)">
+<link rel="Next" type="text/html" href="piping.html" title="Piping and redirection">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html">Reference</a> : Word-ordering methods
+<h2><a name="WordOrderingMethods"></a>Word-ordering methods</h2>
+<p>MAF supports all the methods used to order words permitted in KBMAG, and some others, and the code is constructed so as to make it easy to add more if required. With some word-orderings, such as <code>"shortlex"</code>, automatic structures are assumed to be required; for others they are only computed if explicitly requested. You can use command line options to over-ride the default behaviour.</p>
+<p>In MAF the word-ordering method is always set in the input file, and, unlike KBMAG, the use of command line options to change the word-ordering is not supported. This is mainly because a user could generate the automata for a different word-ordering and then inadvertently try to use them as though they applied to to the ordering specified in the input file.</p>
+<p>The following options are currently supported as values for the <code>ordering</code> field of an input file: </p>
+<ol><li><code>ordering := "shortlex"</code>
+Words are ordered so that all words of a particular length come before any longer word. Amongst words of equal length, lexicographical ordering is used, with words earlier in the lexicographical ordering coming first.
+</li>
+<li><code>ordering := "wtlex"</code>
+<p> This ordering, "weighted lex ordering" requires an additional field, <code>weight</code>, to appear in the input file, containing a list of positive integers, one for each generator, like this:</p>
+<code>weight := [2,1,6,3,4],</code><br>
+<p> The length of the list of weights must be equal to the number of generators. The assignment of the <code>weight</code> field must come after the <code>generatorOrder</code> field and before the <code>equations</code> field. Using weight values above 65535 could lead to erroneous results, because integer overflows will be possible on very long words.</p>
+<p> The weight of a word is computed by adding up the weights of the generators in the word. Heavier words come later in the ordering than all lighter words. Amongst words of equal weight lexicographic ordering is used to decide which word comes first.</p>
+<li><code>ordering := "wtshortlex"</code>
+<p> This ordering, "weighted shortlex ordering" requires also requires the <code>weight</code> field, and is defined almost identically to <code>"wtlex"</code> order. The only difference is that in the definition above "Amongst words of equal weight lexicographic ordering is used to decide which word comes first" is replaced by "Amongst words of equal weight <em>shortlex</em> ordering is used to decide which word comes first".</p>
+<li><code>ordering := "recursive"</code>
+<p>Use a recursive word-ordering. There are various ways to define this. Perhaps the quickest is as follows:</p>
+<p>Let <code><i>u</i></code> and <code><i>v</i></code> be words in the generators.
+If one of <code><i>u</i></code> and <code><i>v</i></code>, say <code><i>v</i></code>, is empty, then <code><i>u</i> &ge; <i>v</i></code>.<br>
+Otherwise, let <code><i>u</i> = <i>u&prime;</i>*a</code> and <code><i>v</i> = <i>v&prime;</i>*b</code>, where <code>a</code> and <code>b</code> are generators.<br>
+Then <code><i>u</i> &gt; <i>v</i></code> if and only if at least one of the following holds:</p>
+<ol type="i">
+<li> <code>a = b</code> and <code><i>u&prime;</i> &gt; <i>v&prime;</i></code></li>
+<li> <code>a &gt; b</code> and <code><i>u</i> &gt; <i>v&prime;</i></code></li>
+<li> <code>b &gt; a</code> but <code><i>u&prime;</i> &gt; <i>v</i></code></li>
+</ol>
+<p>In a confluent rewriting system using <code>ordering := "recursive"</code>, the reduced words will have as few of the later generators in the ordering as possible, and these will come as early in the word as possible. If generator <code>b</code> occurs later than generator <code>a</code> in <code>generatorOrder</code> then <code>a*b</code> comes later in the ordering than any word of the form <code>b*a^<i>n</i></code>. More problematically, (from the point of view of achieving success with MAF) if <code>c</code> &gt; <code>b</code> &gt; <code>a</code> in the ordering, then <code>a*c</code> comes later in the ordering than <code>c*<i>w</i></code> where <code><i>w</i></code> is any word at all containing just <code>a</code> and <code>b</code>.</p>
+<li><code>ordering := "rt_recursive"</code>
+<p>This ordering, "right-recursive",  is very similar to recursive ordering. The only difference from the definition above is that instead of:<br>
+"Otherwise, let <code><i>u</i> = <i>u&prime;</i>*a</code> and <code><i>v</i> = <i>v&prime;</i>*b</code>,..."
+we have<br>
+"Otherwise, let <code><i>u</i> = a*<i>u&prime;</i></code> and <code><i>v</i> = b*<i>v&prime;</i></code>, ..."
+<p>As with recursive ordering, the reduced words will have as few as possible of the later generators, but in this ordering the later generators will come as late in the word as possible. <code>ordering := "rt_recursive"</code> is slightly more like <code>ordering := "shortlex"</code>, in that it will prefer <code>a*b</code> to <code>b*a</code>. In fact for some Coxeter groups they give the same results.</p>
+<li><code>ordering := "wreathprod"</code><br>
+<p>"Wreath Product" ordering is rather complex, as can be seen if you examine the code for comparing two words using this ordering in the source file <code>alphabet.cpp</code>. In this ordering each generator must be assigned a level via the <code>level</code> field like this:</p>
+<p><code>level := [4,3,2,1],</code></p>
+<p>The length of the list of levels must be equal to the number of generators. The assignment of the <code>level</code> field must come after the <code>generatorOrder</code> field and before the list of equations. The smallest permitted value for the level of any generator is 1.</p>
+<p>In order to compare two words we proceed as follows:</p>
+<ol><li>First remove any common prefix or trailing subword they may have. If nothing is left the words are equal. If something is left proceed to step 2.</li>
+<li>Find the maximum level of generator occurring in the symbols remaining for each word. If this is different then the word containing the generator at a higher level is greater. If the maximum is the same proceed to step 3.</li>
+<li>Extract from each word, in order, all the generators at this highest level. These <dfn>maximal level subwords</dfn> are compared using shortlex, and if they are not equal the word which gave the greater maximal level subword is greater. If they are equal proceed to step 4.</li>
+<li> Now starting from the words as they were after step 1, discard, from both words, all symbols from the first  occurrence of a generator at the maximal level, regardless of their level. In other words, replace each word by its longest prefix that consists only of generators from a lower level than the maximal level. Note that these words cannot be equal, because we removed any common symbols from the front of the words at step 1. Now return to step 2.</li>
+</ol>
+<p><code>ordering:="recursive"</code> behaves identically to the special case of wreath product ordering in which the level of generator number <i>i</i> is <i>i</i>. On the other hand, if all the generators have the same level, then <code>"wreathprod"</code> is the same as <code>"shortlex"</code>. So, depending on the levels given to the generators, <code>ordering:="wreathprod"</code> is capable of behaving like both those orderings. (This is part of the reason for its use in coset systems).</p>
+<p>Note that we could have used some other way of comparing the maximal subwords in step 3 above rather than shortlex. For example,we could use a <code>"wtlex"</code> comparison. Also, in step 4 we might choose to look to the right of the maximal subwords rather than the left. MAF's <code>"wreathprod"</code> ordering could more 
+accurately be described as "left wreath product order over left shortlex".</p>
+</ol>
+<p>The remaining word-ordering methods are new to MAF. The author does not know if they have been described and named elsewhere. Several of them are only included because the author uses them for testing purposes, or was interested in experimenting with them. The first two are "right" versions of orders already defined, and are useful.</p>
+
+<ol start="7">
+<li><code>ordering := "short_rtlex"</code><br>
+<p>Words are ordered so that all words of a particular length come before any longer word. Amongst words of equal length, right lexicographical ordering is used, with words earlier in the ordering coming first. Right lexicographical ordering is like ordinary lexicographical ordering <em>but with the words read from right to left rather than left to right</em>. In other words, it is not the first different generator that is decisive between two words of the same length, but the last.
+</p>
+<p>This ordering will usually give similar results to ordinary shortlex, but might be more convenient in some cases. For example, if you want to use a word-acceptor automaton to control a drawing application, and the words represent some sequence of transformations performed left-first rather than right-first. (So that the action of a word <code>a*b*c</code> on some point <i>x</i>, might be represented as <i>x</i>*<code>a*b*c</code>). It is perfectly possible for a rewriting system to be automatic using <code>"short_rtlex"</code> order when it is not automatic using <code>"shortlex"</code> order, and vice versa.</p>
+<li><code>ordering := "rt_wreathprod"</code><br>
+<p>This ordering is identical in its definition to <code>"wreathprod"</code> ordering, except that at step 4 we look to the right of the maximal subwords, rather than the left. This order could therefore be described as "right wreath product order over left shortlex". This word-ordering is actually a better choice for coset systems, than <code>"wreathprod"</code> ordering, because it works correctly when the rewriting system for the group does not use shortlex order. If all the generators are at different levels, this ordering is identical to "rt_recursive" ordering with the generators reordered according to increasing level. When all the generators are at the same level, this ordering is again the same as <code>"shortlex"</code>.</p>
+</ol>
+<p>The next few orderings were added to provide easy test-cases for MAF's facilities for non-shortlex automatic structures.</p>
+<ol start="9">
+<li><code>ordering := "short_wtlex"</code><br>
+<p>Words are ordered so that all words of a particular length come before any longer word. Amongst words of equal length, <code>"wtlex"</code> ordering is used, with words earlier in <code>"wtlex"</code> order coming first. As you would expect this ordering uses the <code>weight</code> field.
+</p>
+<li><code>ordering := "short_fptp"</code> (fptp stands for first past the post)<br>
+<p>Words are ordered so that all words of a particular length come before any longer word. Words of equal length are ordered by considering the left-most occurrence of the latest generator that occurs in either word, ignoring all positions where the generators are equal. Whichever word has this generator is the greater.</p>
+<li><code>ordering := "short_accented_lex"</code>
+<li><code>ordering := "short_multiaccented_lex"</code><br>
+<p>These two orders use the <code>level</code> field. <code>ordering := "short_accented_lex"</code> behaves almost identically to ordinary shortlex. However, if at the first place where the words differ the letters are from the same level, the decision on the order of the words is only provisional and can be over-ridden by the first position in which the generators are from different levels. This ordering is similar to how words are ordered in French and other European languages with accented characters, hence the name.</p>
+<p>With <code>ordering:="short_multiaccentedlex"</code>, if at a later position in the word the order has still not been decided by the occurrence of generators from different levels, and again there are two different generators from the same level, and both generators are at a higher level than has been used to make a provisional decision before, then the provisional decision is over-ridden.</p>
+</ol>
+<p>The remaining orderings were added for experimental purposes, and do not seem to be  useful.</p>
+<ol start="13">
+<li><code>ordering := "short_recursive"</code><br>
+<p>Words are ordered so that all words of a particular length come before any longer word. Amongst words of equal length, recursive ordering is used, with words earlier in the recursive ordering coming first.
+</p>
+<li><code>ordering := "short_rt_recursive"</code><br>
+<p>Words are ordered so that all words of a particular length come before any longer word. Amongst words of equal length, right recursive ordering is used, with words earlier in the right recursive ordering coming first.
+</p>
+<li><code>ordering := "grouped"</code><br>
+<p>This ordering uses the level field, but can be considered to be the limiting case of weighted lex ordering in which the weights of two generators, if different, differ by an infinite ratio. When comparing words first compares the number of generators in each word at the highest level, if this is not equal, then the word with fewer generators at this level comes earlier. The words are then compared at the next level, and so on. If the words are still equal (so that they are certainly the same length), the word which comes first in lexicographical ordering comes earlier.</p>
+<li><code>ordering := "ranked"</code><br>
+<p>This word-ordering uses the <code>level</code> field,and is intermediate in behaviour between <code>"wtlex"</code> and <code>"wreathprod"</code>. The words are first compared by ignoring all the letters except those at the highest level. If they are different, the word which has the remainder which comes first in shortlex ordering comes first. If they are equal we then compare the words by ignoring all the letters except those at the next highest level (now also ignoring the letters at the very highest level). We keep doing this until we have compared the words at every level. If they are still equal after all that, then the word which comes first in lexicographical ordering comes first.</p>
+<p><code>ordering:="ranked"</code> can only differ from <code>ordering:="grouped"</code> if at least two generators are at the same level.</p>
+<p>This ordering is similar to <code>"wreathprod"</code> ordering in that it will make the word arbitrarily longer just to improve the word lexicographically at a higher level, but unlike it in that equations such as <code>[a*c,c*<i>w</i>]</code> are impossible unless <code><i>w</i></code> contains at most one <code>a</code>, and no generators of the same or higher level than <code>a</code>. 
+</p>
+<li><code>ordering := "nestedrank"</code><br>
+<p>This ordering is very similar to the last, but in the event of a draw at a higher level the higher level letters are still taken into account when the generators from the next level down are compared. Therefore this ordering is slightly more like <code>"rt_wreathprod"</code> orderings than <code>"ranked"</code> is.</p>
+</ol>
+<p>Input files using the last three word-orderings tend to produce output rewriting systems with many fewer equations than a <code>"shortlex"</code> input file would, but many more than <code>"recursive"</code> and <code>"rt_recursive"</code> or <code>"wreathprod"</code> and <code>"rt_wreathprod"</code> input files.</p>
+<p>MAF does not currently support building word-acceptors from word-difference machines for <code>"ranked"</code> or <code>"nestedrank"</code> order.</p>
+<p>The author had hoped that these three orderings would prove genuinely useful for rewriting systems. Unfortunately, although they tend to produce confluent systems with far fewer equations than shortlex systems, and are less prone than recursive orderings to pathological behaviour, they also seem to be less likely to collapse quickly, and to be much larger before the collapse. 
+<h4>Further remarks on word-ordering</h4>
+<p><code>"short_fptp"</code>, <code>"short_accentedlex"</code> and <code>"short_multiaccentedlex"</code> were created to provide the easy test cases for building non-shortlex automatic structures. All these word-orderings can be recognised by an FSA, so that they are equally suited to the construction of an automatic structure as shortlex. The author has not found any examples which are automatic using one of these orders but not <code>"shortlex"</code>, but thinks it is possible that this might happen, although since the FSA for these orderings have more states than the shortlex automaton does it would probably an unusual occurrence. Construction of word-acceptors for these word-orderings is slightly more difficult than for <code>"shortlex"</code> or <code>"short_rtlex"</code> word-ordering, because both the latter two can use highly optimised code for building the word-acceptor, whereas the former all need to use the generic non shortlex code.</p>
+<p>The various "wtlex" type word-orderings cannot be recognised by an FSA, but even so, construction of automatic structures is quite often possible.</p>
+<h4>Geodesic and non-geodesic word-orderings</h4>
+<p>The word-orderings whose name <em>begins</em> with <code>short</code> all have the property that the "reduced" word for an element is a shortest equal word, and they will be termed <dfn>geodesic</dfn> word-orderings. For all the other word-orderings "reduction" can increase the length of a word, and so the orderings are termed <dfn>non-geodesic</dfn>. In the case of weighted lex type orderings (<code>"wtlex"</code> and<code>"wtshortlex"</code>),  the potential increase is not usually too severe, but with some of the others, and especially with the the four orderings <code>"recursive"</code>, <code>"rt_recursive"</code>, <code>"wreathprod"</code>, and <code>"rt_wreathprod"</code> the increase in length is potentially unlimited. The first two of these will be called <dfn>recursive type word-orderings</dfn>, and all four called <dfn>wreath type word-orderings</dfn>. Even where the equations in a rewriting system are all quite short, and when the increase in length in any one equation is moderate, reduction of some words can sometimes become <em>very</em> difficult,  even impossible within reasonable time and space constraints, when these orderings are used. Both MAF and KBMAG can run into severe difficulties with wreath type word-orderings. A sign that MAF is in trouble is that the "Depth" value reported in its progress messages becomes extremely high and stays high, and that the message "Performing a difficult reduction" appears frequently. MAF tries hard not to get into this kind of state. Although MAF has to allow the creation of equations that increase the length of words, during Knuth-Bendix completion it attempts to give preference to equations that do not do so, and tries to eliminate perverse equations. Also MAF simply aborts any reduction that takes too long, saves the equation it was working on in its current state if necessary, and only returns to the equation later on if it still seems to be needed.</p>
+<p>The four wreath type orderings can have remarkable behaviour, at least when most generators are at different levels. There are input files, with which <tt>automata</tt> can do nothing useful when ordering is set to <code>"shortlex"</code>, but for which a confluent rewriting system is found within seconds when one or other of these orderings is used with a suitable ordering of generators or choice of levels. The confluent systems that are found in such cases are usually much smaller, in terms of the number of equations, than the <code>"shortlex"</code> one where both exist, which means these orderings are potentially very useful for large finite groups as well as for infinite ones that are not shortlex confluent (see <a href="example3.html">MAF Tutorial 3</a> for an example). On the other hand the equations that emerge are often frequently severely unbalanced, with the RHS much longer than the LHS. This means that "reduction" becomes a severely misleading term.</p>
+<p>If you use one of these orderings, and MAF gets into difficulties, it is worth trying to run <tt>automata</tt> again with the <kbd>-work_order n</kbd> option or the <kbd>-strategy n</kbd>, or some of the other special options. This makes it possible to set flags that alter MAF's algorithms in various ways. This may be enough for the problem to be avoided.</p>
+<h4>Tips on Word Ordering</h4>
+<ol>
+<li><p>If using a recursive type of word-ordering, make sure you order the generators sensibly. Using one of the recursive orderings frequently results in the elimination of one or more generators - if you specify the order incorrectly you will not eliminate the generators you want to eliminate. Generators you want to keep should come first.</p>
+<li><p>If you want to use a wreath type word-ordering, but the input file is actually confluent when using <code>"shortlex"</code> ordering, it may be better to create an input file from the <tt>.kbprog</tt> file for the "shortlex ordering". It sometimes happens that MAF is unable to create a confluent rewriting system from the original axiom set, but can do so from the shortlex confluent rewriting system.</p>
+<li><p>Good results are often obtained with the <code>"wreathprod"</code> and <code>"rt_wreathprod"</code> word-orderings if each generator has the same level as its inverse, but increasing levels are used otherwise. Sometimes a symmetry between generators may suggest other ways of grouping generators at the same level. Another possibility, of interest in the case where all the generators are torsion elements, is to assign, for each mutually inverse pair of generators, one generator to level 1, and the other to level 2, as this will result in output files where all the accepted words are "positive" words.</p>
+<p>If all the generators are at different levels, then <code>"wreathprod"</code> ordering is equivalent to  <code>"recursive"</code>, and <code>"rt_wreathprod"</code> to <code>"rt_recursive"</code> ordering, in each case with the generators re-ordered according to increasing level. MAF's performance will be marginally better if you actually change the input file accordingly.</p>
+<li><p>You can often use a recursive type word-ordering to change generators. For example if a group is generated by <i>a,b</i> it is also generated by <i>a,c</i> where <i>c = a*b</i>, so that adding <code>c</code> as a new generator which comes before <code>b</code> in <code>generatorOrder</code> will cause <i>b</i> to be eliminated. The author used this approach to find some two-generator presentations of symmetric groups included in the examples. However, using a coset system with named subgroup generators is normally a better approach to changing generators.
+</ol>
+</body>
+</html>

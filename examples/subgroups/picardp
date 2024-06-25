@@ -1,0 +1,25 @@
+#Picard group PSL(2,Z[i]) - quite hard for autgroup
+#This choice of generating set is consistent with the following
+#set of matrices:
+#a= 0 -1  t = 1 1   u = 1 i  l = -i 0  
+#   1  0      0 1       0 1       0 i      
+#If l is replaced by m = A *l = 0 i the group is still automatic, and the 
+#                               i 0
+#presentation and automata are both simpler. See picard2p
+#The axioms can also be simplified for this generating set. See picard1p
+_RWS := rec                    
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,t,T,u,U,l],
+  inverses := [a,T,t,U,u,l],
+  equations :=
+  [
+    [a*t*a*t*a*t,IdWord],
+    [a*l*a*l,IdWord],
+    [t*l*t*l,IdWord],
+    [u*l*u*l,IdWord],
+    [u*a*l*u*a*l*u*a*l,IdWord],
+    [u*t,t*u]
+  ]
+);

@@ -1,0 +1,15 @@
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [x,y,Y],
+  ordering := "shortlex",
+  inverses :=       [x,Y,y],
+  equations := 
+  [
+    [(Y*x)^3,IdWord],
+    [(x*y^4*x*y^31)^2,IdWord],
+    [y^61,IdWord]
+  ]
+);
+

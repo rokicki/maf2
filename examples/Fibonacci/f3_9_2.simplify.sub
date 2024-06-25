@@ -1,0 +1,4 @@
+_RWS_Sub := rec
+(
+  normalSubGenerators := [a^2,b^2,c^2]
+);

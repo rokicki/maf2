@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : Introduction : Obtaining and installing MAF</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html">  
+<link rel="Next" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Prev" type="text/html" href="What_is_MAF.html" title="What's new?">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="MAF.html#introduction">Introduction</a> : Obtaining and installing MAF
+<h3><a name="obtainingmaf"></a>Obtaining MAF</h3>
+<p>You can download the binaries and source code of MAF by visiting the <a href="http://maffsa.sourceforge.net/">MAF website on SourceForge</a>, or the <a href="https://sourceforge.net/projects/maffsa/">MAF project on SourceForge</a>. Downloads are no longer available from the author's personal web site.</p>
+<h3>Installing MAF</h3>
+<p>If you download one of the Zip files containing the binaries for MAF, simply unzip this to the location of your choice. On both Mac and Windows platforms you might want to add the directory containing the MAF binaries to your path, or at least create a shell script or batch file that can do so. On Mac platforms it is necessary to set the DYLD_LIBRARY_PATH environment variable unless you are logged to one of the main MAF subdirectories, otherwise you will get a loader error when you try to run a MAF utility.</p>
+<p>For example if you install maf in <tt>/Users/<i>username</i>/MAF</tt> you might do the following:</p>
+<p>
+<kbd>PATH=/Users/<i>username</i>/MAF/bin:$PATH<br>
+     export PATH<br>
+DYLD_LIBRARY_PATH=/Users/<i>username</i>/MAF/bin:$DYLD_LIBRARY_PATH<br>
+     export DYLD_LIBRARY_PATH</kbd>
+</p>
+<h3>Pruning MAF</h3>
+<p>The author does not want MAF to take up more space on your computer than need be. However, for compatibility with KBMAG, many executable files are included that you will most likely never use. You may safely delete any file that you do not intend to run directly, because none of the executables call other executables to do their work. You may, of course, delete the examples, but it is probably a good idea to keep at least a few of them until you are familiar with the syntax of input and substructure files.</p>
+</body>
+</html>

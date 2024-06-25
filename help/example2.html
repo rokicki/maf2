@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : Tutorials :  2 - Choosing generators</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="example1.html" title="Tutorial 1: Processing an input file with automata">
+<link rel="Next" type="text/html" href="example3.html" title="Tutorial 3: Using wreath product word-orderings">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="MAF.html#tutorials">Tutorials</a> :  2 - Choosing generators
+<h2>MAF Tutorial 2 : Choosing generators</h2>
+<p>In this tutorial you will learn that the choice of generating set, and the order in which the generators are specified can strongly influence the size of the automata MAF creates. It can even influence which automata MAF is able to create. You will also learn that your mathematical training may well lead you into making poor choices. This matters because the larger an automaton to be computed by <tt>automata</tt> is, the more difficult it is likely to be to find.</p>
+<p>The tutorial uses four different input files for a very well known and important group: the group of rotational symmetries of the tessellation of (2,3,7) hyperbolic triangles, often known simply by some notation such as 2 3 7, and a member of the Von Dyck family of groups. There are many other input file for groups like this included in the <tt>examples</tt> directories. The author has named most of these <tt>D(<i>p</i>_<i>q</i>_<i>r</i>)</tt> where <i>p</i>,<i>q</i>,<i>r</i> are the three numbers representing the angles of the triangle which is (half of) the fundamental region of the tessellation. There are also input files <tt>T(<i>p</i>_<i>q</i>_<i>r</i>)</tt> which are for the corresponding triangle groups: that is the group of reflectional symmetries of the tessellation, and which contain the Von Dyck group as a subgroup of index 2. However, in this lesson, for ease of typing we shall use a simpler scheme.</p>
+<p>Open a command prompt window (shell), and make the <tt>examples</tt> subdirectory the current directory. The <tt>lesson2</tt> subdirectory of this directory contains four input files for the group 2,3,7. These files and the corresponding presentations are as follows.</p>
+<table summary="4 presentations of 2,3,7 Von Dyck group" class="niceborder" cellspacing="0">
+<tr><th>filename</th><th>Presentation</th></tr>
+<tr><td><tt>237</tt></td><td>&lt;a,b | a^2=b^3=(a*b)^7=1&gt;</td></tr>
+<tr><td><tt>327</tt></td><td>&lt;a,b | a^3=b^2=(a*b)^7=1&gt;</td></tr>
+<tr><td><tt>723</tt></td><td>&lt;a,b | a^7=b^2=(a*b)^3=1&gt;</td></tr>
+<tr><td><tt>723_abc</tt></td><td>&lt;a,b | a^7=b^2=c^3=a*b*c=1&gt;</td></tr>
+</table>
+<p>You are invited to run <tt>automata</tt> against each of these input files. There is no need to use any special options: all the runs will complete very quickly. Most mathematicians, if invited to give a presentation for this group, would surely choose the first.</p>
+<p>Take a look at the output files created for each with your directory listing program. You should see that the files for <tt>237</tt> and <tt>327</tt> are almost the same size, with the <tt>327</tt> files a little smaller on average, but the files for <tt>723</tt> and <tt>723_abc</tt> are distinctly smaller. The files for <tt>723_abc</tt> are larger than for <tt>723</tt>, but considering the fact that there is an extra generator, smaller than one might expect. Much more importantly, <tt>723_abc</tt> has a confluent rewriting system. This means that we can expect word reduction to be faster for this presentation than for the others when dealing with long words.</p>
+<p>Since file sizes are not a very mathematical metric let us take a look at the number of states in some of the automata.</p>
+<table summary="Automata state counts for the 4 presentations" class="niceborder" cellspacing="0">
+<caption>State counts of automata for different presentations of 2,3,7</caption>
+<tr><th>filename</th><th>Primary Word differences</th><th>Word-acceptor</th><th>Multiplier </th></tr>
+<tr><td><tt>237</tt></td><td>30</td><td>52</td><td>135</td></tr>
+<tr><td><tt>327</tt></td><td>28</td><td>50</td><td>133</td></tr>
+<tr><td><tt>723</tt></td><td>14</td><td>29</td><td>84</td></tr>
+<tr><td><tt>723_abc</tt></td><td>13</td><td>25</td><td>72</td></tr>
+</table>
+<p>The user is encouraged to try other orderings of the generators or other generating sets. For example, groups generated by generators <i>a,b</i> of order 2 and 3 are also generated by <i>a*b</i> and <i>a*b^-1</i>, and hence also by <i>a*b</i> and <i>a*b*a*b^-1</i>. Those generating sets work well with coset enumerators, but the author has found they work less well with MAF - where it seems "geometric" generators often work best.</p>
+<p>It is not possible to give hard and fast guide-lines, but this behaviour does seem fairly typical, and some good rules of thumb seem to be:</p>
+<ul><li>If a group is generated by two generators, one of which is an involution, the involution should come second.
+<li>If a group is generated by two generators <i>a,b</i> and <i>a,b,a*b</i> are all torsion elements make which ever of <i>a,b,</i> and <i>a*b</i> has the highest order into the first generator, and if possible make the second generator an involution.
+<li>If a two generator group can be generated by 3 or 4 involutions, try that as a generating set.
+</ul>
+<p>It is interesting to see how far the smaller size of the automata for the last two generating sets carries across to quotient groups. The <tt>lesson2</tt> subdirectory also contains analogous input files for the two sets of quotients of 2,3,7 in which the commutator has order 8 and order 12. The former is a moderately large finite group, the latter infinite.</p>
+<p>When running <tt>automata</tt> against these two sets of input files the user is advised to use the <kbd>-confluent</kbd> command line option against the set of files for the commutator of order 8, and to use the <kbd>-nokb</kbd> command line option against the set of files for the commutator of order 12. The latter is especially important. The computation of the automata for the second set of groups is a reasonably substantial one.</p>
+<p>You will encounter mixed results - for the commutator of order 8 quotient all the computations take roughly the same length of time, though <tt>7238_abc</tt> is marginally slower than the rest. There does not seem to be any major differences in the sizes of the automata for the different presentations, at least, there is no clear winner for this set of presentations. Things are very different with the second set however: on the author's machine the computations for <tt>72312_abc</tt> and <tt>72312</tt> are substantially faster than the computations for <tt>23712</tt>: with the first two taking 31 and 42 seconds respectively, and the latter requiring 210 seconds. The automatic structure for <tt>72312_abc</tt> is less than half the size of that for <tt>23712</tt>.</p>
+</body>
+</html>

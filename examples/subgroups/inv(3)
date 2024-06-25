@@ -1,0 +1,13 @@
+#Involution group of rank 3.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [p,q,r],
+  inverses := [p,q,r],
+  equations :=
+  [
+  ]
+);
+
+

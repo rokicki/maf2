@@ -1,0 +1,32 @@
+#This is another set of independent axioms for the antislice group
+#For all but the indented axiom the system is confluent to a larger
+#finite group when that axiom is commented out. Coset enumeration
+#over antislice_alt.sub5 will show the independence of the indented
+#axiom when that is commented out.
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [rl,LR,td,DT,fb,BF],
+  ordering := "shortlex",
+  inverses :=       [LR,rl,DT,td,BF,fb],
+  equations := 
+  [
+    [rl^3,LR],
+    [td^3,DT],
+    [fb^3,BF],
+    [rl^2*td^2*rl,td^2*LR],
+    [rl^2*fb^2*rl,fb^2*LR],
+    [td*rl*fb*rl,LR*BF*LR*DT],
+    [td*fb*td*rl,LR*DT*BF*DT],
+    [DT*fb*td*rl,LR*DT*BF*td],
+    [td*BF*DT*rl,LR*td*fb*DT],
+    [fb*LR*td*rl,LR*DT*rl*BF],
+    [fb*DT*fb*rl,LR*BF*td*BF],
+    [BF*td*fb*rl,LR*BF*DT*fb],
+    [fb*td*BF*LR,rl*fb*DT*BF],
+     [rl^2*fb*td*rl*fb*td,BF*DT*LR*BF*DT],
+    [td*rl*td*rl*td*rl,LR*DT*LR*DT*LR*DT]
+  ]
+);
+

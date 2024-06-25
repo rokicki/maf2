@@ -1,0 +1,29 @@
+#Mathieu group M23
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [d,D,a,c,C,b,B],
+  inverses := [D,d,a,C,c,B,b],
+  equations :=
+  [
+    [c,b*a*b*a*B*a*b],
+    [d,(a*c*a*c*a*c*a*c*a*c*c*a*c*a*c*c)^-1*c*a*c*a*c*a*c*a*c*a*c*c*a*c*a*c*c],
+    [b^4,IdWord],
+    [(a*b)^23,IdWord],
+    [(a*b*a*B)^6,IdWord],
+    [(a*b^2)^6,IdWord],
+    [(a*b*a*B*a*b^2)^4,IdWord],
+    [(a*b)^3*a*B*a*b^2*(a*b*a*B)^2*(a*b)^3*(a*B)^3,IdWord],
+    [(a*b*a*b^2)^3*(a*b^2*a*B)^2*a*b*a*b^2*a*b*a*B*a*b^2,IdWord],
+    [c^4,IdWord],
+    [(a*c)^11,IdWord],
+    [(a*c^2)^5,IdWord],
+    [(a*C*a*C*a*c*a*c)^3,IdWord],
+    [(a*c*a*c*a*C)^5,IdWord],
+    [a*d*a*d*a*d*a,D*a*D*a*D*a*D],
+    [d^2*a*d^2*a*d^2,a*d^2*a*d^2*a],
+    [a*d*a*D*a*d*a*d*a*D*a*d*a*d*a,D*a*d*a*D*a*D*a*d*a*D*a*D*a*d],
+    [d^2*a*d*a*d^2*a*D*a*d^2*a*d*a*d*a*D,a*d*a*D*a*d^2*a*D*a*D*a*d^2*a*d*a]
+  ]
+);

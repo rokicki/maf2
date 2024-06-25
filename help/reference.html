@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Reference</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+
+<link rel="Prev" type="text/html" href="cosets.html">
+<link rel="Next" type="text/html" href="limits.html" title="Internal limits">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : Reference
+<h2 style="margin-top:-1ex">MAF : Reference</h2>
+<p>This section summaries the functionality of every MAF utility, and gives a detailed description of its command line options. The main body of the information is in the three "Usage" pages linked to by the <a href="#utility">Utility reference subsection</a>. The other subsections contain information about features which apply throughout MAF.</p>
+<ul>
+<li><a href="limits.html">Internal limits</a> details various size limits for MAF.</li>
+<li><a href="file_formats.html">File names and formats</a> describes the files used for input, and created as output.</li> 
+<li><a href="word_ordering_methods.html">Word-ordering methods</a> describes the word-orderings supported in input files.</li> 
+<li><a href="piping.html">Piping and redirection</a> summarises the general rules for reading and writing files, or <tt>stdin</tt> and <tt>stdout</tt>, which are similar throughout MAF.</li> 
+
+<li><a href="exit_codes.html">Exit codes</a> describes the exit codes used by MAF utilities to indicate success or failure.</li>
+</ul>
+<h3><a name="usage"></a>Usage</h3>
+<h4>Notation for usage sections</h4>
+<p>The example below shows how command line options are documented for MAF utilities:</p>
+<p><kbd>gpaxioms [<i>loglevel</i>] [-midfa] [-serial | -hybrid] <i>group</i> [-cos [<i>subsuffix</i>]]</kbd></p>
+<ol><li>When a command line option, or a parameter, is shown in square brackets, then it is optional.<br>
+<li>Text in italics represent parameter values, usually file names or numbers, or occasionally a collection of standard options, as in <kbd>[<i>loglevel</i>]</kbd> above.
+<li>When two or more command line options, or a command line option and a parameter, are separated by | , then it means just one of the items must be used, or in the case where the items are enclosed in square brackets, may be used.
+</ol>
+<h4>General usage information</h4>
+<ul>
+<li><a href="options_syntax.html">Usage: Command line syntax</a> describes the general rules for using MAF command line options, together with some information about how they are parsed.</li>
+<li><a href="standard_options.html">Usage: Standard options</a> describes those command line options that are supported by many or even all MAF components.</li>
+</ul>
+<h4><a name="utility"></a>Utility reference</h4>
+<ul>
+<li><p><a href="automata_usage.html">Usage: <tt>automata</tt></a> contains information for that program, and also for most important utilities provided for compatibility with KBMAG: <a href="automata_usage.html#kbprog"><tt>kbprog</tt></a>, <a href="automata_usage.html#autgroup"><tt>autgroup</tt></a>, <a href="automata_usage.html#kbprogcos"><tt>kbprogcos</tt></a>, <a href="automata_usage.html#autcos"><tt>autcos</tt></a> and <a href="automata_usage.html#gpmakefsa"><tt>gpmakefsa</tt></a>. Whenever you want to use MAF to investigate the properties of some object you will almost always first have to invoke one or other of these utilities on an input file that describes it.</p></li>
+
+<li><a href="gp_usage.html">Usage: RWS Utilities</a> contains information about the utilities in MAF that work with the rewriting systems contained in input files. These utilities perform additional computations, which tell you more about the object being investigated. Most of them need one or more of the output files usually create by <tt>automata</tt>, though there are a few exceptions to this, notably the Tietze transformation program <tt>simplify</tt>, and the coset enumerator <tt>gptcenum</tt>.</li>
+
+<li><p><a href="fsa_usage.html">Usage: FSA Utilities</a> contains information about MAF utilities that work directly with automata rather than input files. These utilities can be used for performing computations that relate to the structure of a group. All but one of the FSA utilities has a name beginning with "fsa". Many of them create new automata, either by transforming an input automaton in some way, or by combining two or even three existing automata into a new one.</p>
+</ul>
+</body>
+</html>

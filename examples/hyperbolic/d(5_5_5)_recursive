@@ -1,0 +1,14 @@
+#Von Dyck (5,5,5) group - infinite hyperbolic
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a,A,b,B],
+  inverses := [A,a,B,b],
+  equations :=
+  [
+    [a^5,IdWord],
+    [b^5,IdWord],
+    [(a*b)^5,IdWord],
+  ]
+);

@@ -1,0 +1,15 @@
+#One of 6 one relator quotients of the modular group by relators of length 18 or below
+#whose structure is unknown
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [y,Y,x],
+  ordering := "shortlex",
+  inverses :=       [Y,y,x],
+  equations := 
+  [
+    [y^2,Y],
+    [(x*y)^4*(x*Y)^2*(x*y)^2*(x*Y)^4*(x*y)^2*(x*Y)*(x*y)*(x*Y)^2),IdWord]
+  ]
+);

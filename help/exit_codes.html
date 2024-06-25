@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Reference : Exit codes</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Prev" type="text/html" href="limits.html">
+<link rel="Next" type="text/html" href="options_syntax.html">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html#usage">Reference</a> : Exit codes
+<h2>Exit codes of MAF utilities</h2>
+<p>The exit code, or error level, of all MAF utilities is 0 if successful. Various exit codes are used if the program fails to complete successfully:</p>
+<ul><li><p>Exit code 1 is used if there is a usage error, or the input supplied to the program is invalid in some way. In this case the program aborts with an error message sent to <tt>stderr</tt>, without producing its normal output.</p></li>
+<li><p>Some programs can also exit with exit code 2, which means that they have been aborted with provisional or incomplete results. This applies notably to <tt>automata</tt>, and to two programs provided for KBMAG compatibility: <tt>kbprog</tt> and <tt>kbprogcos</tt>.</p></li>
+<li><p>Exit code 3 means that the program has failed because of an I/O error. This error would normally be caused by a required file's unexpected non existence, or inaccessibility, or by the program running out of disk space.</p></li>
+</ul>
+</body>
+</html>

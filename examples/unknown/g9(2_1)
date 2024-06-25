@@ -1,0 +1,20 @@
+#Sieradski group g9(2,1)
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B,c,C,d,D,e,E,f,F,g,G,h,H,i,I],
+        inverses := [A,a,B,b,C,c,D,d,E,e,F,f,G,g,H,h,I,i],
+  equations :=
+  [
+    [a*c,b],
+    [b*d,c],
+    [c*e,d],
+    [d*f,e],
+    [e*g,f],
+    [f*h,g],
+    [g*i,h],
+    [h*a,i],
+    [i*b,a]
+  ]
+);

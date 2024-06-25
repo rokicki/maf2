@@ -1,0 +1,252 @@
+#Copyright 2008,2009 Alun Williams
+#This file is part of MAF.
+#MAF is free software: you can redistribute it and/or modify it
+#under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+
+#MAF is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#You should have received a copy of the GNU General Public License
+#along with MAF.  If not, see <http://www.gnu.org/licenses/>.
+
+;
+; $Log: maf.def $
+; Revision 1.17  2009/11/10 19:53:48Z  Alun
+; Various new exports added
+; Revision 1.16  2009/10/07 08:22:56Z  Alun
+; Compatibility of FSA utilities with KBMAG improved.
+; Compatibility programs produce fewer FSAs KBMAG would not (if any)
+; Revision 1.15  2009/09/14 10:49:28Z  Alun
+; Some method signatures changed after cleaning up basic types used by MAF
+; Added commented out type_info export which is needed if we want to build
+; things with Intel C++
+; Revision 1.14  2009/08/24 00:11:36Z  Alun
+; Added Equation::print()
+; Revision 1.13  2009/07/29 03:42:31Z  Alun
+; Several new methods exported, mostly for benefit of Spirofractal
+; Revision 1.13  2008/11/03 10:58:45Z  Alun
+; Early November checkin
+; Completely reworked pool and Difference_Tracker
+; Ported to Darwin
+; Revision 1.12  2008/10/08 12:38:14Z  Alun
+; For early October version
+; Revision 1.11  2008/09/30 09:25:12Z  Alun
+; Final version built using Indexer.
+;
+;Creating a DLL with C++ signatures is problematical because of name mangling
+;One way to avoid this is by using a COM like architecture where all methods
+;are virtual functions.
+;The problem with this is that is then impossible to create objects on the
+;stack, so memory leaks become much more likely unless you resort to using
+;Microsoft non-standard extensions to C++.
+;So I have preferred to use a traditional DLL construction
+;One just links the program, finds out what symbols are undefined and adds
+;them to the export.
+;Signatures will change if any change is made to the method declaration
+;so MAF.DLL and all the .exe files must be built together, as I am not
+;yet comitting myself a to binary portability (and probably never will).
+;Where the performance and memory hit is not significant I have made methods
+;virtual using APIMETHOD to limit the number of exports needed from the DLL
+;However this only works when the method is called through a pointer or a
+;reference, and not through an instantiated variable or member, as otherwise
+;C++ compilers "know" which method will get called. (It would be nice if there
+;were a compiler option to force all virtual functions to be called virtually
+;but there isn't.)
+;In fact the current linker is capable of recognising undecorated names, but 
+;so far I've preferred not to trust that, since there might be overloaded names
+LIBRARY MAF BASE=0x10000000
+EXPORTS
+?usage@Standard_Options@@QBEXVString@@@Z @1 NONAME
+?recognised@Standard_Options@@QAE_NPAPADAAH@Z @2 NONAME
+??0Standard_Options@@QAE@AAVContainer@@I@Z @3  NONAME
+?create@Container@@SAPAV1@PAVPlatform@@@Z @4 NONAME
+?make_destination@String_Buffer@@QAE?AVString@@V2@00W4Make_Filename_Suffix_Flag@2@@Z @5 NONAME
+?create@FSA_Factory@@SAPAVFSA_Simple@@VString@@PAVContainer@@_NPAVMAF@@@Z @6 NONAME
+?create@MAF@@SAPAV1@PAVContainer@@PBUOptions@1@W4Alphabet_Type@@W4Presentation_Type@@@Z @7 NONAME
+;stuff automata needs
+?create_from_rws@MAF@@SAPAV1@VString@@PAVContainer@@IPBUOptions@1@@Z @8 NONAME
+?create_from_substructure@MAF@@SAPAV1@VString@@0PAVContainer@@IPBUOptions@1@@Z @9 NONAME
+?walk@Heap@@QAEX_N@Z @10 NONAME
+?status@Heap@@QAEPBUHeap_Status@@_N@Z @11 NONAME
+?get_global_heap@Heap@@SAPAV1@XZ @12 NONAME
+?create_container@MAF@@SAPAVContainer@@PAVPlatform@@@Z @13 NONAME
+?create@Subalgebra_Descriptor@@SAPAV1@VString@@AAVMAF@@@Z @14 NONAME
+?minimise@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@W4Transition_Storage_Format@@W4Merge_Label_Flag@1@@Z @15 NONAME
+?binop@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@0W4Binop_Flag@1@@Z @16 NONAME
+?sort_bfs@FSA_Simple@@QAEXXZ @17 NONAME
+?composite@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@0@Z @18 NONAME
+?concat@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@0@Z @19 NONAME
+?cut@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@@Z @20 NONAME
+?exists@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@_N1@Z @21 NONAME
+?kernel@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@I@Z @22 NONAME
+?shortlex@FSA_Factory@@SAPAVFSA_Simple@@AAVContainer@@ABVAlphabet@@_N@Z @23 NONAME
+?star@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@@Z @24 NONAME
+?transpose@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@@Z @25 NONAME
+?fsa_not@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@_N@Z @26 NONAME
+?product_intersection@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@00VString@@_N@Z @27 NONAME
+?prune@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@@Z @28 NONAME
+?reverse@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@_N1@Z @29 NONAME
+?merge@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@PBJ@Z @30 NONAME
+?determinise@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@W4Determinise_Flag@1@_NW4Transition_Storage_Format@@@Z @31 NONAME
+?check_axioms@Group_Automata@@SA_NAAVMAF@@ABVGeneral_Multiplier@@W4Compositor_Algorithm@@@Z @32 NONAME
+?label_product_fsa@Group_Automata@@SA_NPAVFSA_Simple@@AAVMAF@@_N@Z @33 NONAME
+?build_overlap_acceptor@Group_Automata@@SAPAVFSA_Simple@@ABVFSA@@@Z @34 NONAME
+?build_acceptor_from_dm@Group_Automata@@SAPAVFSA_Simple@@AAVMAF@@PBVFSA@@_N22GJ@Z @35 NONAME
+?check_geodesic_word_acceptor@Group_Automata@@SAHPAVSorted_Word_List@@PAVRewriter_Machine@@PBVFSA@@2@Z @36 NONAME
+?build_geodesic_pair_recogniser@Group_Automata@@SAPAVFSA_Simple@@PBVFSA@@0@Z @37 NONAME
+??1Word_List@@UAE@XZ @38 NONAME
+??1Ordinal_Word@@UAE@XZ @39 NONAME
+;Ordinal_Word::Ordinal_Word(class Alphabet const &,unsigned short); 
+??0Ordinal_Word@@QAE@ABVAlphabet@@G@Z @40 NONAME
+;Word_List::Word_List(class Alphabet const &,unsigned int
+??0Word_List@@QAE@ABVAlphabet@@J@Z @41 NONAME
+;void Word::print(class Container &,class Output_Stream *)const
+?print@Word@@QBEXAAVContainer@@PAVOutput_Stream@@@Z @42 NONAME
+;Entry_Word::Entry_Word(class Word_List *,unsigned int)
+??0Entry_Word@@QAE@PAVWord_List@@J@Z @43 NONAME
+;Ordinal_Word & Ordinal_Word::operator=(class Word const &)
+??4Ordinal_Word@@QAEAAV0@ABVWord@@@Z @44 NONAME
+;bool Node_List::use(class Node const * *,int *) 
+?use@Node_List@@QAE_NPAPBVNode@@PAH@Z @45 NONAME
+??1Node_List@@QAE@XZ @46 NONAME
+;Sorted_Word_List::Sorted_Word_List(class Alphabet const &,Element_ID) 
+??0Sorted_Word_List@@QAE@ABVAlphabet@@J@Z @47 NONAME
+;bool Sorted_Word_List::insert(Word const &,Element_ID *) 
+?insert@Sorted_Word_List@@QAE_NABVWord@@PAJ@Z @48 NONAME
+;bool Sorted_Word_List::remove(class Word const &,Element_ID *)
+?remove@Sorted_Word_List@@QAE_NABVWord@@PAJ@Z @49 NONAME
+;virtual  Equation_Word::~Equation_Word(void) 
+??1Equation_Word@@UAE@XZ @50 NONAME
+;Sorted_Word_List::~Sorted_Word_List(void) 
+??1Sorted_Word_List@@UAE@XZ @51 NONAME
+;void Node_List::merge(class Node_List *) 
+?merge@Node_List@@QAEXPAV1@@Z @52 NONAME
+;void Hash::remove_entry(long,bool)
+?remove_entry@Hash@@QAEXJ_N@Z @53 NONAME
+;Working_Equation::Working_Equation(class Node_Manager &,class Ordinal_Word const &,class Ordinal_Word const &,class Derivation const &) 
+??0Working_Equation@@QAE@AAVNode_Manager@@ABVOrdinal_Word@@1ABVDerivation@@@Z @54 NONAME
+;Ordinal_Word::Ordinal_Word(class Word const &)
+??0Ordinal_Word@@QAE@ABVWord@@@Z @55 NONAME
+?trim@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@@Z @56 NONAME
+;FSA::Word_Iterator::~Word_Iterator(void) 
+??1Word_Iterator@FSA@@QAE@XZ  @57 NONAME
+;State_ID FSA::Word_Iterator::next(bool) 
+?next@Word_Iterator@FSA@@QAEJ_N@Z @58 NONAME
+;State_ID FSA::Word_Iterator::first(class Ordinal_Word const *) 
+?first@Word_Iterator@FSA@@QAEJPBVOrdinal_Word@@@Z @59 NONAME
+;FSA::Word_Iterator::Word_Iterator(const class FSA &) 
+??0Word_Iterator@FSA@@QAE@ABV1@@Z @60 NONAME
+;int Word_List::add(class Word const &,unsigned short,bool)
+?add@Word_List@@QAEHABVWord@@G_N@Z @61 NONAME
+;void Sorted_Word_List::empty(void)
+?empty@Sorted_Word_List@@UAEXXZ @62 NONAME
+;Linked_Packed_Equation const *  Presentation::first_axiom(bool)const
+?first_axiom@Presentation@@QBEPBVLinked_Packed_Equation@@_N@Z @63 NONAME
+;Ordinal_Word::Ordinal_Word(class Alphabet const &,unsigned char const *)
+??0Ordinal_Word@@QAE@ABVAlphabet@@PBE@Z @64 NONAME
+;String String_Buffer::append(class String)
+?append@String_Buffer@@QAE?AVString@@V2@@Z @65 NONAME
+;String String_Buffer::set(class String)
+?set@String_Buffer@@QAE?AVString@@V2@@Z @66 NONAME
+;String String::make_filename(class String_Buffer *,class String,class String,class String,bool,enum String::Make_Filename_Suffix_Flag)
+?make_filename@String@@SA?AV1@PAVString_Buffer@@V1@11_NW4Make_Filename_Suffix_Flag@1@@Z @67 NONAME
+;Multiplier::Multiplier(class FSA &,bool)
+??0Multiplier@@QAE@AAVFSA@@_N@Z @68 NONAME
+strcmp @69 NONAME
+;new 
+??2@YAPAXI@Z @70 NONAME
+;new []
+??_U@YAPAXI@Z @71 NONAME
+;delete
+??3@YAXPAX@Z @72 NONAME
+;delete []
+??_V@YAXPAX@Z @73 NONAME
+atoi @74 NONAME
+_purecall @75 NONAME
+?present@Standard_Options@@SA_NVString@@0@Z @76 NONAME
+time @77 NONAME
+atexit @78 NONAME
+_initterm @79 NONAME
+_do_exit @80 NONAME
+_setupargs @81 NONAME
+;sprintf @82 NONAME
+;printf @83 NONAME
+?is_equal@String@@QBE_NV1@_N@Z @83 NONAME
+memcpy @84 NONAME
+memmove @85 NONAME
+signal @86 NONAME
+;FSA::Product_Iterator::~Product_Iterator(void)
+??1Product_Iterator@FSA@@QAE@XZ @87 NONAME
+;long FSA::Product_Iterator::next(bool)
+?next@Product_Iterator@FSA@@QAEJ_N@Z @88 NONAME
+;long FSA::Product_Iterator::first(class Ordinal_Word const *,class Ordinal_Word const *)
+?first@Product_Iterator@FSA@@QAEJPBVOrdinal_Word@@0@Z @89 NONAME
+;Product_Iterator::Product_Iterator(class Product_Iterator &)
+??0Product_Iterator@FSA@@QAE@ABV1@@Z @90 NONAME
+??YWord@@QAEAAV0@ABV0@@Z @91 NONAME
+?clean@Full_Derivation@@AAEXXZ @92 NONAME
+?determinise_multiplier@Group_Automata@@SAPAVFSA_Simple@@ABVFSA@@@Z @93 NONAME
+?erase@Group_Automata@@QAEXXZ @94 NONAME
+?grow_automata@Group_Automata@@QAEXPAVRewriter_Machine@@PAVFSA_Buffer@@III@Z @95 NONAME
+?load_vital@Group_Automata@@QAE_NAAVMAF@@@Z @96 NONAME
+?subgroup_word_acceptor@Group_Automata@@SAPAVFSA_Simple@@AAVMAF@@ABVFSA@@@Z @97 NONAME
+?subgroup_presentation@Group_Automata@@SAPAVMAF@@AAV2@AAVGeneral_Multiplier@@_N@Z @98 NONAME
+?compare@Rubik@@SA_NPBD0H@Z @99 NONAME
+;Ordinal_Word::Ordinal_Word(class Ordinal_Word const &)
+??0Ordinal_Word@@QAE@ABV0@@Z @101 NONAME
+;FSA_Factory::universal(class Container &,class Alphabet const &)
+?universal@FSA_Factory@@SAPAVFSA_Simple@@AAVContainer@@ABVAlphabet@@@Z @102 NONAME
+;Alphabet::create(enum Alphabet_Type,class Container &)
+?create@Alphabet@@SAPAV1@W4Alphabet_Type@@AAVContainer@@@Z @103 NONAME
+?next_bfs@Word@@QAEXXZ @104 NONAME
+atol @105 NONAME
+?data@Char_Classification@@SAABV1@XZ @106 NONAME
+?create_coset_system@Subalgebra_Descriptor@@QAEPAVMAF@@_N0@Z @107 NONAME
+?save@Subalgebra_Descriptor@@UAEXVString@@@Z @108 NONAME
+?print@Subalgebra_Descriptor@@UBEXPAVOutput_Stream@@@Z @109 NONAME
+?slice@String_Buffer@@QAE?AVString@@II@Z @110 NONAME
+?append@String_Buffer@@QAE?AVString@@D@Z @111 NONAME
+;void Bit_Array::change_length(unsigned long,enum Bit_Array_Initial_Value,bool)
+?change_length@Bit_Array@@QAEXKW4Bit_Array_Initial_Value@@_N@Z @112 NONAME 
+?principal_value@FSA@@QBE_NPAVPrincipal_Value_Cache@1@PAVOrdinal_Word@@JH1PAJ2@Z @113 NONAME
+??1Principal_Value_Cache@FSA@@QAE@XZ @114 NONAME
+??0Principal_Value_Cache@FSA@@QAE@ABV1@@Z @115 NONAME
+?take@Sorted_Word_List@@QAEXAAV1@@Z @116 NONAME
+??HWord@@QBE?AVOrdinal_Word@@ABV0@@Z @117 NONAME
+?axiom_count@Presentation@@QBEI_N@Z @118 NONAME
+?coset_table@Group_Automata@@SAPAVFSA_Simple@@ABVGeneral_Multiplier@@@Z  @119 NONAME
+?diagonal@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@@Z @120 NONAME
+?rs_presentation@Group_Automata@@SAPAVMAF@@ABV2@ABVFSA_Simple@@@Z @121 NONAME
+?format@String_Buffer@@QAA?AVString@@PBDZZ @122 NONAME
+?all_words@FSA_Factory@@SAPAVFSA_Simple@@AAVContainer@@ABVAlphabet@@H@Z @123 NONAME
+?cartesian_product@FSA_Factory@@SAPAVFSA_Simple@@ABVFSA@@0@Z @124 NONAME
+?pad_language@FSA_Factory@@SAPAVFSA_Simple@@AAVContainer@@ABVAlphabet@@@Z @125 NONAME
+?learn_differences@Rewriter_Machine@@QAEIAAVWorking_Equation@@@Z @126 NONAME
+??0Hash@@QAE@JIJ@Z @127 NONAME
+?insert_common@Hash@@AAEHPBXIPAJ_N2@Z @128 NONAME
+?extra_packed_data@Word@@QBEPAXPAI@Z @129 NONAME
+?empty@Hash@@QAEXJ@Z @130 NONAME
+?find@Hash@@QBE_NPBXIPAJ@Z @131 NONAME
+??4Word@@QAEAAV0@ABV0@@Z @132 NONAME
+?extra_unpack@Word@@QAEGPBE@Z @133 NONAME
+??1Hash@@UAE@XZ @134 NONAME
+?compare@Alphabet@@QBEHABVWord@@0@Z @135 NONAME
+?append@Sorted_Word_List@@QAE_NABVWord@@PAJ@Z @136 NONAME
+?grow@Sorted_Word_List@@QAEXJ@Z @137 NONAME
+;Remaining functions are exported for benefit of programs outside MAF suite
+;that want to use MAF functionality.
+?insert_data@AVL_Tree@@AAEXAAPAVAVL_Node@@PBX@Z @138 NONAME
+?delete_data@AVL_Tree@@AAEXAAPAVAVL_Node@@PBX@Z @139 NONAME
+??0AVL_Tree@@QAE@XZ                             @140 NONAME
+??1AVL_Tree@@UAE@XZ                             @141 NONAME
+?check@AVL_Tree@@ABEXXZ                         @142 NONAME
+??0FSA_Simple@@QAE@AAVContainer@@ABVAlphabet@@JHW4Transition_Storage_Format@@@Z @143 NONAME
+?set_label_word@FSA_Common@@QAE_NJABVWord@@@Z @144 NONAME
+?markov@FSA_Factory@@SAPAVFSA_Simple@@AAVContainer@@ABVAlphabet@@@Z @145 NONAME
+?finite_language@FSA_Factory@@SAPAVFSA_Simple@@ABVWord_Collection@@_N@Z @146 NONAME
+?print@Equation@@QBEXAAVContainer@@PAVOutput_Stream@@@Z @147 NONAME
+;exported added to avoid link errors with Intel C++ compiler or C15 compiler (though latter is still not supported)
+??_7type_info@@6B@ @148 NONAME

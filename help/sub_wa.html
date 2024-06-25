@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Background material : Subgroup word-acceptors</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="General_multiplier.html" title="The general multiplier and word-differences">
+<link rel="Next" type="text/html" href="MAF_vs_KBMAG.html" title="MAF and KBMAG compared">
+
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="background.html">Background</a> : Subgroup word-acceptors
+<h2>Subgroup word-acceptors</h2>
+<p>We prove here that given that a unique word-acceptor for the group exists, a subgroup word-acceptor for a subgroup <i>H</i> exists if and only if a certain set of right cosets of <i>H</i> is finite. For any word <i>w</i> let <i>P(w)</i>={<i>w(i)</i>} the set of all prefixes of <i>w</i> and Let <i>L<sub>0</sub></i> denote the language of the word-acceptor. Then a subgroup word-acceptor exists if and only if  the set of cosets <span class="nobr"><i>C<sub>H</sub></i> = {<i>H*w</i>;<i>w &isin; L<sub>0</sub></i> and &exist;<i>h</i> <i>h &isin; H</i> and <i>h &isin; L<sub>0</sub></i> and <i>w &isin; P(h)</i>}</span> is finite. (Technically speaking in this definition I am guilty of regarding words and elements as being interchangable, but given that we are considering only irreducible words I hope the reader will forgive me). </p> 
+<p>First let us suppose that the subgroup word-acceptor exists. In this case we can assume that it is trim. Let us consider what it means if a state &sigma; is reached by two different words <i>u</i>,<i>v</i>. Clearly there is some word <i>w</i> such that <span class="nobr"><i>u*w</i> &isin; <i>H</i></span> and <span class="nobr"><i>v*w</i> &isin; <i>H</i></span> otherwise the acceptor would not be trim. So we have <span class="nobr"><i>u*w =<sub>G</sub> h1</i></span> and <span class="nobr"><i>v*w =<sub>G</sub> h2</i></span> where <i>h1, h2</i> are presumably distinct elements of <i>H</i>. But therefore <span class="nobr"><i>u =<sub>G</sub> h1*W</i></span> and <span class="nobr"><i>v =<sub>G</sub> h2*W</i></span>. "Multiplying" on the left by <i>H</i> to find the corresponding cosets gives us <span class="nobr"><i>H</i>*<i>u = H*h1*W</i> = <i>H*W</i></span> and <span class="nobr"><i>H*v = H*h2*W = H*W</i></span>.</p>
+<p>This shows both that any state of a subgroup word-acceptor is associated with a unique coset. The subgroup word-acceptor must not reach its failure state for any of the words <i>w</i> mentioned in the definition of the set <i>C<sub>H</sub></i>, so every element of this set must correspond to at least one state, and no two elements to the same state. Since the set of states is finite <i>C<sub>H</sub></i> must be finite.</p>
+<p>Now let us suppose that <i>C<sub>H</sub></i> is finite, and that the word-acceptor for the group exists. Clearly we can form a (partial) membership FSA whose states 1..n are labelled by the n cosets <i>H<sub>1</sub>=H,H<sub>2</sub></i>,... in <i>C<sub>H</sub></i>, and whose initial state 1 is also the unique accept state. The transitions are defined by <span class="nobr"><i>&sigma;<sub>n</sub>^g&rarr;&sigma;<sub>m</sub></i></span> if <span class="nobr"><i>H<sub>n</sub>*g=H<sub>m</sub></i> &isin; <i>C<sub>H</sub></i></span>, and by <span class="nobr"><i>&sigma;<sub>n</sub>^g&rarr;0</i></span> otherwise. Now the "and" of this FSA with the word-acceptor for the group is the subgroup word-acceptor whose existence we wished to prove.</p>
+</body>
+</html> 

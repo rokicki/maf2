@@ -1,0 +1,26 @@
+#P4MM
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [x,q,Q,h,H,v,V],
+  ordering := "shortlex",
+  inverses := [x,Q,q,H,h,V,v],
+  equations := 
+  [
+    [v*h,h*v],
+    [q*q*h*q*q,H],
+    [q*q*v*q*q,V],
+    [q*q*q*q,IdWord],
+    [Q*h*q,V],
+    [x*q*q*h*x*q*q,H],
+    [x*q*q*v,v*x*q*q],
+    [x*h,h*x],
+    [x*v*x,V],
+    [q*q*x,x*q*q],
+    [q*h*q*h*q*h*q*h,IdWord],
+    [q*H*q*q*H*q,IdWord],
+    [x*Q*x*q,q*q],
+    [V,q*H*Q]
+  ]
+);
+

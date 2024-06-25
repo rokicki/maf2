@@ -1,0 +1,23 @@
+#This is a rewriting system from KBMAG. It is for a non-Abelian group of
+#order 3^8 (6561)
+#All three generators have order 27, though this is not at all obvious. (The
+#very similar presentation obrien10 is also for such a group (according to
+#the paper "Groups of Defiency Zero" from which it is taken, but
+#MAF cannot find either a confluent RWS or an automatic structure for it.
+#There are several files in ../pathological based on this file, using other
+#choices for ordering, and generatorOrder, which MAF has a great deal of
+#difficulty in processing correctly. The author has not found any other
+#examples of smallish finite groups that are so difficult.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B,c,C],
+  inverses       := [A,a,B,b,C,c],
+  equations :=
+  [
+    [a*a*C*a*c,IdWord],
+    [a*c*b^2*A*C*b,IdWord],
+    [A*B*a*b*c^3,IdWord]
+  ]
+);

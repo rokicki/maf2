@@ -1,0 +1,27 @@
+# Coxeter graph
+#      
+#  4   4  
+# d-a-b-c
+#
+# Coxeter Matrix (above upper diagonal)
+# 1 3 2 4  
+#   1 4 2 
+#     1 2 
+#       1        
+#Weyl group ~B3 (all gens involutory).
+#Symmetry group of cubic tessellation
+_RWS := rec(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [d,a,b,c],
+  inverses := [d,a,b,c],
+  equations :=
+  [
+    [b*a*b,a*b*a],
+    [c*a,a*c],
+    [(a*d)^4,IdWord],
+    [(c*b)^4,IdWord],
+    [d*b,b*d],
+    [d*c,c*d]
+  ]
+);

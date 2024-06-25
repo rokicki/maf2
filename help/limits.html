@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Reference : Internal limits</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+
+<link rel="Prev" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Next" type="text/html" href="file_formats.html" title="File names and formats">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html">Reference</a> : Internal limits
+<h2>Internal limits</h2>
+<h4>Total memory usage</h4>
+<p>The 32-bit version of MAF can use as much memory as the operating system will allow it to. On a Mac Pro this can be about 3GB of memory. On Windows machines this is likely to be 2GB, although some machines may allow more than this. On a Mac Pro the 64-bit version of MAF can use all the available memory. There is as yet no 64-bit version of MAF for Windows, mostly due to the inadequate memory model used for 64-bit programs on Windows.</p>
+<h4>Maximum set size</h4>
+<p>Throughout MAF, no explicitly constructed set can have more than a certain number of elements. This limits,  in particular, the number of states in a finite state automaton, and the number of equations in a rewriting system.</p>
+<p>In 64-bit MAF the maximum set size is 2^31-1, but you should note that it is likely to exceed that capabilities of all but the most powerful computers to create such a large automaton.</p>
+<p>In the 32-bit version of MAF the maximum set size is now 2^29-1. It is unlikely that most 32-bit operating system would allow an FSA with an alphabet with 3 or more symbols to have more than 1/3 of this number of states.</p>
+<p>The maximimum number of cosets in a coset table is one less than this in each case.</p>
+<p>The largest FSA that MAF has used as part of a successful automatic structure computation known to the author, had around 85 million states. This computation used the 64-bit version of MAF. With the 32-bit version of MAF the largest successful computation known involved an FSA with 52 million states.</p>
+<h4>Alphabet size</h4>
+<p>The alphabet for a single variable FSA is limited to 32767 symbols.</p> 
+<p>MAF also allows for presentations with up to 32767 generators. However, though MAF now works well with presentations that have several hundred generators, presentations with more generators than this should have a Tietze transformation program run on them first to eliminate as many generators as possible. You can do this with <a href="gp_usage.html#simplify"><tt>simplify</tt></a>.</p>
+<h4>Word length</h4>
+<p>The maximum length of word MAF permits is 65533 (2^16-3). The maximum size of an equation is therefore twice this. However, some programs, notably <tt>simplify</tt> and <tt>gptcenum</tt>, need to convert the equations contained in an input file into relators. Therefore the total size of equations in input files should be no more than 65533.</p>
+<h4>Identifier length</h4>
+<p>There is no explicit limit on the length of the name of a generator or subgenerator. However, you are strongly recommended to keep identifiers short since using long identifiers will increase the size of some output files substantially.</p>
+</body>
+</html>

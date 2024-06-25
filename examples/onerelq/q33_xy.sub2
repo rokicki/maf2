@@ -1,0 +1,30 @@
+_RWS_Sub := rec
+(
+  normalSubGenerators :=
+  [
+  x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y,
+  x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y,
+  x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y,
+  x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y,
+  x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y,
+  x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y,
+  x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y,
+  x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y,
+  x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y,
+  x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y,
+  x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y,
+  x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y,
+  x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y,
+  x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y,
+  x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y,
+  x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y,
+  x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y,
+  x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y,
+  x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y,
+  x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y*x*Y,
+  x*Y*x*Y*x*y*x*y*x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y,
+  x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y*x*Y*x*Y*x*y,
+  x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y*x*Y,
+  x*Y*x*Y*x*Y*x*Y*x*y*x*y*x*Y*x*y*x*Y*x*Y*x*y*x*y*x*y*x*y*x*Y*x*Y*x*y*x*y]
+);
+

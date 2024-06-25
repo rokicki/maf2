@@ -1,0 +1,20 @@
+#Borromean rings group branched of order 4
+#This example is infinite shortlex automatic
+#but it is very difficult to show this directly as the word acceptor
+#has almost 50,000 states and trial word acceptors typically have 250,000 or
+#so states, so that the multiplier is huge prior to minimisation (it still
+#has almost 350000 states afterwards)
+#plesken3 is the same group as this one, with a change of 
+#generators. 
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B,x,X],
+  inverses := [A,a,B,b,X,x],
+  equations :=
+  [
+  [a*x,b],
+  [x^5,IdWord], [a^2*x*a,X*a*x^2]
+  ]
+);

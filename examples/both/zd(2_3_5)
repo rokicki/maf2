@@ -1,0 +1,13 @@
+#Free product of Z and Von Dyck (2,3,5) group
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b,B,z,Z],
+  inverses := [a,B,b,Z,z],
+  equations := 
+  [
+   [b^3,IdWord], 
+   [(a*b)^5,IdWord]
+  ]
+);

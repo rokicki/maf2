@@ -1,0 +1,13 @@
+#This example comes from KBMAG.
+#This coset system cannot be processed successfully
+#The subgroup appears not to have finite index, and the number and
+#length of word-differences increases continually
+#It also does not seem to be possible to make a subgroup word acceptor
+_RWS_Sub:= rec
+(
+  subGenerators :=
+  [
+    a^2,
+    b^2,
+  ]
+);

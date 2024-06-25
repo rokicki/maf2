@@ -1,0 +1,24 @@
+#Group of generator changes for SL(2,C) free groups of rank 2.
+#s = interchage a and b
+#x = interchange a and A
+#y = interchange b and B
+#r = a->b b->AB (meaning matrix that was labelled b is labelled a, and matrix
+#                that was labelled AB is labelled b)
+#c = a->a b->abA
+#d = a->baB b->b
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [s,x,y,r,R,c,C,d,D],
+  inverses :=       [s,x,y,R,r,C,c,D,d],
+  equations :=
+  [
+    [r*r,R],
+    [s*x*s,y],
+    [s*r*s,R*c],
+    [s*c*s,d],
+    [R*C*r,D],
+    [x*y,y*x],
+  ]
+);

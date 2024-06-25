@@ -1,0 +1,15 @@
+_RWS_Sub := rec
+(
+  normalSubGenerators :=
+  [
+    u^4*v*u^4*v*u*v^2*u*v*u*v*u^2*v^2*u,
+    u^3*v*u^4*v*u*u*V^2*U*V^4*U*V^2*U,
+#    (u^4*v*u^4*v)^5,
+#    (u^2*v*u^4*v*u^2)^5,
+#    (u^4*v*u^4*v)*(u^2*v*u^4*v*u^2)*(u^4*v*u^4*v)^-1*(u^2*v*u^4*v*u^2)^-1
+#    (u^4*v*u^4*v)*u*(u^4*v*u^4*v)^-1*U,
+#    (u^4*v*u^4*v)*v*(u^4*v*u^4*v)^-1*V,
+#    (u^2*v*u^4*v*u^2)*u*(u^2*v*u^4*v*u^2)^-1*U,
+#    (u^2*v*u^4*v*u^2)*v*(u^2*v*u^4*v*u^2)^-1*V
+  ]
+);

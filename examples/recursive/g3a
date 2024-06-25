@@ -1,0 +1,12 @@
+# Genus 3 surface group
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a1,A1,b1,B1,a2,A2,b2,B2,a3,A3,b3,B3],
+        inverses := [A1,a1,B1,b1,A2,a2,B2,b2,A3,a3,B3,b3],
+  equations :=
+  [
+    [a1*b1*A1*B1*a2*b2*A2*B2*a3*b3*A3*B3,IdWord]
+  ]
+);

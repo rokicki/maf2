@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Reference (Usage) : Command line syntax</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+<link rel="Prev" type="text/html" href="exit_codes.html" title="Exit codes">
+<link rel="Next" type="text/html" href="standard_options.html" title="Standard options">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html#usage">Reference (Usage)</a> : Command line syntax
+<h2><a name="options_syntax"></a>Command line syntax</h2>
+<p>MAF utilities allow command line options to be specified anywhere on the command line, and in any order, though it is usually a good idea to put all such options before any filenames (except perhaps for the <kbd>-cos</kbd> option). Command line options always begin with a '-' character, and are always separate words: you cannot combine several single letter options into one longer option, as is possible with some packages. In fact there are relatively few single letter command line options, and most of these are only included for compatibility with KBMAG. Most command line options in MAF are ordinary English words, intended to describe the purpose or effect of the option. Many command line options require a parameter, often a number. This must always be specified immediately after the option itself but separated from it by at least one space. Command line options are case sensitive (and all alphabetic characters should be lower case only). However, when a command line option contains underscore(s) ('_' characters ) it will be recognised with or without the underscore(s), or with the underscore(s) replaced by '-' characters. For instance, <kbd>-nowd</kbd>, <kbd>-no_wd</kbd>, and <kbd>-no-wd</kbd> can all be used to set the corresponding option in <tt>automata</tt>. You may not add extra '_' characters. 
+</p>
+<h3>Numeric parameters</h3>
+<p>Numeric parameters are specified as ordinary decimal numbers. However, from version 2, you can use one of the following 6 letters at the end of a number to multiply the number by a scaling factor:</p>
+<table class="niceborder" cellspacing="0" summary="scaling factors for numbers">
+<tr><th>Letter</th><th>Factor</th></tr>
+<tr><td>k</td><td>1,000</td></tr>
+<tr><td>K</td><td>2^10=1,024</td></tr>
+<tr><td>m</td><td>1,000,000</td></tr>
+<tr><td>M</td><td>2^20=1,048,576</td></tr>
+<tr><td>g</td><td>1,000,000,000</td></tr>
+<tr><td>G</td><td>2^30=1,073,741,824</td></tr>
+</table>
+<p>For example you can specify the maximum amount of memory to be used  by a coset table with the coset enumerator <tt>gptcenum</tt> should be 2 Gigabytes using the command line option <kbd>-work_space 2G</kbd>, or
+that the maximum number of equations <tt>automata</tt> should create is 10 million by <kbd>-max_equations 10m</kbd>.
+<h3>String parameters</h3>
+<p>Filenames and other non-numeric parameters may optionally be enclosed in quotes. This is necessary if the filename contains spaces or characters which have a special meaning in the command shell being used.</p>
+<h3><kbd>-strategy</kbd> options</h3>
+<p>Some utilities, notably <tt>automata</tt> and <tt>gptcenum</tt> have a special command line option <kbd>-strategy <i>string</i></kbd>. This option is likely to be introduced to <tt>simplify</tt> in future, and conceivably to some of the other more complex MAF utilities. In utilities that support it, the <kbd><i>string</i></kbd> parameter will take the form of an optional name, used to select predefined strategies, possibly followed by a '/' character and one or more single letter codes which either modify a named strategy or define a new one. (In the case of <tt>gptcenum</tt> the complete syntax is actually more complex than this but it adheres to this general plan).</p>
+</body>
+</html>

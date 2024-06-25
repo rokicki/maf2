@@ -1,0 +1,410 @@
+@media all
+{
+
+
+.prelike sup
+{
+  font-size: 85%;
+}
+
+
+
+BODY
+{
+  font-size:small;
+  text-align:justify;
+  background-repeat: no-repeat;
+  line-height:1.2em;
+}
+
+
+
+P
+{
+  text-align:justify;
+  margin: 0.6em 1em;
+  padding:0ex;
+}
+
+
+
+.nobr
+{
+  white-space: no-wrap;
+  display: inline-block;
+}
+
+
+
+TD P
+{
+  margin: 0px;
+}
+
+LI P
+{
+  margin: 0.4em 0em;
+}
+
+TH, TD
+{
+  text-align:left;
+  padding: 0.25ex 1ex;
+}
+
+H1, H2, H3, H4, H5, H6
+{
+  font-weight:bold;
+  margin:0.5em 0em;
+}
+
+TT, CODE, .code 
+{
+  font-family: "Courier New","Courier",monospace;
+  font-size: 110%;
+}
+
+KBD
+{
+  font-family: "Courier New","Courier",monospace;
+  font-weight:bold;  
+  font-size:110%
+}
+
+H1
+{
+  text-align:center;
+  font-size:220%!important;
+  line-height:1em;
+}
+
+H2
+{
+  text-align:center;
+  font-size:180%!important;
+  line-height:1em;
+}
+
+H3
+{
+  font-size:150%!important;
+  line-height:1em;
+}
+
+H4
+{
+  font-size:120%!important;
+  line-height:1em;
+}
+
+H5
+{
+  font-size:100%!important;
+  line-height:1em;
+}
+
+H6
+{
+  font-size:80%;
+  line-height:1.33em;
+}
+
+LI, p.lilike
+{
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  margin-left:0em;
+  margin-right:2em;
+}
+
+INS, .new, .star
+{
+  font-style:italic;
+  font-weight:bold;
+  padding: 0.2ex 0.6ex;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+INS
+{
+  text-decoration:none;
+  font-size:110%;
+  line-height: 1.5em;
+}
+
+P.note
+{
+  font-size:larger;
+  border:0.5ex ridge;
+  margin-left:8ex;
+  margin-right:8ex;
+  padding: 0.25ex 0.6ex;
+}
+
+.panel,.xpanel
+{
+  border: 2px solid #55a6ab;
+  background:#f0f7ee;
+  text-align:justify;
+}
+
+.panel P
+{
+  margin:0.25ex;
+}
+
+p.xpanel,div.xpanel
+{
+  float:right;
+  width:50ex;
+  margin-left:4ex;
+  margin-top:1ex;
+  margin-bottom:1ex;
+  margin-right:1ex;
+  padding:0.25ex 0.6ex;
+}
+
+PRE,.prelike
+{
+  font-family: "Courier New","Courier",monospace;
+  font-size:small;
+  padding: 0.25ex 0.6ex;
+  margin: 0.6em 2em;
+  white-space:pre;
+}
+
+TABLE PRE,table .prelike
+{
+  margin-top: 0.25ex;
+  margin-bottom: 0.25ex;
+}
+
+table.niceborder, table.niceborder td, table.niceborder th
+{
+  border-width: 1px;
+  border-style: solid;
+}
+
+table.niceborder
+{
+  margin: 1em 2em;
+}
+
+table.niceborder table td, table.niceborder table th
+{
+  border-style: none;
+}
+
+table.niceborder table.niceborder td, table.niceborder table.niceborder th
+{
+  border-width: 1px;
+  border-style: solid;
+}
+
+.sql
+{
+  margin-left:2em;
+  text-align:left;
+}
+
+dfn
+{
+  font-weight:bold;
+}
+
+}
+
+@media print
+{
+
+BODY
+{
+  margin-top: 1ex;
+  margin-bottom:1ex;
+}
+
+.toppage
+{
+  page-break-before:always;
+}
+
+H1,H2,H3,H4,H5,H6
+{
+  page-break-after:;
+}
+
+A
+{
+  font-weight:bold;
+}
+
+a:link {color:black}
+a:visited {color:black}
+.noprint
+{
+  display:none;
+}
+.panel,.sql,.xpanel,.note
+{
+  page-break-inside:avoid;
+}
+
+h5.next
+{
+  display:none!important;
+}
+}
+
+@media screen
+{
+
+html
+{
+  background-color:#ccc;
+  height: 100%;  
+}
+
+body
+{
+  margin:1ex auto;
+  max-width:100ex;
+  padding:0.1ex 2em;
+  font-family: "Verdana", "Arial","Helvetica",sans-serif;
+  color: #000044;
+  background-color: #f0f8ff; /*aliceblue*/
+  background-repeat: no-repeat;
+  min-height: 97%;  
+}
+
+
+TABLE
+{    
+  border-color: #55a6ab;
+}
+
+TH
+{
+  border-color: #55a6ab;
+}
+
+TD
+{
+  border-color: #55a6ab;
+  border-width: 1px;
+}
+
+A
+{                   
+  font-weight:bold;
+}
+
+H1, H2, H3, H4, H5, H6
+{
+  font-family: "Arial","Helvetica",sans-serif;
+  color:#000055;
+}
+
+INS, .new
+{
+ color:white;
+ background:#001155;
+}
+
+.star
+{
+ color:white;
+ background:#c60040;
+}
+
+P.note
+{
+  background-color:#e0e8ee;
+  color: black;
+  border-color: #f5fffa; /*mintcream*/
+}
+
+a
+{
+  text-decoration:none;
+}
+
+a:link
+{
+  color:blue;
+}
+a:visited {color:#005094;}
+a:active {color:#c60040;}
+a:hover
+{
+  color:red;
+  text-decoration:underline;
+}
+
+PRE, div.prelike
+{
+  background-color:#ddd;
+}
+
+
+table.niceborder, table.niceborder td, table.niceborder th
+{
+  border-color: #55a6ab;
+}
+
+hr
+{
+  border-style: solid;
+  border-color: #55a6ab;
+  color: #55a6ab;
+}
+
+table.niceborder table td, table.niceborder table th
+{
+  border-style: none;
+}
+
+table.niceborder table.niceborder td, table.niceborder table.niceborder th
+{
+  border-color: #55a6ab;
+}
+
+table.niceborder th
+{
+  background-color: #f0f8ff /*aliceblue*/;
+}
+
+caption
+{
+  caption-side:bottom;
+  font-style:italic;
+}
+
+tr.darkrow
+{
+  background-color : #e0e8ee;
+}
+
+td.lines, td.lines pre
+{
+  background-color:white;
+}
+
+td div.prelike
+{
+  margin:0px;
+}
+
+acronym
+{
+  border-bottom: 2px dashed #55a6ab;
+  cursor:help;
+}
+
+h5.next
+{
+  font-style:italic;
+  text-align:right;
+}
+}
+

@@ -1,0 +1,22 @@
+#Generator change group - should be isomorphic to a subgroup of UL(2,Z)
+#l = (a,b,AB)->(a,ba,AAB)
+#r = (a,b,AB)->(ab,b,BAB)
+#s = (a,b,AB)->(a,B,Ab)
+#t = (a,b,AB)->(A,b,aB)
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "rt_recursive",
+  generatorOrder := [l,L,r,R,s,t,j],
+  inverses := [L,l,R,r,s,t,j],
+  equations :=
+  [
+    [s*t,j],
+    [s*l*s*l,IdWord],
+    [s*r*s*r,IdWord],
+    [t*l*t*l,IdWord],
+    [t*r*t*r,IdWord],
+    [(s*r*s*l)^3,IdWord],
+    [j,IdWord]
+  ]
+);

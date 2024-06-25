@@ -1,0 +1,64 @@
+_RWS_Sub := rec
+(
+  subGenerators :=
+  [
+u^2*v^2*u^2*v^2*u^2*v^2,
+V^2*U^2*V^2*U^2*V^2*U^2,
+u*v^2*u^2*v^2*u^2*v^2*u,
+U*V^2*U^2*V^2*U^2*V^2*U,
+U^2*V^2*U^2*V^2*U^2*V^2,
+v^2*u^2*v^2*u^2*v^2*u^2,
+v*u^2*v^2*u^2*v^2*u^2*v,
+V*U^2*V^2*U^2*V^2*U^2*V,
+u^4*V*U*V^2*U^2*V^2*U*V,
+u*V^2*U^2*V^2*U^2*V^2*U^3,
+u^2*V^3*U^2*V^2*U^2*V^3,
+u*V*U^2*V^2*U^2*V^2*U^2*V*U,
+u*v*u*v*u*v*u*v*u*v*u*v*u*v,
+V*U*V*U*V*U*V*U*V*U*V*U*V*U,
+U^4*v*u*v^2*u^2*v^2*u*v,
+U*v^2*u^2*v^2*u^2*v^2*u^3,
+U^2*v^3*u^2*v^2*u^2*v^3,
+U*v*u^2*v^2*u^2*v^2*u^2*v*u,
+U*V*U*V*U*V*U*V*U*V*U*V*U*V,
+v*u*v*u*v*u*v*u*v*u*v*u*v*u,
+u^5*V*U*V^2*U^2*V^2*U*V*U,
+u^2*V^2*U^2*V^2*U^2*V^2*U^4,
+u^3*v^3*u*v*u^3*v^3*u*v,
+V*U*V^3*U^3*V*U*V^3*U^3,
+u^3*V^2*U*V*U*V*U*V*U*V*U*V^2,
+u*V*U*V*U*V*U*V*U*V*U*V*U*V*U^2,
+u^3*V^3*U^2*V^2*U^2*V^3*U,
+u^2*V*U^2*V^2*U^2*V^2*U^2*V*U^2,
+u^2*v^3*u*v*u^3*v^3*u*v*u,
+U*V*U*V^3*U^3*V*U*V^3*U^2,
+u*v*u^3*v^3*u*v*u^3*v^3,
+V^3*U^3*V*U*V^3*U^3*V*U,
+u*v^3*u*v*u^3*v^3*u*v*u^2,
+U^2*V*U*V^3*U^3*V*U*V^3*U,
+u*V*U^3*V^2*U^2*V^2*U^2*V*U*V,
+u*V^2*U*V^2*U^2*V^2*U^2*V^4,
+u*V*U*V*U^2*V^2*U^2*V^2*U^3*V,
+u*V^4*U^2*V^2*U^2*V^2*U*V^2,
+U^5*v*u*v^2*u^2*v^2*u*v*u,
+U^2*v^2*u^2*v^2*u^2*v^2*u^4,
+U^3*v^2*u*v*u*v*u*v*u*v*u*v^2,
+U*v*u*v*u*v*u*v*u*v*u*v*u*v*u^2
+  ],
+  subGeneratorNames :=
+  [
+    h0,h1,h2,h3,h4,h5,h6,h7,
+    h8,h9,h10,h11,h12,h13,h14,h15,h16,h17,
+    h18,h19,h20,h21,h22,h23,h24,h25,h26,h27,
+    h28,h29,h30,h31,h32,h33,h34,h35,h36,h37,
+    h38,h39,h40,h41
+  ],
+  subGeneratorInverseNames :=
+  [
+    h1,h0,h3,h2,h5,h4,h7,h6,
+    h9,h8,h11,h10,h13,h12,h15,h14,h17,h16,
+    h19,h18,h21,h20,h23,h22,h25,h24,h27,h26,
+    h29,h28,h31,h30,h33,h32,h35,h34,h37,h36,
+    h39,h38,h41,h40
+  ]
+);

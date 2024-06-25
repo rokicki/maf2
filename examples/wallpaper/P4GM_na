@@ -1,0 +1,19 @@
+#Presentation of P4GM found by MAF, deliberately engineered to be neither
+#confluent not automatic, so we can test how it works with subgroups
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [g,G,f,F,q,Q,r,m,h,H,v,V],
+  ordering := "shortlex",
+  inverses := [G,g,F,f,Q,q,r,m,H,h,V,v],
+  equations := 
+  [
+    [q*m,F],
+    [Q^2,r],
+    [Q*m,G],
+    [F^2,H],
+    [G^2,V],
+    [F*v,V*F]
+  ]
+);

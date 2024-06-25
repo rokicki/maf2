@@ -1,0 +1,16 @@
+#P4
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [h,H,v,V,q,Q,r],
+  ordering := "shortlex",
+  inverses := [H,h,V,v,Q,q,r],
+  equations := 
+  [
+    [v*h,h*v],
+    [r*h*r,H],
+    [r*v*r,V],
+    [q*q,r],
+    [Q*h*q,V]
+  ]
+);

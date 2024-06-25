@@ -1,0 +1,47 @@
+_RWS_Sub := rec
+(
+  subGenerators :=
+  [
+    p,P,q,Q
+  ],
+  subGeneratorNames :=
+  [
+    p_,P_,q_,Q_
+  ],
+  subGeneratorInverseNames :=
+  [
+    P_,p_,Q_,q_
+  ]
+);
+  subGenerators :=
+  [
+    x*y*x*Y,
+    y*x*Y*x,
+    x*Y*x*y,
+    Y*x*y*x
+  ],
+  subGeneratorNames := [a,A,b,B],
+  subGeneratorInverseNames := [A,a,B,b]
+);
+
+  [
+    x*y*X*Y
+    (Y*x)^6,
+    (x*Y)^6,
+    (y*x)^6,
+    y*(x*y)^6*Y,
+    y*(Y*x)^6*Y,
+    Y*(x*y)^6*y,
+    Y*(Y*x)^6*y,
+    x*y*x*(x*y)^6*x*Y*x, 
+    x*y*x*(Y*x)^6*x*Y*x,
+    x*Y*x*(x*y)^6*x*y*x, 
+    x*Y*x*(Y*x)^6*x*y*x,
+    y*x*Y*(x*y)^6*y*x*Y,
+    y*x*Y*(Y*x)^6*y*x*Y,
+    Y*x*y*(x*y)^6*Y*x*y,
+    Y*x*y*(Y*x)^6*Y*x*y
+  ]
+  subGeneratorNames := [a,A,b,B,c,C,d,D,e,E,f,F,g,G,h,H],
+  subGeneratorInverseNames := [A,a,B,b,C,c,D,d,E,e,F,f,G,g,H,h]
+);

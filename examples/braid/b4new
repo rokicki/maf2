@@ -1,0 +1,20 @@
+#Braid group B4
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a,A,b,B,t1,T1,t2,T2,t,T,s1,s1^-1,s2,s2^-1,s3,s3^-1],
+  inverses       := [A,a,B,b,T1,t1,T2,t2,T,t,s1^-1,s1,s2^-1,s2,s3^-1,s3],
+  equations :=
+  [
+    [s2*s1*s2,s1*s2*s1],
+    [s3*s2*s3,s2*s3*s2],
+    [s3*s1,s1*s3],
+    [t,s1],
+    [t2,s2*s1^-1],
+    [t1,s1*s2*s1^-2],
+    [b,s3*s1^-1],
+    [a,s1*s2*s1^-1*s3*s2^-1*s1^-1]
+  ]
+);
+

@@ -1,0 +1,12 @@
+_RWS_Sub := rec
+(
+  subGenerators :=
+  [
+    (((a*b)^4*a*B)^2*a*B)^4,
+    (((a*b)^4*a*B)^2*a*B)^-4,
+    (((a*B)^4*a*b)*a*b*((a*B)^4*a*b))^4,
+    (((a*B)^4*a*b)*a*b*((a*B)^4*a*b))^-4,
+  ],
+  subGeneratorNames :=        [g,G,h,H],
+  subGeneratorInverseNames := [G,g,H,h]
+);

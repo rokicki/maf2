@@ -1,0 +1,12 @@
+#This group is actually D_22 (although it wasn't meant to be).
+#All generators are unexpectedly involutory. 
+_RWS := rec(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b,B],
+  inverses := [a,B,b],
+  equations := [
+  [b^3,IdWord],
+  [(a*b)^2,IdWord]
+               ]
+);

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : An overview</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="Obtaining_MAF.html" title="Obtaining MAF">
+<link rel="Next" type="text/html" href="solutions.html" title="Solutions to the word problem">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : An overview
+<h2><a name="Overview"></a>An overview</h2>
+<p>This section will give the reader a general understanding of how the MAF package is used and what it is useful for. However, many important details are omitted for now.
+<h3><a name="usage"></a>Using MAF</h3>
+<p>MAF programs are traditional "command line" utilities. Every MAF utility will print out a brief description of itself, and how it should be used, if it is started without any command line arguments, or with invalid ones. A typical MAF utility will read at least one text input file, perform some computation on it, and then generate some other files, which may well in turn be used as input to some other program. Both input to MAF, and output from it, will generally be supplied using text files in <a href="http://www.geom.uiuc.edu/~dfh/gasp.html">standard GASP format</a>, which is also used by KBMAG.</p>
+<p>Most MAF utilities accept a number of "command line options", although it is the author's intention that you should not have to use many of these most of the time. The only information that is always needed, is the name of the file to be used as input. For the major components of MAF, the most useful command line options will be introduced at relevant points in the documentation. A complete description of all the command line options for all MAF utilities, can be found within the "Usage" sections of the <a href="reference.html#usage">MAF Reference</a>.</p>
+<p>A first example of the use of MAF is in <a href="example1.html">MAF Tutorial 1:  Processing an input file</a>.
+
+<h3><a name="capable"></a>What MAF can do</h3>
+<p>Before describing the various programs that constitute MAF in detail, it will be as well to summarise what MAF can do, and what questions about a group or monoid doing it might help answer. Since it is tiresome to endlessly repeat the phrase "group or monoid", from now on this document will usually simply use "group", and the reader who wishes to can supply "or monoid". The documentation will be specific when there are important differences in the facilities provided for the two kinds of object.
+</p>
+<ol>
+<li><h4>Computations on a whole group</h4>
+<p>For most users, MAF's most important capability will be the computation of automata that provide an effective solution to the word problem for a group. For groups, MAF supports the construction of up to nine different automata that do so with varying degrees of efficiency and cost in terms of memory usage. For monoids the choice is more limited - there are only two. To perform such computations the user must prepare a text file, a GASP rewriting system, that describes the group. This file will usually be referred to as an <dfn>input file</dfn>. Information about input files can be found in <a href="input_files.html">Input files</a>. The user will then invoke one of the MAF utilities, usually <tt>automata</tt>, to perform the necessary computations.</p>
+<p>When MAF's computations succeed the most important of the files it outputs will constitute either an <a href="solutions.html#automatic">automatic structure</a>, or a <a href="solutions.html#confluent">confluent rewriting system</a>. The various possibilities are described more fully in <a href="solutions.html">Overview: Solutions to the word problem</a> and information on how to use MAF to perform such computations is in <a href="automata.html">Overview: Computations on whole groups or monoids</a>.
+<p>We list some other things MAF can tell you about a group for which it has solved the word problem.
+</p>
+<ul>
+<li>As soon as MAF's computations succeed, you will usually know the group's size. One might encounter a group of which MAF says that it is finite, but too big for it to be able to compute the exact size. In practice, MAF's computations will not often succeed for such large groups.
+<li>As mentioned in <a href="What_is_MAF.html">What is MAF?</a>, a possible application of the automata MAF constructs in solving the word problem, is to use them to enumerate group elements. A utility, <a href="fsa_usage.html#fsaenumerate"><tt>fsaenumerate</tt></a>, is provided to do this. Most users interested in this application will find it better either to use MAF's C++ library to do this, or else to write their own code to make use of a suitable automaton. The best automaton for the purpose is called the word-acceptor, and it forms part of the automatic structure. However, it can also be computed from a confluent rewriting system, and MAF usually does so.
+<li>MAF includes a range of utilities to perform other computations using the automata already computed for the group. For instance, there is a word reduction utility, <a href="gp_usage.html#reduce"><tt>reduce</tt></a>, which for any input word will output a canonical word representing the corresponding group element. This will allow you to discover whether two different words correspond to distinct elements or not. Another utility, <a href="gp_usage.html#gporder"><tt>gporder</tt></a>, can compute the order of torsion elements, and will often be able to tell you when an element is torsion free. A third utility, <a href="gp_usage.html#gpcclass"><tt>gpcclass</tt></a>, can compute the conjugacy classes of a finite group (provided the group is not too large), and outputs an automaton that provides an effective solution to the conjugacy problem for the group. In the case of infinite or very large finite groups, a different utility, <a href="gp_usage.html#isconjugate"><tt>isconjugate</tt></a>, can be used to test particular pairs of elements for conjugacy.</li>
+</ul>
+<p>If MAF's computations take too long and are interrupted by the user some automata will usually still be computed. These will be termed <dfn>provisional automata</dfn>. One can often perform some useful computations with these. For example, one may be able to put upper bounds on the order of some elements of the group, and word reduction may be able to show, for a particular case of interest, that two distinct words do not represent distinct group elements.</p>
+</li>
+<li><h4>Computations on subgroups</h4>
+<p>The second most important facility of MAF is computation of automata which relate to the structure of a subgroup within a larger group (or monoid). This is done using objects called coset systems; these are created from the input file for the group, together with a second type of input file called a <a href="substructure_files.html">substructure file</a>. When MAF's computations succeed on a coset system, the index of the subgroup is now known, <em>whether or not it is finite</em>. MAF generally also computes a presentation of the subgroup. If an automatic structure for the underlying group has previously been constructed then it may also be possible to construct an automaton that can enumerate the subgroup elements as words in the main group generators; this can always be done if the the subgroup has finite index. It is only this last computation which depends on our having previously computed any automata for the whole group - computations on a coset system may succeed quickly for a subgroup of a group whose structure we not yet know, especially when the subgroup has low index.</p>
+<p>MAF also has a number of utilities that can create substructure files. In particular it can find low index subgroups of a group. It is possible to compute intersections of a number of such subgroups to find subgroups of higher index. All these computations are discussed more fully in <a href="cosets.html">MAF: Computations on subgroups</a>.</p>
+<p>When MAF succeeds in computing automata for a coset system MAF has solved the <dfn>generalised word problem</dfn> for the group and subgroup: for any word in the generators one can now say whether or not it corresponds to an element of the subgroup, and, given any two words, one can compute whether or not they belong to the same coset of the subgroup. As in the case of computations on a whole group, the automata MAF computes for a coset system can take the form either of an automatic structure, or a (perhaps partially) confluent rewriting system. The reader will suspect, and with some justification, that MAF's facilities for computation on a whole group are little more than the special case of computation on a subgroup that arises when we pick the trivial subgroup.</p>
+<p>Most MAF components work equally well whether they are dealing with groups or with coset systems. Even though there are minor differences in how the utilities are invoked, and in how they behave between the two types of object, this is often only because it would not be possible to remove these differences without breaking compatibility with KBMAG.</p>
+</li>
+<li><h4>Transforming group presentations</h4>
+<p>It is often desirable to look for a new presentation of a finitely presented group. The same program that is used for the computations already discussed, (<tt>automata</tt>) can be used also for this purpose. One way to do this is to ask MAF to perform a computation of the presentation of a subgroup that actually has index 1. In fact this is one of the most frequent uses the author makes of MAF's coset system facilities. When one is dealing with an intractable presentation it is well worth looking to see if one can find a presentation that appears to be more promising.</p>
+<p>MAF also has a Tietze transformation program, <tt>simplify</tt>, which is often very useful for simplifying the presentations MAF computes for subgroups, which can often involve many more generators than MAF's other programs can comfortably handle. <tt>simplify</tt> can also be used to abelianise a presentation; although this will usually be slower than using matrix diagonalisation methods there is no risk of running into trouble because of very large numbers.</p>
+<p>When an automatic structure is computed for a group, then MAF usually creates a new presentation for the group based directly on this structure. This presentation allows for the automatic structure to be recomputed as quickly as possible; this may be useful, since the files representing automatic structures can be very large. There is also a utility <tt>gpvital</tt> which outputs a different presentation based on the automatic structure; after you have run <tt>simplify</tt> against this, it is likely to be close to being a smallest presentation for that generating set, at any rate, computation of the group's structure from any smaller presentation may be unusually difficult.</p>
+</li>
+</ol>
+</body>
+</html>

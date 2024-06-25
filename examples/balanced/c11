@@ -1,0 +1,13 @@
+#balanced pathological presentation of C11 
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [x,X,y,Y],
+  ordering := "shortlex",
+  inverses := [X,x,Y,y],
+  equations :=
+  [
+    [x^3*y^4*x^5*y^7,IdWord],
+    [x^2*y^3*x^7*y^8,IdWord]
+  ]
+);

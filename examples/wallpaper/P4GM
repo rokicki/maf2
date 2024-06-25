@@ -1,0 +1,18 @@
+#A confluent and automatic presentation of P4GM found by MAF.
+#g is supposed to be vertical glide reflection up about line x=0.25
+#f is supposed to be horizontal glide reflection to the right about line y=0.25
+#m
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [g,G,f,F,m],
+  ordering := "shortlex",
+  inverses := [G,g,F,f,m],
+  equations := 
+  [
+    [m*G,f*m],
+    [F*g,G*f],
+    [F*G,g*f]
+  ]
+);

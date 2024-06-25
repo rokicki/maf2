@@ -1,0 +1,19 @@
+#This is a simpler presentation of SL(2,Z[i]) found by MAF using a coset system
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  ordering := "shortlex",
+  generatorOrder := [a,A,t,T,u,U,l,L,j],
+  inverses :=       [A,a,T,t,U,u,L,l,j],
+  equations := 
+  [
+    [a^2,j],
+    [A*l,a*L],
+    [u*t,t*u],
+    [l*t,T*l],
+    [l*u,U*l],
+    [t*a*t,a*T*A],
+    [a*u*a*U,u*a*L]
+  ]
+);

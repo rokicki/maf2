@@ -1,0 +1,14 @@
+#An example from a paper by Leech in 1963. Found in ACE test0008.in
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B],
+  inverses := [A,a,B,b],
+  equations := 
+  [
+   [b^7,IdWord], 
+   [(a*b)^2,IdWord],
+   [(A*b)^3,IdWord]
+  ]
+);

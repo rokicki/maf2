@@ -1,0 +1,22 @@
+#obrien10 is the 10th group in the list of groups of order 6561 in the
+#paper "Groups of Deficiency Zero".
+#MAF can easily verify that <a,b> is a subgroup of index 27
+#but it seems impossible for it to prove the group has order 6561, or
+#that the subgroup has order 243, unless the commented out axiom is
+#included, in which case both problems are solved in seconds
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B,c,C],
+  inverses := [A,a,B,b,C,c],
+  equations :=
+  [
+      [a^2 * B * a * b,IdWord],
+      [A * b^3 * C * a * c,IdWord],
+      [A * b * c^2 * a * B * c,IdWord]
+#      [b*A*b*C,A*c^2*B]
+  ]
+);
+
+

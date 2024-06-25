@@ -1,0 +1,14 @@
+#presentation of psl(2,p) for p=23
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [x,y,Y],
+  ordering := "recursive",
+  inverses := [x,Y,y],
+  equations :=
+  [
+    [(Y*x)^3,IdWord],
+    [y^23,IdWord],
+    [(x*y^4*x*y^12)^2,IdWord]
+  ]
+);

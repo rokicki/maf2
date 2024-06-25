@@ -1,0 +1,16 @@
+#It is unknown whether this is a group of order 6561 or not
+#The commented out axiom makes it one.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [c,C,a,A,b,B],
+  inverses := [C,c,A,a,B,b],
+  equations :=
+  [
+    [c*a*C*B*a*b*a,IdWord],
+    [b*a*c*b*A*C*b,IdWord],
+    [c*B*a*c*b*c*A,IdWord]
+#,    [a * b * c^2 * A * B * c,IdWord]
+  ]
+);

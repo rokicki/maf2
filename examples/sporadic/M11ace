@@ -1,0 +1,28 @@
+#Mathieu group M_11 ; presentation from ACE
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B],
+  inverses := [A,a,B,b],
+  equations :=
+  [
+    [b^4,IdWord],
+    [a^2*B^2*a^2*B*A*B*a^2*B^2*a^2*B*A*b,IdWord],
+    [A*b*a*b*A^2*b^2*A*b*a*B^2*A*b*a*b*A^2*b^2*A*b*a*B^2,IdWord],
+    [b*a*b*a*B^2*a^3*B^2*a^3*B^2*a^3*B^2*a^2*b*A^2*b^2*A^2*b,IdWord],
+    [A^3*b^2*A^3*B^2*A^4*B^2*A*B^2*a*B^2*A^3*B^2*A^3*B^2*a^-6,IdWord],
+    [a^3*B^2*a^3*B^2*a^2*B^2*a^3*B^2*a^3*B^2*A*B^2*A*B*A*B^2*a^2*B^2*a^2*b,IdWord],
+    [A*b^2*A^3*B^2*A^3*B^2*A^4*B*A^3*B^2*a^4*B^2*a^3*B^2*a^3*B^2*A^2*b,IdWord],
+    [A*b*a*b^2*A*B*A*B^2*a^2*B^2*a^2*B*a*B^2*a^3*B^2*a^3*B^2*A^2*B*a*b*a^4*B^2*a^3*B^2*a^3*B^2,IdWord],
+    [A*B*a*b^2*A*B*A*B^2*a^2*B^2*a^2*B*a*b*A^2*b^2*A^2*B^2*a*b*a*b*a^2*B^2*A^3*B^2*A^3*B^2*A^4*B^2*a*B^2*a*b,IdWord],
+    [A*B^2*A*B*a^4*B^2*a^3*B^2*a^3*B^2*A*B^2*a*b*a*b*a*B^2*A^3*B^2*A^3*B^2*A^4*B^2*a^2*B^2*a*B*A*B^2*A^2,IdWord],
+    [B^2*a*B*a*b*A^2*B^2*A*b*a*B^2*A*B*A*B^2*a*b*a^4*B^2*a^3*B^2*a^4*B*A*B^2*A^2*B^2*a^2*B^2*A^3*B^2*A^3*B^2*A^2,IdWord],
+    [b^2*a*b*a^4*B^2*a^3*B^2*a^5*b*a^4*B^2*a^3*B^2*a^3*b*a^2*B^2*a*B^2*A*B^2*a^2*b*a^2*B^2*A^3*B^2*A^3*B^2*A^2,IdWord],
+    [a*B*A*b^2*A^2*b*a^4*B^2*a^3*B^2*a^3*B^2*A^2*B*a^2*B^2*A^3*B^2*A^3*B^2*A^4*b*a^2*B^2*a*B^2*a^4*B^2*a^3*B^2*a^3,IdWord],
+    [A*b^2*A^3*B^2*A^4*B*A*B^2*a^5*B^2*a^3*B^2*a^3*B^2*A^2*B*a^3*B^2*a*b*a^5*B^2*a^3*B^2*a^3*B^2*A^3*b*a*B^2*a*B^2,IdWord],
+    [A^2*b^2*A^2*b*a^3*b*a*B^2*A*B*A*B^2*a^2*B^2*a^2*B^2*a^2*B^2*a^2*B*a*B^2*A^3*b^2*A^3*B^2*A^4*B^2*A*B^2*A^2*B*a^2*B^2*A^3*B^2*A^3*B^2*A^2,IdWord],
+    [A^2*b^2*A^3*B^2*A^4*B*A*B^2*a^2*b*A^2*b^2*A^2*B^2*a*b*A^3*b*A*B*a*B^2*a^2*B*A*B^2*A^3*B*a*B^2*a*B^2*A*B*A*B^2*a^2*B^2*a^3*B^2*A*B*a*B^2*a^2*B*A*B,IdWord],
+    [b*a*B^2*a*b*a^2*B^2*A^3*B^2*A^3*B^2*a^-5*B^2*A*B^2*a^4*B^2*a^3*B^2*a^3*B^2*A*B^2*a*b*a^5*B^2*a^3*B^2*a^3*B^2*A^3*b*a^4*B^2*a^3*B^2*a^3*B^2*A,IdWord]
+  ]
+);

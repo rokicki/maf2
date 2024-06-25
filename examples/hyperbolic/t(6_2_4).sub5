@@ -1,0 +1,24 @@
+_RWS_Sub:= rec
+(
+  subGenerators:=
+  [
+    #s = half turn about  ac
+    a*c
+    #t = half turn about b(ac)
+    ,b*a*c*b
+    #y = reflection in y' axis (actually along line x+y=1)
+    ,a*b*a
+  ],
+  subGeneratorNames :=
+  [
+    s,
+    t,
+    y
+  ],
+  subGeneratorInverseNames :=
+  [
+    s,
+    t,
+    y
+  ]
+);

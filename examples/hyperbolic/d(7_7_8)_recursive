@@ -1,0 +1,14 @@
+#Von Dyck (7,7,8) group - infinite hyperbolic
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a,A,b,B],
+  inverses := [A,a,B,b],
+  equations :=
+  [
+    [a^7,IdWord],
+    [b^7,IdWord],
+    [(a*b)^8,IdWord],
+  ]
+);

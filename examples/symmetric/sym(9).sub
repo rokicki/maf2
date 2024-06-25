@@ -1,0 +1,6 @@
+_RWS_Sub:= rec
+(
+  subGenerators:=[a*c*d*f*g*h,h*g*f*d*c*a,a*b*c*e*f*g*h,h*g*f*e*c*b*a],
+  subGeneratorNames:=[p,P,q,Q],
+  subGeneratorInverseNames:=[P,p,Q,q]
+);

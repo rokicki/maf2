@@ -1,0 +1,58 @@
+[NMAKE]
+# default definitions and rules for the Win32 makefile for MAF
+##############################################################
+
+SLASH = \ #
+
+# map file = change this to 'con' or '$*.map' if required
+M = nul
+
+# suffixes for object files
+O = o32
+W = v32
+RO = rbj
+
+# Tools
+LIB32 = link.exe -lib
+RC32 = rc.exe
+!ifdef DEBUG
+#To get Debug
+CC = cl.exe -Zi
+LINK32 = link.exe -debug -pdb:none
+COMMON = -nologo -c -I. -J -GF -Od -Gy -W4 -Fo$@ 
+!else
+#Normal
+CC = cl.exe 
+LINK32 = link.exe -LTCG
+COMMON = -nologo -c -I. -J -G7 -GF -GL -arch:SSE2 -Gy -Ox -Wall -Fo$@ 
+!endif
+
+#flags
+PFLAGS = -DWIN32 -D_WIN32_WINNT=0x501 -DWINVER=0x501 -D_X86_
+CFLAGS = $(COMMON) -Za
+CPPFLAGS = $(CFLAGS)
+CWFLAGS = $(PFLAGS) $(COMMON) -Ze
+
+# default suffixes
+
+.SUFFIXES:
+.SUFFIXES: .$O .$W .cpp .c .rbj .rc
+
+# default rules
+
+.c.$O:
+	$(CC) $(CFLAGS) $*.c
+.cpp.$O:
+	$(CC) $(CPPFLAGS) $*.cpp
+
+.c.$W:
+	$(CC) $(CWFLAGS) $*.c
+
+.cpp.$W:
+	$(CC) $(CWFLAGS) $*.cpp
+
+.rc.rbj:
+	$(RC) $(PFLAGS) -Fo$*.rbj $*.rc
+
+ALL = win32
+CFG = Win32 Release

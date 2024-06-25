@@ -1,0 +1,13 @@
+#Dihedral group of order 6
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a,b,B],
+  inverses := [a,B,b],
+  equations :=
+  [
+    [b*b,B],
+    [a*b*a,B]
+  ]
+);

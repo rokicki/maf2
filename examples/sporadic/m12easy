@@ -1,0 +1,16 @@
+#Mathieu group M_12
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,c,d],
+  inverses := [A,a,c,d],
+  equations :=
+  [
+    [a^11,IdWord],
+    [(a*c)^3,IdWord],
+    [(a*d)^3,IdWord],
+    [(c*d)^10,IdWord],
+    [a^2*(c*d)^2*a*(c*d)^-2,IdWord]
+  ]
+);

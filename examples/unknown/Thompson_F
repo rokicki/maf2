@@ -1,0 +1,12 @@
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a,A,b,B],
+  inverses := [A,a,B,b],
+  equations :=
+  [
+    [a*B*A*b*a*b*A*A*B*a,IdWord],
+    [a*B*A^2*b*a^2*b*A*A^2*B*a^2,IdWord]
+  ]
+);

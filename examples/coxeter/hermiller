@@ -1,0 +1,31 @@
+# Coxeter graph
+#             
+#   4          
+#  a-c---d-inf-a
+#  inf\ /inf
+#      b
+#Coxeter Matrix (above upper diagonal)
+# 1 2 4   inf
+#   1 inf inf
+#     1   3 
+#         1 
+#An Example from paper "Rewriting Systems for Coxeter Groups" by Susan Hermiller
+_RWS := rec
+(
+  isRWS := true,
+#  ordering := "wtlex",
+#  generatorOrder := [g,f,e,d,c,b,a],
+#  weight := [3,4,2,1,1,1,1],
+#  inverses := [g,f,e,d,c,b,a],
+  generatorOrder := [a,b,c,d],
+  inverses := [a,b,c,d],
+  equations :=
+  [
+    [b*a,a*b],
+    [(a*c)^4,IdWord],
+    [(c*d)^3,IdWord],
+#    [e,a*b],
+#    [f,a*c*a*c],
+#    [g,c*d*c]
+  ]
+);

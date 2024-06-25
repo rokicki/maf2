@@ -1,0 +1,7 @@
+_RWS_Sub := rec
+(
+  normalSubGenerators :=
+  [
+    (x*Y)^4*(x*y)^2*(x*Y)^2*(x*y)^4*(x*Y)^2*(x*y)*(x*Y)*(x*y)^2)
+  ]
+);

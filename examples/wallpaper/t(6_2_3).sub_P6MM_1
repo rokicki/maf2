@@ -1,0 +1,69 @@
+#Subgroup of index 1 i.e. P6MM
+#t(6,2,3) is the simplest possible presentation of P6MM. It is based on the
+#reflections in the edges of a right angled triangle with one of its
+#other angles equal 30 degrees. Sides a is the longer and c the shorter leg
+#with the vertex of 30 degrees at the origin.
+#We will use an oblique coordinate system with the x axis along side c
+#and the y axis along b*c
+#a,b,c are reflections in the sides of this reference triangle, and
+#transformations are written right to left, so that c*a means
+#reflect in side a, then reflect in side c
+#The sub generators below correspond to some of the more obvious symmetries
+#By knocking out generators we are going to find subgroups of P6MM that
+#are isomorphic to all of the wallpaper groups without 4 roto-centers.
+_RWS_Sub:= rec
+(
+  subGenerators:=
+  [
+    #t = horizontal along b*c left and down
+    c*b*c*b*a*b
+    #T 
+    ,b*a*b*c*b*c
+    #u = translation along c*b*c by right and down
+    ,c*b*a*b*c*b
+    #U
+    ,b*c*b*a*b*c
+    #s = 60 degree anti-clockwise rotation about origin
+    ,b*c
+    #S = 60 degree anti-clockwise rotation about origin
+    ,c*b                                   
+    #r = half turn about origin
+#    ,b*c*b*c*b*c
+    #d= reflection in line x==y
+#    ,b*c*b*c*b
+    #e = reflection in line x+y=0
+    ,c
+    #x = reflection in X axis
+#    ,b*c*b
+    #y = reflection in vertical through y-x=1.
+#    ,a
+  ],
+  subGeneratorNames :=
+  [
+    t
+    ,T
+    ,u
+    ,U
+    ,s
+    ,S
+#    ,r
+#    ,d
+    ,e
+ #   ,x
+#    ,y
+  ],
+  subGeneratorInverseNames :=
+  [
+    T
+    ,t
+    ,U
+    ,u
+    ,S
+    ,s
+ #   ,r
+#    ,d
+    ,e
+#    ,x
+#    ,y
+  ]
+);

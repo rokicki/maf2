@@ -1,0 +1,17 @@
+#This group is automatic, but MAF takes ages to decide the word-differences
+#have stabilised. 
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [y,Y,x],
+  ordering := "shortlex",
+  inverses :=       [Y,y,x],
+  equations := 
+  [
+    [y^6,IdWord],
+    [(x*y)^12,IdWord],
+    [y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y*x,x*y*x*y*x*y*x*Y*x*y*x*y*x*Y*x*y*x*y],
+    [(x*y*x*Y)^7,IdWord]
+  ]
+);

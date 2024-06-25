@@ -1,0 +1,30 @@
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [u,U,v,V],
+  ordering := "shortlex",
+  inverses :=  [U,u,V,v],
+
+  equations := 
+  [
+    [(v*U*v)^2,IdWord],
+    [(U*v)^3,IdWord],
+    [u^4*v^2*u^2*v^4*u^2*v*u*v^2,IdWord],
+#    [u^4*V^3*U*V^2*U*V^2*U*V^2*U*V^3,IdWord],
+  ]
+);
+[s,u^2*v*u^2*v*u^2*v*u],
+[t,V*U^2*V*U^2*V*U],
+[t*s,s*t],
+
+#   [u*v*U*V*u*V*U*v,u*V*U*v*u*v*U*V],
+#    [(u^2*v)^6,IdWord],  # ^6 is the  missing axiom
+
+#    [(u^4*v)^6,IdWord],
+#    [(u^2*V^2)^21,IdWord],
+#    [(u*u*u*v)^21,IdWord],
+#    [(u*v)^19,IdWord], #really at least 114
+##    [(u^2*v^2)^7,IdWord], #really at least 133
+#    [(u^2*v*u*v)^6,IdWord]
+#    [U^4*V^2*U^2*V^4*U^2*V*U*V^2,IdWord],

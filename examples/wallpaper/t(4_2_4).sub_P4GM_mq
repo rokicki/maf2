@@ -1,0 +1,106 @@
+#Subgroup of index 2 isomorphic to P4GM
+#t(4,2,4) is the simplest possible presentation of P4MM. It is based on the
+#reflections in the edges of an isosceles right angled triangle. Sides a & c
+#are the equal legs, with side c lying on the x axis with vertex bc at the
+#origin. and vertex ac at (0.5,0)
+#a,b,c are reflections in the sides of this reference triangle, and
+#transformations are written right to left, so that c*a means
+#reflect in side a, then reflect in side c.
+
+#In this subgroup we forget about the reflection symmetry across edge a,
+#and combine the two triangles that share this edge into one.
+#Again we move the origin to ab and take the x
+#axis along b. There is a 4 roto-center at O'
+#          |       +O'
+#          y     / |  \
+#          |   b=c'a=b' \
+#          | /     |      y'
+#        bc=O---c--+--x---  \
+#         /  \     |
+#       x'     a'  |
+#      /         \ |
+#                  
+
+#We also now have the possibility of "vertical" and "horizontal" glide reflections.
+
+#The sub generators below correspond to some of the more obvious symmetries
+#Now the descriptions refer to our new coordinate system.
+#By knocking out generators we are going to find subgroups of P4MM that
+#are isomorphic to all of the wallpaper groups without 3 roto-centers.
+
+_RWS_Sub:= rec
+(
+  subGenerators:=
+  [
+    #h = "horizontal" translation by 1 to the "right" actually 1 left and down!
+#    c*b*a*c*b*a
+    #H = "horizontal" translation by 1 to the "left" actually 1 right and up!
+#    ,a*b*c*a*b*c
+    #v = "vertical" translation by 1 "up"  actually 1 right and down!
+#    ,c*a*b*c*a*b
+    #V = "vertical" translation by 1 "down" 
+#    ,b*a*c*b*a*c
+    #g = "vertical" glide reflection "up"
+#    ,b*a*c
+    #G = "vertical" glide reflection "down"
+#    ,c*a*b
+    #f = "horizontal" glide reflection "right"
+#    ,c*b*a
+    #F = "horizontal" glide reflection "left"
+#    ,a*b*c
+    #q = 90 degree anti-clockwise rotation about "origin" (b'c')
+    a*b
+    #Q = 90 degree anti-clockwise rotation about "origin"
+    ,b*a                                   
+    #r = half turn about "origin"
+#    ,a*b*a*b
+    #d = reflection in line x'==y' (actually in line x==0 in our original coordinates)
+#    ,a
+    #e = reflection in line x'+y'=0 (actually in line y==0.5 in our original coordinates)
+#    ,b*a*b
+    #x = reflection in x' axis (actually in line x==y)
+#    ,b
+    #y = reflection in y' axis (actually along line x+y=1)
+#    ,a*b*a
+   #m = reflection between centre and corner of square, actually on original x axis
+    ,c
+  ],
+  subGeneratorNames :=
+  [
+#    h
+#    ,H
+#    ,v
+#    ,V
+#    ,g
+#    ,G
+#    ,f
+#    ,F
+    q
+    ,Q
+#    ,r
+#    ,d
+#    ,e
+#    ,x
+#    ,y
+    ,m
+  ],
+  subGeneratorInverseNames :=
+  [
+#    H
+#    ,h
+#    ,V
+#    ,v
+#    ,G
+#    ,g
+#    ,F
+#    ,f
+    Q
+    ,q
+#    ,r
+#    ,d
+#    ,e
+#    ,x
+#    ,y
+    ,m
+  ]
+);

@@ -1,0 +1,11 @@
+_RWS_Sub := rec
+(
+  subGenerators :=
+  [
+    a*a,
+    b*b,
+    (a*b)^2,
+    (a*b*A)^2,
+    (b*a*B)^2
+  ]
+);

@@ -1,0 +1,15 @@
+#2-3-7 triangle group presentation
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [a,b,c],
+  ordering := "shortlex",
+  inverses := [a,b,c],
+  equations := 
+  [
+    [(b*c)^2,IdWord],
+    [(c*a)^3,IdWord],
+    [(a*b)^7,IdWord]
+  ]
+);
+

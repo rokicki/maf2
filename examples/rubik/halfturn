@@ -1,0 +1,28 @@
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [rr,ll,tt,dd,ff,bb],
+  ordering := "shortlex",
+  inverses :=       [rr,ll,tt,dd,ff,bb],
+  equations := 
+  [
+    [tt*rr*ff*bb*ll,rr*ff*bb*ll*dd],
+    [tt*ff*tt*rr*ll,rr*ll*dd*bb*dd],
+    [dd*rr*tt*rr*ll,rr*ll*tt*rr*dd],
+    [dd*rr*ff*rr*tt,tt*ll*bb*ll*dd],
+    [ff*rr*ff*rr*ll,rr*ll*bb*rr*bb],
+    [ff*bb*tt*ff*tt,dd*ff*dd*ff*bb],
+    [bb*dd*rr*dd*ff,ff*tt*ll*tt*bb],
+    [ll*ff*rr*tt*ff*rr,rr*bb*rr*dd*bb*ll],
+    [tt*rr*tt*rr*tt*rr,rr*dd*ll*tt*ll*dd],
+    [dd*bb*ll*tt*ff*tt,tt*ff*rr*tt*bb*dd],
+    [ff*rr*ff*rr*ff*rr,rr*bb*ll*ff*ll*bb],
+    [ff*tt*ff*tt*ff*tt,tt*ff*tt*ff*tt*ff],
+    [ll*tt*ff*rr*ff*tt*rr,rr*tt*ff*ll*ff*tt*ll],
+    [tt*rr*tt*rr*ff*rr*tt*rr,rr*ff*rr*tt*rr*ff*rr*ff],
+    [tt*rr*tt*ff*tt*rr*tt*ff,rr*tt*ff*tt*rr*tt*ff*tt],
+    [ff*rr*ff*rr*ff*tt*ff*rr,tt*ff*rr*ff*tt*ff*tt*ff],
+    [ll*dd*rr*ll*ff*rr*tt*dd*ff,rr*dd*ff*tt*ff*bb*tt*ll*bb],
+    [tt*rr*ff*tt*ff*rr*tt*rr*ff,rr*ff*tt*ff*rr*tt*rr*ff*tt]
+  ]
+);

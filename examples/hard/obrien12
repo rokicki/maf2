@@ -1,0 +1,19 @@
+#This was thought possibly to be a presentation of a group of order 6561
+#It is #12 in the list of presentations of groups (possibly) of order 6561
+#in "Groups of Deficiency Zero".
+#However it is an infinite shortlex automatic group, though this can
+#only be shown with considerable difficulty
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [b,B,a,A,c,C],
+  inverses := [B,b,A,a,C,c],
+  equations :=
+  [
+    [a*c*a*B*C*a*b,IdWord],
+    [b*b*A*C*a*c*b,IdWord],
+    [c*A*B*c*a*b*c,IdWord]
+  ]
+);
+

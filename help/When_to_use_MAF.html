@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : An overview : When to use MAF</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="overview.html">An overview</a> : When to use MAF
+<h2><a name="when"></a>When to use MAF</h2>
+<p>MAF's facilities for computation mostly rely on on an implementation of the Knuth-Bendix procedure. Many computations on groups that are known to be finite, or on subgroups of a possibly infinite group that are known or expected to have finite index, are often better handled by coset enumeration. MAF now includes its own powerful coset enumerator, which should generally perform as well, and sometimes better than the best known coset enumeration package, ACE, but MAF's coset enumerator cannot yet be controlled interactively in the same way as ACE.  For difficult presentations, Knuth-Bendix completion will often succeed more quickly and use less memory than coset enumeration, and it is not doomed to fail when dealing with an infinite object. In fact, MAF's internal data structures make it possible for many additional deductions to be made about the object, so that its Knuth-Bendix implementation actually has much in common with coset enumeration: for many presentations Knuth-Bendix completion and coset enumeration will perform fairly similarly.</p>
+<h3><a name="behaviour"></a>MAF's behaviour for some important group families</h3>
+<p>Users who wish to compute automata for a presentation which they know belongs to a particular type of group will usually be in a better position than users who wish to compute automata for a completely unknown group. For many important families of group it is possible to know in advance what computations are possible, and to have a rough idea of how long they will take. The author is here assuming that the presentation is one that is natural for a group in that family, and not one which either deliberately or unintentionally obscures its membership of the family.
+</p>
+<p>First we list some group families for which MAF is usually good:</p>
+<ul>
+<li><p>MAF can usually compute automata for triangle groups, Von Dyck groups and many crystallographic groups almost instantly.</p>
+<li>More generally, presentations which give a group in the form of a Coxeter group, can usually be processed within a minute or two at most, particularly if the relators are short. Coxeter presentations of the symmetric groups can be processed very quickly.</li>
+<li>Presentations for knot groups and Kleinian groups are usually also easy to handle. However, in the case
+of Kleinian groups with elliptic elements success may be dependent on the choice of presentation (this is discussed in <a href="example4.html">MAF Tutorials: 4 - A useful trick with two generator groups</a>).
+<li>There is a type of group presentation, known as a polycyclic presentation, which presents a polycyclic group. Polycyclic presentations usually omit some of the relators that would be necessary in an ordinary presentation. Provided MAF is given a polycyclic type presentation in a form that does <em>not</em> omit such relators, it will be able to process the presentation quickly, provided certain other parameters, to be described later, are chosen appropriately.</li>
+<li>Presentations with only one relator are usually easy shown to be of an automatic group, except sometimes when the relator is short.</li>
+<li>If a group is known to be word-hyperbolic, then in principle it is automatic. Also, in principle, a randomly generated presentation, is likely to be word-hyperbolic and hence automatic. In practice it is very possible that the automatic structure for a badly chosen set of generators for such a group might be far too large for it to be possible to compute it.
+</ul>
+<p>Next we list some group families for which MAF is not good:</p>
+<ul><li>MAF cannot compute automatic structures for Braid groups (or solve their word problem in any other way), except for a few special cases. Computation with Braid groups uses a normal form computed in a way that does not adapt itself well to MAF's architecture.</li>
+<li>MAF can only compute synchronous automatic structures. There is a second type of automatic structure, known as an asynchronous automatic structure. So far as the author is aware these can only be computed in an ad-hoc manner, and for certain special families of groups (such as Baumslag-Solitar groups).</li>
+<li>MAF is not the best tool for computing with a large abelian group given by a presentation that does not reveal the order of the generators. In fact MAF can take a very long time to compute automata for such presentations, because they tend to give rise to a huge number of relations.
+<li>MAF can only handle words up to a certain length. So MAF will not be able to handle a presentation if it contains an extremely long relator like <i>x<sup>999999</sup>=1</i>. To work-around this limitation it will be necessary to additional generators, so that we can transform the relator into two shorter ones (such as <i>x<sup>999</sup>y<sup>-1</sup></i> = <i>y<sup>1001</sup></i> = 1). For information on such limitations refer to <a href="limits.html">MAF Reference: Internal limits</a>
+</ul>
+</body>
+</html>

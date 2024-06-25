@@ -1,0 +1,851 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Reference (Usage) : automata</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="standard_options.html" title="Standard options">
+<link rel="Next" type="text/html" href="gp_usage.html" title="Usage: RWS utilities">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html#usage">Reference (Usage)</a> : <tt>automata</tt>
+<h2>Usage: <tt>automata</tt></h2>
+<p><tt>automata</tt> has a very large number of command line options. These are discussed in detail in the following sections with related options grouped together. The distinction between the various groups of options is not always clear-cut, and so you may also wish to refer to the <a href="#automata_options_table">Table of options for <tt>automata</tt></a>.
+</p>
+<p>These options are also all accepted by the KBMAG compatibility programs: <tt>kbprog</tt>, <tt>kbprogcos</tt>, <tt>autgroup</tt>, <tt>autcos</tt>, and <tt>gpmakefsa</tt>, (even though not all the options may be relevant to all of those programs). <tt>automata</tt> also accepts almost all the KBMAG compatibility options itself, though in one or two cases options are specific to a particular utility.</p>
+<p>When MAF starts its implementation of the Knuth-Bendix procedure it chooses values for options that have not been specified explicitly, and for its internal limits, to try to maximise its chances of success. This is done using fairly simple-minded heuristics,  based on the minimum and maximum size of the axioms, the number of generators, the word-ordering method, and the values of any options that have been specified explicitly.</p>
+<p>Many options have a fixed default setting, and so will need to be set explicitly if you want to change them. In general you will only want to change these options if you find <tt>automata</tt> behaves badly with its default settings. The <a href="#strategy"><kbd>-strategy <i>string</i></kbd></a> option allow the user to try various predefined combinations of these options that have proved helpful for some input files.</p>
+<h3>Input options</h3>
+<h4><kbd><a href="standard_options.html#coset_systems">-cos</a></kbd></h4>
+<p>This option is used to tell <tt>automata</tt> to read a <a href="substructure_files.html">substructure file</a> as well as a regular <a href="input_files.html">input file</a>, and to create a <a href="cosets.html">coset system</a> input file and use that as input for the program.</p>
+<h4><a name="resume"></a><kbd>-resume</kbd></h4>
+<p>The <kbd>-resume</kbd> option tells MAF to read any output file produced by a previous run of <tt>automata</tt>, or some other program and to use the equations contained in it as additional axioms for the current run. MAF will first look for a file with a <kbd>.pkbprog</kbd> suffix, and then if it cannot find that, one with a <kbd>.kbprog</kbd> suffix. No warning is given if neither file exists.</p>
+<h3>Goal setting options</h3>
+<p>If <tt>automata</tt> is started without any of the the options to be described in this section, then depending on the nature of the input files, MAF will follow one of two plans:</p>
+<ol>
+<li><p><b>Plan A:</b> MAF will initially assume that an automatic structure is required and will compute the word-differences of the equations it finds, and guess when it is safe to try to perform the computation of an automatic structure. Initially MAF will allow long equations that contain new word-differences into its main list of equations (rather than "pooling" them). If there are very many word differences then MAF will eventually stop doing this, and will also become reluctant to try to build an automatic structure, and will instead behave more as though it were looking for a confluent rewriting system. However, MAF still will eventually attempt to build an automatic structure if it appears that there are no more word differences to be found, either because the rewriting system becomes confluent, or because after a while the word-difference machine can recognise all new equations.</p>
+<p> This plan is the default if a geodesic ordering is used, unless the underlying object has generators for which inverses have not been specified.</p>
+<li><p><b>Plan C:</b> MAF will assume that a confluent rewriting system is required, and continue the Knuth-Bendix procedure until it finds one. After doing so it will also compute an automatic structure if it is possible to do so. This plan is the default if a non-geodesic word-ordering is used, or word-differences cannot be computed.</p>
+</ol>
+<p>Unfortunately, while there may be many times when MAF's computations succeed quickly in either case, there are input files for which it is either necessary or highly advisable to use command line options to give MAF more information about what it should do. </p>
+<h4><a name="confluent"></a><kbd>-confluent</kbd> / <kbd>-no_wd</kbd></h4>
+<p>The <kbd>-confluent</kbd> and <kbd>-no_wd</kbd> (or <kbd>-nowd</kbd>) command line options both inform MAF that you require a confluent rewriting system (so select plan C). Both options cause MAF to suppress computation of word-differences. The options only differ in what happens when confluence is achieved:</p>
+<ul><li>if you specified <kbd>-confluent</kbd>, and it makes sense to do so, MAF will then attempt to compute word differences and an automatic structure as well as outputting the confluent rewriting system.</li>
+<li>if you specified <kbd>-nowd</kbd>, MAF will not compute an automatic structure even it might well be able to do so. <tt>automata</tt> will still compute the word-acceptor and L1-acceptor, which is the only significant difference between running <kbd>automata -no_wd <i>rwsname</i></kbd> and <kbd>kbprog <i>rwsname</i></kbd> 
+</ul>
+<p>The <kbd>-confluent</kbd> option is on by default for all non-geodesic orderings. It is off by default for geodesic orderings.
+</p>
+<p>For large finite groups, and for pathological presentations, these options can make MAF run much more quickly.  You should probably always use <kbd>-no_wd</kbd> if what you are trying to do is to prove the non-existence of a non-trivial group, because in this case you hope your presentation will be trivial. For example  with the <kbd>-no_wd</kbd> option MAF proves the difficult <kbd>examples/trivial/degen4c</kbd> example trivial in well under thirty seconds on most machines, but run with no special options, it is likely to take two minutes or longer. If you are mainly interested in finite groups, and are not interested in their automatic structure, and don't want any of the other extra automata that <tt>automata</tt> creates, then you may prefer to use <tt>kbprog</tt> rather than <tt>automata</tt> since that has the <kbd>-nowd</kbd> option on by default.</p>
+<h4><a name="wd"></a><kbd>-wd</kbd></h4>
+<p>This option will force MAF to follow plan A, even for word-orderings where its usual strategy would be to
+follow plan C. The <kbd>-force_differences</kbd> option will have the same effect, but also modifies how plan A is carried out.</p>
+<h3>Plan A Modifiers</h3>
+<p>There are several command line options that will influence how MAF tries to find a balance between building the an index automaton in a systematic way, which is usually the best strategy for finding a confluent rewriting system, and looking ahead for long equations that contain new word-differences, which is often the  strategy that will make for early success in building an automatic structure. We first document the most important, <kbd>-no_kb</kbd>, which stands alone, (you can use it with other options, but they will usually
+then make no difference). Note that all the other options can be used in any combination, even if the names of the options might suggest otherwise. For example <kbd>-slow -fast</kbd> is a valid combination of options. Note that none of these options, other than <kbd>-force_differences</kbd>, will actually force MAF to follow its plan A. If MAF is following its plan C then these options will have no effect.
+<h4><a name="no_kb"></a><kbd>-no_kb</kbd></h4>
+<p>This option tells MAF to suppress the Knuth-Bendix phase altogether and to immediately build an automatic structure, using just the word-differences it has been able to deduce from a very cursory examination of the axioms. This option should be used with caution, and never with a presentation you know is for a finite group, nor for a pathological presentation, but for many infinite groups it will give results in a few seconds rather than several minutes. This is in effect a <b>Plan B</b> for building an automatic structure.</p>
+<p>With this option the automata built will almost certainly be incorrect for several iterations. However if the group is genuinely automatic, success is eventually inevitable, and for examples of only moderate difficulty, such as <kbd>examples/automatic/picard</kbd> and <kbd>examples/coxeter/cox33334c</kbd> this may very well give the fastest results. This option is to be recommended for Triangle and Von Dyck type groups, but not for most Coxeter groups. Even for more difficult examples it is usually beneficial, though for a few examples it may be catastrophic. Another possible reason for using this option is where you have already tried, and failed, to build an automatic structure using <tt>automata</tt> without the <kbd>-nokb</kbd> option. If MAF had created a very large number of equations, then it may not have had enough memory available to be able to work efficiently. When you use the <kbd>-nokb</kbd> option the number of equations will be kept to a minimum. So there might be cases where the resulting saving in memory would allow an automatic structure to be found. Generally, in this case you would also use the <kbd>-resume</kbd> option at the same time, so that more word-differences would be known initially.</p>
+
+<h4><a name="fast"></a><kbd>-fast</kbd></h4>
+<p>This option is like a milder form of <kbd>-no_kb</kbd> and causes MAF to take a less cautious view than usual about whether or not to try to build an automatic structure. When it works it will save you a few seconds, or perhaps tens of seconds, but in most cases the <kbd>-no_kb</kbd> option would also work well, and would be even faster.</p>
+<p><kbd>-fast</kbd> works quite well, or at any rate is not horribly counter-productive, with most of the example presentations (even the confluent ones), but it should not really be used for groups you know in advance are finite, since these definitely do have a minimal confluent rewriting system, and MAF will insist on finding it. If you specify the <kbd>-fast</kbd> option for such a group then MAF is more likely to try to build the automatic structure before confluence is achieved, and the consequence may be that MAF will spend a long time building a word-acceptor from a word-difference machine, and may have great difficulty doing so. Then, if the word-acceptor is correct, MAF will see that the group is finite and resume Knuth-Bendix processing anyway. In this case time, possibly a long time, has been wasted. And, if the word-acceptor is wrong and MAF still does not know the group is finite, even more time will be wasted, because in such cases it will probably spend a very long time building and then correcting a multiplier.</p>
+
+<p>If a presentation is difficult then the <kbd>-fast</kbd> option usually does not make much difference, because MAF will not want to leave the Knuth-Bendix phase anyway.</p>
+<h4><a name="no_prune"></a><kbd>-no_prune</kbd></h4>
+<p>When MAF is following plan A, then unless the <kbd>-tight</kbd> option is used, it will be allowing some long equations into the index-automaton early, because it appears they contain new word-differences. Therefore, at the end of each expansion cycle, MAF will normally remove all of these long equations from the index-automaton and put them in the pool. Then, when it checks the pool, any of the equations that do still contain new word-differences will be reinserted, but others, for which the word-differences turned out to be spurious, or can be found in a shorter equation, will remain in the pool. The intention behind this is two-fold:</p>
+<ol><li>The greater the number of long equations that are present in the index-automaton, the longer it will take to make the necessary changes to insert new equations, and the more memory MAF will require. Pruning regularly helps improve performance and minimise memory usage.</li>
+<li>Long equations will tend to cause more spurious word-differences to be found later on, and so may prevent MAF from deciding it is time to try to build an automatic structure</li>
+</ol>
+<p>Usually pruning is beneficial, but in some cases it can be very costly and achieves little (because it turns out almost all the long equations come back), so the <kbd>-no_prune</kbd> option is provided to disable pruning completely.</p>
+<h4><a name="slow"></a><kbd>-slow</kbd></h4>
+<p>When following its plan A, MAF usually reduces the thoroughness of its search of overlaps if it believes it is soon going to move to building an automatic structure. That helps to speed up processing when the number of equations has become large. However, this can sometimes have the effect of making it much more difficult to
+actually build an automatic structure because the size of the trial word-acceptor becomes very large. The <kbd>-slow</kbd> option forces MAF to search overlaps in a more uniform manner, which may sometimes alleviate this problem.</p>
+<p>It is probably worth using this option for difficult automatic structures: run with the <kbd>-slow</kbd> option until you think word-differences are becoming stable, then interrupt <tt>automata</tt> with <kbd>Ctrl+C</kbd>, and then restart it with the <kbd>-nokb</kbd> and <kbd>-resume</kbd> options.</p>
+
+<h4><a name="tight"></a><kbd>-tight</kbd></h4>
+<p>This option tells MAF not to favour equations with word-differences at all even though word-differences will still be computed. While this will usually result in it taking longer for MAF to decide it has found all the word-differences it can sometimes have the opposite effect. Sometimes spurious word-differences in long equations can cause MAF to believe the word-differences are still changing, when in reality all the word-differences have been found and when this option is used this is less likely to occur. Because this option prevents long equations from getting into the index automaton early it can have the effect of making the number of equations that gets created much greater, because MAF is forced to increase its internal limits more quickly.
+</p>
+<p>It is also possibly worth using this option if you think a group might have a confluent rewriting system, but that it possibly does not and it looks as though it may also be automatic.</p>
+
+<h4><a name="force_differences"></a><kbd>-force_differences</kbd></h4>
+<p>This option tells MAF to continue to favour equations with word-differences even when there are very many of them. The main reason to use this option is so that you can judge whether it is at all likely a group which has a lot of word-differences might eventually turn out to be automatic. Generally speaking if the number of word-differences continues to grow rapidly when this option is used, then unless you can find a different generating set with better behaviour, there is no hope of finding an automatic structure. In such cases it is better to look for a confluent rewriting system, because it is often the case that input files which give rise to very many word-differences eventually collapse and that the group turns out to be finite.
+</p>
+
+<h3>Limits</h3>
+<h4><a name="max_equations"></a><kbd>-max_equations <i>n</i></kbd></h4>
+<p>The <kbd>-max_equations <i>n</i></kbd> option limits the number of primary equations that MAF will create. By default there is no limit. This option works differently depending on whether plan A or plan C is being followed.
+<ul><li><p><b>Plan A</b>: <tt>automata</tt> will stop performing Knuth-Bendix expansion as soon as possible after the number of primary equations reaches the maximum, and will try to build an automatic structure.</p>
+<li><p><b>Plan C</b>: <tt>automata</tt> will abort and output a provisional rewriting system and index-automaton when the limit is reached</p>
+</ul>
+<p>This option, and the next are potentially useful. There are some groups for which a careful choice of this option or the next will give faster results than either relying on <tt>automata</tt>'s plan A, or using the <kbd>-no_kb</kbd> option to force plan B. However, there does not seem to be any sensible way of discovering a suitable value: for difficult input files it can be counter-productive to run Knuth-Bendix expansion for more than a very short period of time, because the trial automata can become more difficult to correct because they are much larger when more, but not enough, word-differences are known.
+<h4><a name="max_time"></a><kbd>-max_time <i>n</i></kbd></h4>
+<p>The <kbd>-max_time <i>n</i></kbd> option limits the period for which Knuth-Bendix expansion is performed. <i>n</i> is a number of seconds. By default there is no limit, and this is also the case if you put <kbd>-max_time 0</kbd>, so the minimum value is 1. This option works differently depending on whether plan A or plan C is being followed.
+<ul><li><p><b>Plan A</b>: <tt>automata</tt> will stop performing Knuth-Bendix expansion as soon as possible after the time limit is exceeded and will try to build an automatic structure.</p>
+<li><p><b>Plan C</b>: <tt>automata</tt> will abort and output a provisional rewriting system and index-automaton when the time limit is reached.</p>
+</ul>
+<p>See also the comment on <kbd>-max_equations <i>n</i></kbd> above.</p>
+<h4><a name="min_time"></a><kbd>-min_time <i>n</i></kbd></h4>
+<p>The <kbd>-min_time <i>n</i></kbd> option sets a lower limit (in seconds) on the the period during which Knuth-Bendix expansion is performed. By default there is no lower limit. This option is only applicable when plan A is being followed, and will be ignored if a confluent rewriting system is found before the minimum time limit has elapsed.</p>
+<p>This option is provided for KBMAG compatibility purposes, and there should be no reason to use it in <tt>automata</tt>.</p>
+
+<h3>Options relating to the computation of automatic structures</h3>
+
+<h4><a name="force_multiplier"></a><kbd>-force_multiplier</kbd></h4>
+<p>When MAF has built a candidate word-acceptor for an automatic structure it will normally use heuristics to determine whether it is a good idea to try to build the general multiplier for the acceptor. If the word-acceptor has too many states, MAF will assume that it is probably wrong, and that, rather than building the multiplier, it should try some other technique to discover missing word-differences. MAF has quite a wide repertoire of such techniques; it will often try several of them in turn, usually building a new candidate word-acceptor after each technique is tried, until eventually it either manages to build a word-acceptor with substantially fewer states (at which point the word-acceptor is usually correct, or very nearly so), or it runs out of ideas, and tries to build the multiplier anyway.</p>
+<p>For some groups it might happen that the word-acceptor really is large, or that MAF's other techniques for finding more word-differences don't achieve much. In such cases you can try the <kbd>-force_multiplier</kbd> option which will change the heuristics so that an attempt to build the multiplier is made much sooner than it otherwise would be. MAF may still try some its alternative techniques, but will be much more inclined to try to build the multiplier early. You should note, that at least in the author's experience, using this option usually has a bad effect, and it will turn out that it takes longer to build the automatic structure when it is used, even if it appeared that MAF's alternative techniques for finding word-differences were not working well or were being used for too long.</p>
+
+<h4><a name="no_hd"></a><kbd>-no_hd</kbd></h4>
+<p>When MAF is computing word-difference machines it is necessary for it to compute large numbers of reductions of words of the form <i>x*w*y</i> where <i>x</i> and <i>y</i> are generators and <i>w</i> is a word-difference. Now, it turns out that if <i>w</i> is a word-difference then <i>w^-1</i> is also a word difference. Therefore, a computation of this type can be performed by computing <i>(w^-1*x^-1)^-1*y</i>, or alternatively,<i>((w*y)^-1*x^-1)</i>^-1. Note that neither of these computation involves any left multiplication, which means that in many cases MAF can compute a putative element for such words very cheaply, provided it has precomputed the inverses of the relevant words. When <i>w</i> is a word-difference and x is a generator MAF calls a term of the form <i>w^-1*x</i> a left half-difference, and a term of the form <i>(w*x)^-1</i> a right half-difference. MAF will usually compute word-difference machine using these half-differences. When a rewriting system is not confluent it may happen that these two computations give different results from each other, and that a direct computation of <i>x*w*y</i> gives a third word. When MAF first creates a word-difference it performs all three computations and creates any equations that result. Later on, if  <i>x*w*y</i> needs to be computed again,  MAF will only will only compute the word directly if it cannot compute it quickly from left or right half-difference states in its index automaton.</p>
+<p>If a geodesic word-ordering is being used, the inverse of any group element must be represented by a word of the same length. However, for non-geodesic orderings the inverse of a word may be some much longer word. This means using half-differences can be very awkward when non-geodesic orderings are used. The <kbd>-no_hd</kbd> option can be used to suppress computations of half-differences. This will prevent some deductions being made that might otherwise be possible. This option is always turned on if a wreath product type word-ordering is being used, except in the case where word-differences are computed only after confluence has been achieved. You can specify the option explicitly to prevent half-differences being used even in that case (though usually they are then beneficial), or to prevent them being used for an ordering such as <code>"wtlex"</code> in the case where very different weights are attached to a generator and its inverse. You can use this option even for geodesic word-orderings if desired, but it will usually have little effect.</p>
+
+<h4><a name="validate"></a><kbd>-no_validate</kbd> and <kbd>-validate</kbd></h4>
+<p>These options can be used to explicitly enable or disable validation of an automatic structure that has been computed by the axiom checking process. MAF's default behaviour is to check axioms for coset systems but not for groups, (unless you use <tt>autgroup</tt>). For a coset system, you might want to use <kbd>-no_validate</kbd> if you are confident that  MAF will not have any problems computing the automatic structure correctly in the first place (the author has only ever seen computations fail when the subgroup has finite index, and in fact is not even sure if these failures do still ever happen), or if you plan to run <tt>gpaxioms</tt> as a separate process later on. For groups you might want to use <kbd>-validate</kbd> if you don't trust the author's conjecture that the axiom check for a group will never fail, and would rather do the check from within <tt>automata</tt> than run <tt>gpaxioms</tt> as a separate process.</p>
+<p>Note that when a completely confluent rewriting system is found, (but not a partially confluent coset system), the <kbd>-validate</kbd> option will have no effect. An automatic structure built from a confluent rewriting system cannot possibly fail the axiom check. You can always run <tt>gpaxioms</tt> if you have any doubts about this.</p>
+<h4><a name="no_weak_acceptor"></a><kbd>-no_weak_acceptor</kbd></h4>
+<p>This instructs MAF never to try to use a weak word-difference machine to build a word acceptor. If MAF finds that constructing a trial word-acceptor using the strong word-difference machine is slow, it will at some point try to use the weak word-difference machine instead, because for some groups this results in much faster construction of the word-acceptor. Subsequently it will revert to using the strong word difference machine unless this proves to be the case. Unfortunately, it can happen that construction of such a word-acceptor will cause MAF to crash. The reason for this is that the maximum number of states in a word-acceptor is an exponential function of the number of word-differences, and this is much more likely to arise when a weak word difference machine is used. So, this command line option is provided to allow you to restart MAF if it behaves in this unfortunate manner.</p>
+
+<h4><a name="timeout"></a><kbd>-timeout <i>n</i></kbd></h4>
+<p>This option sets a time-out value which MAF uses to age various statistics about word-differences. The default value of the option is 20, which means that these statistics will be aged at most every 10 seconds, and that if more than 20 seconds goes by, MAF will switch to a mode in which fewer overlaps are considered, because it is hoping to move from performing Knuth-Bendix expansion to building an automatic structure.</p>
+<p>In fact this option sets a maximum time-out. The time-out will initially start at a very low value, and will be increased towards the "official" time-out as MAF's heuristics determine that the group is more difficult. So setting this value to a very low value might help force MAF to move to building an automatic structure. The lowest value that will have much effect is 4.
+</p>
+
+
+
+<h3><a name="coset_system_options"></a>Options for coset systems</h3>
+<h4><a name="detect_finite_index"></a><kbd>-detect_finite_index</kbd> / <kbd>-prove_finite_index</kbd></h4>
+<p>These two options, which are only relevant when a coset system is being processed, both tell MAF to check if the subgroup being processed has finite index. MAF will perform this check at the end of an expansion pass if no new coset equations have been created for some time. If MAF finds that a subgroup does have finite index then one one more pass of the Knuth-Bendix procedure is performed, this time only considering overlaps which might reduce the number of cosets further (although it usually happens  that as soon as MAF can detect a subgroup has finite index it can determine the index correctly this is by no means always the case, so a further pass is needed). The <kbd>-detect_finite_index</kbd> option does not affect MAF's strategy much and can safely be used even for subgroups which you are not sure do have finite index, but the <kbd>-prove_finite_index</kbd> modifies processing considerably and should only be used when you don't care if MAF runs out of memory before it can do so.</p>
+<p>Both <kbd>-detect_finite_index</kbd> and <kbd>-prove_finite_index</kbd> modify the behaviour of plan C (as selected by the <kbd>-confluent</kbd> and <kbd>-no_wd</kbd> options). In this modified form of plan C,  MAF will create output files for the coset system as soon as the coset structure is known completely (so that "partial" confluence has been achieved in that the number of cosets and the coset representative for each coset is known).  MAF does not now wait until the <i>G</i>-equations are completely confluent. There is one exception to this - if MAF can determine that the entire group is finite at the time it checks for a finite index subgroup, it will wait for the entire system to become confluent.</p>
+<p>When you use either of these options, and you are using a subgroup structure file with subgroup generator names you will often also need to use the <kbd>-ignore_h_length</kbd> option, and quite possibly the <kbd>-no_h</kbd> option as well.</p>
+
+<h4><a name="eliminate"></a><kbd>-eliminate</kbd></h4>
+<p>This option tells MAF to use the Knuth-Bendix procedure to try to eliminate some of the axioms in a generated subgroup presentation. This option was added to <tt>automata</tt> before the <tt>simplify</tt> utility was provided as part of MAF. Now that <tt>simplify</tt> is available, it will usually be best to use that instead and simplify the presentation afterwards. That will allow you to try its various different strategies for improving the presentation.</p>
+
+<h4><a name="ignore_h_length"></a><kbd>-ignore_h_length</kbd></h4>
+<p>This option is usually only relevant when a coset system with named subgroup generators is being processed. As mentioned elsewhere the <i>H</i>-words that appear on the RHS of coset equations can be extremely long. When this option is used, MAF does not count the <i>H</i>-word part of the RHS in the size of the equation, so that coset equations will be more likely to be inserted into the tree rather than being pooled.</p>
+<p>In fact, MAF no longer counts the the coset symbol on the right either, so this option also might make a marginal difference even when subgroup generators are not named.</p>
+<p>Using this option will often give much faster results for coset systems with named subgroup generators. On, the other hand, if the option is not used, then MAF will tend to run for longer, and therefore discover more <i>G</i>-equations. So when the <kbd>-ignore_h_length</kbd> option is not used, the presentation of the subgroup may be better, because MAF may have been able to determine that some subgroup members, which were initially different Schreier generators, actually represent the same group element.</p>
+<h4><a name="no_h"></a><kbd>-no_h</kbd></h4>
+<p>This option is only relevant when a coset system with named subgroup generators is being processed. When this option is used MAF will not ever perform Knuth-Bendix expansion on equations in the <i>H</i>-words alone. This means it can afford to allow all <i>H</i>-equations that are created into the tree immediately, even though they may be very long. Surprisingly, this often seems to improve the stability of MAF with this type of coset system.</p>
+<h4><a name="schreier"></a><kbd>-schreier</kbd></h4>
+<p>For a coset system using named subgroup generators, this option tells MAF that when it computes the subgroup presentation that it should use the Schreier generators that are the initial states of the multiplier. These are the same generators that would be have been used in any case had a simple coset system been used for the subgroup computation. Why might one want to do this? It is for the same reason that is sometimes best not to use the <kbd>-ignore_h_length</kbd> option: MAF will usually run for longer when a coset system with named subgroup generators than a corresponding simple coset system. So, in this case more <i>G</i>-equations will be discovered, which may mean the presentation of the subgroup is more tractable.</p>
+
+<h3>Progress logging options</h3>
+<p><tt>automata</tt> accepts MAF's standard <a href="standard_options.html#loglevel">[loglevel]</a> command line options with the usual meaning: <kbd>-silent</kbd>, <kbd>-quiet</kbd> and <kbd>-verbose</kbd>. 
+<p>The following options can be used to follow MAF's chain of reasoning in its analysis of a rewriting system. None of these options, is to be recommended for other than the smallest examples, because the volume of output produced will be very high, and especially so when you use <kbd>-v -ve</kbd> combination.</p>
+<kbd><a name="ve"></a>-ve</kbd><br>
+<p>The verbose-equations option. Each new equation is printed as it is found. If the <kbd>-verbose</kbd> option is explicitly enabled, for example by <kbd>-v -ve</kbd> or <kbd>-verbose -ve</kbd>, then not only is each new equation printed out, but so is an outline proof that it is true.</p>
+<kbd><a name="vwd"></a>-vwd</kbd><br>
+<p>The verbose word-differences option. In addition to MAF's normal output, each new word-difference found is printed to <tt>stdout</tt>, together with the equation from which it was computed.
+</p>
+
+<h3>The <a name="strategy"></a><kbd>-strategy <i>string</i></kbd> option</h3>
+<p>The <kbd>-strategy <i>string</i></kbd> option allows the user to select one of a range of predefined strategies. If it is not used then MAF will pick a strategy based on the properties of the input file and any goal setting options that have been specified (and perhaps some other command line options also). Most predefined strategies have been found to work well with a number of input files, but some are only provided for comparison purposes. The string consists of two parts: first comes a strategy name (which may be blank). This may optionally be followed by a / and a number of single letter options which modify some part of the strategy. The modifiers must be used with caution, because it is possible to create strategies that will cause MAF to create an endless stream of ever longer equations, when other strategies would succeed. Setting a non-empty strategy name is also usually equivalent to setting a number of the other options discussed in later sections. For this reason the <kbd>-strategy</kbd> option should usually come early on the command line. It is perfectly legitimate to specify specific new values for options that have already been set by the particular strategy.</p>
+<h5>The predefined strategies</h5>
+<p>The predefined strategies are shown in the table below. On the right is an equivalent set of command-line options that
+does not specify a named strategy and which would have an identical effect. (In most cases one would not usually need to specify all these options, but all are shown to show the effect of the particular strategy. The meanings of the various strategy modifiers is explained in the next section.</p>
+<table summary="predefined strategies" cellspacing="0" class="niceborder">
+<tr>
+<th>
+Name
+</th>
+<th>
+Purpose
+</th>
+<th>
+Equivalent command line 
+</th>
+
+<tr>
+<td><kbd>balanced</kbd></td><td><p>This option selects a fairly similar combination of options to <kbd>-strategy short</kbd>, and usually performs similarly. The only two differences are that: 
+<ol><li>The <kbd>-work_order n</kbd> option is not explicitly set, so will be defaulted to 1 or 2 depending
+on the input file.
+<li>More equations will be expanded in each pass.
+</ol>
+</td> 
+<td><kbd>-strategy /ab -partial_reductions 1 -special_overlaps 1 -conjugation 1 -secondary 1 -probe_style 3</kbd></td>
+</tr>
+
+
+<tr>
+<td><kbd>easy</kbd></td><td>Selects options which work well with "easy" input files. Many of MAF's special features are turned off in the hope of speeding up processing. This option may increase execution time substantially if the input file is not in fact "easy".</td> <td><kbd>-strategy /au -partial_reductions 0 -special_overlaps 0 -conjugation 0 -secondary 0 -no_hd -probe_style 0 -work_order 1</kbd></td>
+</tr>
+
+<tr><td><kbd>era</kbd></td><td>Selects options which may offer the best hope of success for some input files containing long equations. It is fairly similar to <kbd>-strategy long</kbd>, and is worth trying for the same kinds of input file. The "era" strategy makes less use than "long" of new equations that are discovered. This means it tends to complete each pass more quickly, and to make some use at least of the equations that existed at the start of a pass sooner than with other strategies. If a hidden short relation can only be deduced from an overlap between equations that are themselves deduced from overlaps of long equations, this strategy might have the best chance of success. On the other hand, because less use of new equations is made more passes may be needed to discover the equation.</td>
+<td><kbd>-strategy /ecl -conjugation 0 -expand_all -partial_reductions 1 -probe_style 3 -special_overlaps 0 -work_order 4</kbd></td></tr>
+
+<tr><td><kbd>long</kbd></td><td>This is the other strategy that is sometimes useful with input files containing very long equations.</td><td><kbd>-strategy /lc -partial_reductions 1 -special_overlaps 0 -conjugation 0 -secondary 1 -probe_style 0  -work_order 4</kbd></td></tr>
+
+
+
+<tr>
+<td><kbd>naive</kbd></td><td>Makes MAF simulate a very naive implementation of the Knuth-Bendix procedure, which does not balance equations and cannot tell which overlaps between equations are minimal (do not contain a reducible subword not including either the first or last letter of the word). This option generally increases execution time substantially and may well cause trouble, especially if the input file uses a non-geodesic word-ordering.</td> <td><kbd>-strategy /du -filters 0 -partial_reductions 0 -special_overlaps 0 -conjugation 0 -secondary 0 -balancing 0 -left_balancing 0 -no_hd -probe_style 0 -work_order 4</kbd></td>
+</tr>
+
+<tr>
+<td><kbd>quick</kbd></td><td>Selects options which work well with many input files. Some of MAF's special features are turned off in the hope of speeding up processing, but those features which are most likely to be beneficial are turned on. This strategy may well give the best performance, even for very "easy" input files, but it is not suitable for the most difficult input files.</td> <td><kbd>-strategy /a -partial_reductions 1 -special_overlaps 0 -conjugation 1 -secondary 1 -probe_style 0 -work_order 1</kbd></td>
+</tr>
+
+<tr>
+<td><kbd>short</kbd></td><td>Selects the same option combinations that MAF would usually use if started with the <kbd>-confluent</kbd> if an input file uses a geodesic-word ordering. This option does <em>not</em> function as a goal-setting option. Its purpose is to allow you to investigate possible modifications to the strategy that might be beneficial for a particular input file. For example some input files might benefit from using <kbd>-strategy short/ec</kbd></td> <td><kbd>-strategy /a -partial_reductions 1 -special_overlaps 1 -conjugation 1 -secondary 1 -probe_style 3 -work_order 1</kbd></td>
+</tr>
+
+<tr>
+<td><kbd>sparse</kbd></td><td>
+Selects the same option combinations that MAF would usually use when looking for an automatic structure for an input file using a geodesic word-ordering. It selects a mode of operation in which MAF is allowed to discard equations, or even fail to consider certain overlaps that might be created with other strategies. (Any such equations will eventually be created, but possibly not until much later than they could have been.) This option does <em>not</em> function as a goal-setting option. Its purpose is to allow you to investigate possible modifications to the strategy that might be beneficial for a particular input file. For example some input files might benefit from using <kbd>-strategy sparse/ec</kbd>. This type of strategy is usually only useful when MAF is computing word-differences, and indeed will work quite differently depending on whether they are or not.
+</td> <td><kbd>-strategy /as -partial_reductions 1 -special_overlaps 1 -conjugation 1 -secondary 2 -probe_style 2 -work_order 1</kbd></td>
+</tr>
+
+
+<tr>
+<td><kbd>vanilla</kbd></td><td>Makes MAF simulate a basic implementation of the Knuth-Bendix procedure, which knows which overlaps are minimal, and which performs balancing. This option generally increases execution time, and may not work well if the input file uses a non-geodesic word-ordering. This option is usually very bad if the input file contains long equations.</td> <td><kbd>-strategy /ue -filters 0 -partial_reductions 0 -special_overlaps 0 -conjugation 0 -secondary 0 -no_hd -probe_style 0 -work_order 2</kbd></td>
+</tr>
+
+<tr>
+<td><kbd>wreath</kbd></td><td>
+Selects the same option combinations that MAF would usually use if started with the <kbd>-confluent</kbd> if an input file uses a wreath-product word-ordering. This option does <em>not</em> function as a goal-setting option. Its purpose is to allow you to investigate possible modifications to the strategy that might be beneficial for a particular input file. For example some input files might benefit from using <kbd>-strategy wreath/fc</kbd>
+</td> <td><kbd>-partial_reductions 1 -special_overlaps 1 -conjugation 1 -secondary 3 -probe_style 3 -work_order 2</kbd></td>
+</tr>
+</table>
+
+<p>The "vanilla" and "naive" strategies are not recommended for general use. They may be of interest to users who are interested in learning how important MAF's extra means of discovering new equations are to its successful operation. KBMAG's version of <tt>kbprog</tt> is intermediate between these two strategies: it performs balancing, but only if <code>"shortlex"</code> word-ordering is used. It cannot tell which overlaps are minimal, but if the system appears to becoming confluent, can perform a test which checks the current set of minimal overlaps. It is also the case that MAF will perform much worse with these strategies than KBMAG's <tt>kbprog</tt> or other Knuth-Bendix implementations might, especially when the input file uses a wreath product word-ordering. That is because MAF always operates with a "reduced" set of rules. This tends to reduce the speed with which new equations can be discovered, and to increase the size and perversity of the equations when a wreath-product ordering is used. MAF also discovers overlaps in a completely different way to KBMAG. When KBMAG is expanding an equation it looks for all the overlaps in which it is the right equation, as well as all the overlaps in which it is the left, but in either case the other equation must not have been created after the equation being expanded. MAF could not implement this strategy efficiently. However it can always determine all the minimal overlaps in which any particular equation is the left equation very quickly, and it is some subset of this overlaps that MAF considers when it is "expanding nodes". When MAF out-performs KBMAG substantially it is usually because its strategies can and do consider the overlaps of recently discovered equations sooner than KBMAG would. When KBMAG out-performs MAF substantially it is usually because of the extra overheads inherent in MAF's design: in particular MAF sometimes gets into a state where a rewriting system is clearly trying to collapse to a much smaller one, but takes a very long time to do so.
+</p>
+
+<h5><a name="modifier"></a>The strategy modifiers</h5>
+<p>The strategy modifiers allow you to modify the predefined strategies or to create entirely new strategies for MAF to use. Each modifier corresponds to either a bit in MAF's internal strategy flags option, or to one of the boolean options set by one of the other command line options for <tt>automata</tt>. It would be difficult some of these options available using regular command line options without adversely affecting MAF's ability to choose default values for options that have not been specified based on the properties of the input file and the other options chosen.</p>
+
+<table summary="strategy modifiers" cellspacing="0" class="niceborder">
+<tr>
+<th>
+Letter
+</th>
+<th>
+Effect
+</th>
+
+<tr>
+<td><kbd>A</kbd></td><td><p>This option selects "aggressive discard". MAF normally uses this option unless the word-ordering is non-geodesic and can increase the length of words by an unlimited amount. When this option is in effect many equations which might otherwise have been pooled may instead be discarded. (This does not cause trouble, because either the equation is an "extra" equation that has been discovered other than through the Knuth-Bendix procedure, or it is an equation that MAF's "contract" does not oblige it to keep yet, so that the overlap that gave rise to it will certainly be considered again). This option usually improves performance for input files using geodesic word-orderings. It is not used for input files using wreath product  word-orderings, but it is possible that it might sometimes be  beneficial.</p></td>
+</tr>
+
+<tr>
+<td><kbd>B</kbd></td><td><p>This option selects "balanced expand". MAF normally uses only a rather small subset of the available equations as the left equation in overlaps. This option increases the size of this set somewhat, though the amount by which it does so varies a lot depending on the nature of the input file. Using this option might sometimes improve performance, but usually has little effect. 
+</td>
+</tr>
+
+<tr>
+<td><kbd>C</kbd></td><td><p>Makes MAF follow a "closed" strategy. If the strategy is "closed" MAF will not add any new equations to the set of equations which will be expanded on this pass. Note that if the right hand side of an equation in this set becomes reducible then the equation which results from repairing the equation by giving it a new right hand side is new and the equation is removed from the set of equations to be expanded, except when the work order option is 1. The "era" and "long" strategies are closed. All other predefined strategies are open. Closed strategies might work better if many new small equations arise from overlaps between small equations, but eventually a new equation that arises from an overlap between two larger equations causes a collapse, since this overlap may be considered sooner in a "closed" strategy.</p></td>
+</tr>
+
+<tr>
+<td><kbd>D</kbd></td><td><p>Makes MAF follow a "deep" or possibly "dumb" strategy. If this option is set MAF considers non-minimal overlaps. This option is set for the "naive" strategy, but no others. However, it might occasionally be beneficial when a "closed" strategy is used.</p></td>
+</tr>
+
+<tr>
+<td><kbd>E</kbd></td><td><p>Makes MAF use "era" based expansion. This means that only overlaps in which the right hand equation existed at the start of the pass are considered. If the strategy is also closed (as the "era" predefined strategy is), then the overlap existed at the start of the pass. This option tends to reduce the time each pass requires to run, but increase the number of passes. It is not usually beneficial, but it is more likely to be so when there are hidden equations.</p></td>
+</tr>
+
+<tr>
+<td><kbd>F</kbd></td><td><p>Makes MAF "forgetful". MAF knows whether overlaps have been considered before, and will exclude overlaps that have been from being considered again if the size of the equation from the overlap is sufficiently small. If this option is used then MAF will not exclude overlaps like this. It is plausible that when a wreath-product word-ordering is used that using this option might sometimes be beneficial, because it can happen that the equation which arises from the overlap now is desirable, whereas the old equation was modified by a perverse reduction that has since been eliminated but will remain in the pool for several passes.</p></td>
+</tr>
+
+<tr>
+<td><kbd>I</kbd></td><td><p>Allows MAF to be "intelligent" and to make deductions or inferences from information available to it, that would not be available to a basic Knuth-Bendix program. This option is on by default unless you use the "naive", "vanilla" or "easy" predefined strategies. So an option such as <kbd>-strategy easy/i</kbd> might make the "easy" strategy work better with input files that were not in fact very easy. For input files using a non-geodesic word-ordering it is unsafe to use this modifier with the "vanilla" or "naive" strategies unless you also use the P modifier.</td></tr>
+
+<tr>
+<td><kbd>J</kbd></td><td><p>This option has no effect unless word-differences are being computed. If they are then it changes the time at which word-differences are computed. MAF's usual policy is to compute the word-differences of an equation as soon as its current set of equations are all correctly reduced, and before computing conjugates and considering special overlaps. If the J option is specified then word-differences are only computed after conjugation and after special overlaps have been considered. Using the J option will increase the number of equations that are inserted because they appear to contain new word-differences (unless the <kbd>-tight</kbd> option is used), because the difference tracker MAF uses to compute word-differences may not yet have had an opportunity to compute the word-differences of some other equation that would give rise to the same word-difference. But, on the other hand, the word-difference machine will contain fewer mistakes.</td></tr>
+
+<tr>
+<td><kbd>L</kbd></td><td><p>This option stops MAF from favouring short equations over long ones. In fact the only thing this option does is to cause the "visible limit" to be set to a higher value than it normally would be (to either the length of longest equation or 8/5 of the "expand limit" is this is greater), and you can achieve the same effect by using the <kbd>-pool_above <i>n</i></kbd> option instead, but this value often seems to work well. When this option is used you may find that there are many more "special overlaps", so it may be necessary to disable special overlap processing completely when you use it. If there are long equations in the input file (with a total length above 20) then MAF might normally set the "visible limit" below the length of some of these equations, which means that overlaps involving these equations may be pooled: MAF tries to keep the initial visible limit to 20 or below, though it will never be less than 8 more than the shortest equation in the input file with a length greater than 4 (only G-equations are relevant if the input file is a coset system). So with some input files,  the L option causes the "visible limit" to be set to a much higher value, so that almost all equations will be inserted into the index automaton immediately. In general, it is much better to allow some equations to be pooled rather than disable the pool altogether, because when the index automaton contains many very long equations performance of MAF is adversely affected, because the amount of house-keeping required to insert new equations increases, and because such equations tend to be eliminated when later equations make either the LHS or RHS reducible. In fact, it is not having a pool that is often the main reason why the "vanilla" and "naive" strategies perform poorly.
+</td></tr>
+
+<tr><td><kbd>N</kbd></td><td><p>This options undoes the effect of the L option. So <kbd>-strategy long/N</kbd> would allow you to experiment with using a strategy almost the same as the long strategy, but with a different "visible limit", using the combination of  options <kbd>-strategy long/N -pool_above <i>n</i></kbd> where <i>n</i> would probably be some smaller number. The "era" strategy also sets the L strategy option flag, so this option letter might also be useful with that strategy.</td></tr>
+
+<tr><td><kbd>O</kbd></td><td><p>This option undoes the effect of the C modifier, and allows a "closed" strategy to be converted into an open one. So <kbd>-strategy era/o</kbd> and <kbd>-strategy long/o</kbd> would create "open" versions of these two closed strategies. In an "open" strategy, equations discovered during a pass of the new Knuth-Bendix phase may be added to the set of equations to be expanded if they meet certain criteria. Most input files benefit from "open" strategies, in some cases enormously, but a few are adversely affected.</td></tr>
+
+
+<tr><td><kbd>P</kbd></td><td><p>This options allows the "vanilla" and "naive" strategies to use the pool, which is essential if you want to modify them with the 'I' option, and it may well make them work much better in any case.</td></tr>
+
+<tr><td><kbd>S</kbd></td><td><p>This is option that is set by the "sparse" strategy. If this option is set more equations can be discarded. This will make the pool smaller, so might sometimes speed up processing if confluence is achieved quickly, but usually it will slow processing down a little because more overlaps need to be considered in more than one pass. You could experiment with using this option with the "wreath" strategy, for which the pool can sometimes get very big so that checking the pool becomes a major part of the processing.</td></tr>
+
+<tr><td><kbd>T</kbd></td><td><p>This option undoes the effect of the 'E' that is set by the "era" and "vanilla" strategies. For each equation that is expanded a list of all the overlaps in which it is the left equation will be constructed, whereas when the 'E' option is used the list will only include overlaps with equations that existed at the start of the pass.</td></tr>
+
+<tr><td><kbd>U</kbd></td><td><p>This option makes a strategy "unintelligent": in such strategies MAF is not allowed to make deductions from information that does not come from considering overlaps. For instance, when word-differences are being computed, using this option will prevent the difference tracker from creating equations that arise from processing coincidences in the word-difference machine. If you use this option then the <kbd>-no_hd</kbd> option will be set, because otherwise MAF can go wrong when it tries to compute word-differences, because MAF cannot compute inverses without using deductions. For the same reason this option is incompatible with the <kbd>-check_inverses</kbd> option.</td></tr>
+</table>
+
+<h3>Tactical Options</h3>
+<p>MAF has very many options which will modify its implementation of the Knuth-Bendix procedure, and which can therefore dramatically effect the amount of time and memory needed to find a confluent rewriting system.</p>
+
+<h4><a name="conjugation"></a><kbd>-conjugation <i>n</i></kbd></h4>
+<p>When MAF first creates an equation it is fed into a pipeline which attempts to maintain the index automaton in good condition. The first thing that happens to any equation is that its right conjugate is created, if it exists. The last thing to happen before the equation is considered to be fully incorporated into the index automaton, is that undergoes a further process of "conjugation". What happens in this process depends on the value of the <kbd>-conjugation <i>n</i></kbd> option.</p>
+<table summary="Values for -conjugation n">
+<tr>
+<th>Value</th><th>Action performed by conjugation procedure</th></tr>
+<tr><td>0</td><td>None</td></tr>
+<tr><td>1</td><td>The equation obtained by left balancing (multiplying both sides of the equation by the inverse of the first symbol on the LHS) is considered, if left balancing is possible for this equation. This is the default value for the option unless the "era", "long", or "easy" strategy is specified.</td></tr>
+<tr><td>2</td><td>All overlaps with equations with an LHS of length 2 are considered (either to the left or right)</td></tr>
+<tr><td>3</td><td>All overlaps of length |LHS|+1 containing the LHS are considered (which of course includes all the overlaps with equations of length 2)</td></tr>
+<tr><td>4</td><td>Same as 1, unless a coset system is being processed and this is a G equation. In that case a coset equation is formed by multiplying on the left by the coset symbol.</td></tr>
+</table>
+<p><kbd>-conjugation 0</kbd> is quite often beneficial for input files for largish finite groups, at least when the presentation is otherwise straight-forward and a geodesic word-ordering is being used.</p>
+
+<h4><a name="dense_rm"></a><kbd>-dense_rm</kbd></h4>
+<p>This option is only relevant if there are more than 8 group generators, or MAF is processing a coset system and there are more than 8 named subgroup generators. In this case MAF will usually use a sparse format for the transitions in the index automaton it maintains for doing its work. The <kbd>-dense_rm</kbd> will force dense format to be used.</p>
+<p>Word reduction is somewhat slower when sparse format is used, so MAF may work a little more slowly than normal, but this is usually more than offset by the fact that MAF has less work to do when inserting new equations into the automaton (in fact prior to the possibility of using a sparse transition table it was extremely difficult for MAF to handle input files with large generating sets). One reason you might want to force a dense format index automaton to be used is that without it MAF does not detect many partial reductions: often, when the number of generators is large the generating set is much larger than need be, and in such cases doing the partial reduction checks can be very helpful.</p>
+
+<h4><a name="expand_all"></a><kbd>-expand_all</kbd></h4>
+<p>Usually MAF follows a strategy of performing multiple passes of Knuth-Bendix completion, in any one pass considering only overlaps in which the first left hand side satisfies certain criteria which causes MAF to "approve" of the equation. This strategy is often very successful and allows MAF to process some input files many times faster than KBMAG would. However, with some other input files it works very badly. <kbd>-expand_all</kbd> orders MAF to consider overlaps of all the equations it knows about in each pass. This will normally degrade performance slightly those will not always be the case. A less drastic option with a somewhat similar effect use the "balanced" strategy, or to specify some other strategy explicitly and apply the B strategy modifier. </p>
+
+<h4><a name="extended_consider"></a><kbd>-extended_consider</kbd></h4>
+<p>This option tells MAF to consider each overlap more fully than it normally would. Instead of just considering the basic overlap that arises from the two originally overlapping LHS, MAF will look for other  overlaps which arise in the partially reduced words in these overlaps. It might be the case that such overlaps had not yet been considered, and that doing so will help to discover better reductions for one or other side of the equation arising from the first overlap. This option does not often seem to be useful: it tends to degrade performance slightly (but severely with wreath type word-orderings), but it is also only likely ever to be beneficial with such orderings, since it is for them that is most difficult to arrange matters so that overlaps are considered in a sensible order.</p>
+
+<h4><a name="filters"></a><kbd>-filters <i>n</i></kbd></h4>
+<p>This is one of two options which controls which overlaps MAF will consider for an equation being expanded (the other is <kbd>-probe_style <i>n</i></kbd>). The set of overlaps available for an equation is usually filtered so that only overlaps which are less than a certain length, or which appear to give rise to equations of less than a certain size are considered (the limits being gradually increased at the start of each new pass). The <kbd>-filters <i>n</i></kbd> option is a bit mask which should take a value between 0 and 7 and which defaults to 7. The only value about from 7 which you should currently experiment with is 0, which will stop MAF performing any filtering at all. Changing this option is unlikely to have a good effect.</p>
+
+<h4><a name="no_pool"></a><kbd>-no_pool</kbd></h4>
+<p>This option tells MAF not to prevent long equations from being added to the index automaton. This is a very risky option to use, and probably should never be used with non-geodesic word-orderings as it will frequently result in a "feedback loop" that causes MAF to generate an almost endless stream of longer and longer equations. In almost all cases the <kbd>-pool_above <i>n</i></kbd> option will be a better choice than this option. It is sometimes useful for input files which have very long equations, especially in the case where there are also some equations of moderate length. This option does not in fact disable the pool altogether, but if it is used equations will only get into the pool if it is currently impossible to reduce either the LHS or the RHS of the equation (because the maximum word length would be exceeded, or because the reduction cannot be completed in a timely manner)</p>
+
+
+<h4><a name="no_throttle"></a><kbd>-no_throttle</kbd></h4>
+<p>MAF usually imposes a limit on the number of partial reduction checks and special overlaps which may be pending consideration. It does this because otherwise these aspects of processing can come to unduly dominate MAF's activity. You can use the <kbd>-no_throttle</kbd> option to remove the limit. This might be worth doing if you have disabled special overlaps completely, because performing more partial reduction checks will make MAF behave more as though it were performing a Todd-Coxeter coset enumeration, and so might be beneficial when the structure whose automata are being computed is finite.</p>
+
+<h4><a name="partial_reductions"></a><kbd>-partial_reductions <i>n</i></kbd></h4>
+<p>The <kbd>-partial_reductions <i>n</i></kbd> option, which takes a value between 0 and 7, controls what, if any, checks are made when a transition which will cause part (but not the whole) of the input word to be rewritten, is added to the index automaton. The default value is 1 which enables some checking.  <kbd>-partial_reductions 0</kbd> often speeds up processing slightly, and equally often slows it down, sometimes quite severely. The other values introduce some extra, experimental checks, but are rarely, if ever, beneficial.</p>
+
+<h4><a name="pool_above"></a><kbd>-pool_above <i>n</i></kbd></h4>
+<p>This option sets the initial "visible limit". Equations up to this size are inserted into the index automaton, longer equations are liable to be placed in the pool, or even discarded altogether (if this happens the overlap that gives rise to the equation will be considered again later). MAF will gradually increase the "visible limit", and the first few passes of the Knuth-Bendix procedure can be very quick, so if you want to set this option you may need to experiment a little to achieve the intended result. Setting this option is sometimes necessary when there is a mix of short and long axioms; unless this option is used MAF can sometimes give too much weight to the overlaps of the shorter axioms (though if you think that might be the case you should try using the "long" or "era" strategies).</p>
+
+<h4><a name="probe_style"></a><kbd>-probe_style <i>n</i></kbd></h4>
+<p>This is one of two options which determines which overlaps MAF will be visible for an LHS. The value for <kbd>-probe_style <i>n</i></kbd> is a number between 0 and 3. Value 0 makes the fewest overlaps visible, value 3 the most. MAF divides all the left hand sides into two sets, an "approved" set of short left hand sides, and all the rest. At the start of an expansion phase it computes various limits such as the maximum length of an overlap between two approved or two unapproved equations. It then uses these to select which overlaps are visible. Using a low value of probe_style reduces the number of equations that are created which will subsequently need to be eliminated, and when word-differences are being computed, reduces the number of spurious word-differences that are found. On the other hand it might delay the discovery of a possibly important equation to a later phase.</p>
+
+<h4><a name="repeat"></a><kbd>-repeat <i>n</i></kbd></h4>
+<p> The <kbd>-repeat <i>n</i></kbd> option which takes a value between 0 and 2, controls how many times MAF will look at the overlaps for those equations that are selected to be considered as the first left hand side in an overlap. It is perfectly possible that after considering all the overlaps for a particular equation new overlaps of that equation will have arisen, or that some of the RHS in the previously considered overlaps have changed, or that the equation arising from an already overlap will be different, or will now satisfy the heuristics that control which equations get inserted into the index-automaton when previously it would not have.</p>
+<p>This option defaults to 0, which means that the overlaps for any particular equation will be considered just once per pass. If the option is set to 1, the overlaps of each equation are considered twice, and if it is set to 2, the overlaps are considered repeatedly until considering the overlaps has no effect.</p>
+<p>This option will usually degrade performance slightly.</p>
+
+<h4><a name="special_overlaps"></a><kbd>-special_overlaps <i>n</i></kbd></h4>
+<p>A "special overlap" is an overlap that is discovered as a by-product of inserting an equation into MAF's index automaton, rather than one that is discovered through looking for the overlaps of an equation that is being expanded. MAF inevitably discovers such overlaps from time to time. The <kbd>-special_overlaps <i>n</i></kbd> option determines how these overlaps are treated, and takes a value between 0 and 5. The default value of the option is 1, which means that "special overlaps" will only be considered if they appear to correspond to an equation that is fairly short. You can disable special overlap processing altogether with <kbd>-special_overlaps 0</kbd>. This often speeds up computations for straight-forward input files, but it can have a very bad effect for difficult ones: for these special overlap processing is often very important, particularly when a wreath type word-ordering is used. The amount of special overlap processing tends to increase as the number of generators increases, so for input files with large generating sets it is often best to use the <kbd>-special_overlaps 0</kbd> option.</p>
+<p>If <kbd>-special_overlaps</kbd> is given a value of 2, the length up to which equations are considered to be special is increased slightly: in fact the behaviour will then be similar to version 1 of MAF. The limit has been reduced in version 2 of MAF to try to decrease the proportion of input files for which special overlaps processing is unhelpful. However, some input files work better with the old behaviour.</p>
+<p>If <kbd>-special_overlaps</kbd> is given a value of 3 or above, many more special overlaps will be processed, (though the length up to which overlaps is special is reduced) and each equation will take longer to create. Values greater than 2 currently are almost always bad.</p>
+
+
+
+<h4><a name="work_order"></a><kbd>-work_order <i>n</i></kbd></h4>
+<p>In each phase of its Knuth-Bendix implementation MAF will select a subset of the available primary equations. For each equation in this subset it will then choose a subset of the overlaps in which the LHS of that equation is the prefix. MAF only constructs this list of overlaps at the time it decides to process that particular equation (MAF refers the process of constructing and processing this list as "Expanding Nodes"). This means that
+the order in which the subset of equations is processed may have a substantial impact on execution time, especially in the case of a difficult presentation.</p>
+<p>The <kbd>-work_order <i>n</i></kbd> option where n is a value from 1 to 6, selects the order in which equations will be processed as shown in the table below.</p>
+<table summary="Values for -work-order n option" class="niceborder" cellspacing="0">
+<tr>
+<th>n</th><th>Ordering</th>
+</tr>
+<tr>
+<td>1</td>
+<td><p>Equations that have not been expanded before are processed first, in shortlex order of LHS.
+Then any equations that have been expanded before and are to be expanded again are processed, also in shortlex order of LHS. Any equations that are added to the list of equations to be expanded while the expansion phase is proceeding are added to the list of equations that have not been expanded before (so are processed before the equations that have been expanded before) on a first in first out basis. This option is the default unless either a wreath type word-ordering method is used, or the "era" or "long" strategies are used.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><p>Equations are processed in order of RHS length, from shortest first. Equations of equal RHS length, are processed in order of LHS length, from shortest first. Equations of equal LHS and RHS length are ordered according to the ordering of the LHS implied by the word-ordering method. Equations that are added to the list of equations to be expanded while the expansion phase is proceeding are inserted into the list at the correct point, and an equation whose RHS changes will be removed and reinserted at the correct point. This option is the default when a wreath type ordering is used unless the "era" or "long" strategies are used.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><p>Equations that have not been expanded before are processed first, using the same ordering as for <kbd>-work_order 2</kbd>. Then equations that have been expanded before are expanded again, with those least recently processed expanded first. This means that on phase 3 say, all the equations that were first expanded in phase 2 will usually be processed before all the equations that were first expanded in phase 1. This explanation ignores a technicality which is explained in connection with <kbd>-work_order 4</kbd>
+</td>
+</tr>
+<tr><td>4</td>
+<td><p>Equations that have not been expanded before are processed first, in order of the time they were inserted into the index automaton. Then equations that have been expanded before are expanded again, with those least recently processed expanded first. This means that on phase 3 say, all the equations that were first expanded in phase 2 will usually be processed before all the equations that were first expanded in phase 1.</p>
+<p>There is a technicality, which is that the time of expansion is measured not using actual time, but by a timestamp which represents the most recently created equation against which the equation has been expanded.
+When the "era" strategy is used, all equations are expanded in a way that ignores all equations created after the expansion phase began, so in the next phase all the equations that were expanded have the same timestamp, so will be sorted by the time they were inserted into the automaton. Equations will also appear to have been expanded at the same time if no new equations were added to the index automaton in between the two expansions.</p>
+<p><kbd>-work_order 4</kbd> is the default if the "era" or "long" strategies are used. </p>
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td><p>Equations are processed in order of LHS length, from shortest first. Equations of equal LHS length are ordered according to the ordering of the LHS implied by the word-ordering method. Equations that are added to the list of equations to be expanded while the expansion phase is proceeding are inserted into the list at the correct point.
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td><p>Equations are processed in order of LHS length, from longest first. Equations of equal LHS length are ordered according to the ordering of the LHS implied by the word-ordering method. Equations that are added to the list of equations to be expanded while the expansion phase is proceeding are inserted into the list at the correct point.
+</td>
+</tr>
+</table>
+<p>For a difficult presentations it may well be worth trying <kbd>-work_order 4</kbd> if the default strategy does not work well. In cases where MAF is out-performed by KBMAG using this option will often work well. Option 6 often sometimes well also.</p>
+
+
+<h3>Options for dealing with secondary equations</h3>
+<p>Every equation in a minimal confluent rewriting system has the property that both the RHS and every subword of the LHS are irreducible. This kind of equation is called a primary equation. An equation which instead has the property that both the RHS and every prefix of the LHS are irreducible is called a <dfn>secondary equation</dfn>. Secondary equations play an important role in MAF. This is true even if you choose the options which prevent them from being deliberately created.</p>
+<p>Secondary equations can be created in two ways:
+<ol><li>They can be created by computing the reduction of reducible words with an irreducible prefix. Inserting secondary equations like this helps to make word reduction quicker. In the case where a wreath type ordering is used this can become critical.</li>
+<li>They can be equations which were originally primary equations, but for which a trailing subword is now known to be reducible. Let us call this process demotion.</li>
+</ol>
+<p>When a secondary equation is created by the first process, it is quite possible that balancing the new equation will show that the original LHS did not in fact have an irreducible prefix. </p>
+<p>When an equation becomes secondary by the second process, it is necessary to consider the overlap between
+the two left hand sides in order to determine which equation leads to the better reduction of the LHS. MAF assumes that the original equation is better until it has time to consider the overlap.</p>
+<p>If a non-geodesic word-ordering is in use it is quite possible that the original secondary equation is much smaller than the equation that arises from considering the overlap between the secondary equation and the primary, and that the resulting new primary equation will be rejected by MAF's heuristics which decide whether or not to allow an equation into the index automaton.</p>
+<h4><a name="secondary"></a><kbd>-secondary <i>n</i></kbd></h4>
+<p>This option only applies when MAF is following plan C: if word-differences are being computed then it is
+set automatically.</p>
+<p>The <kbd>-secondary <i>n</i></kbd> option sets MAF's policy towards secondary equations. It takes a value from 0 to 4. In the value is 0 or 1 secondary equations can only be created through demotion (except that MAF allows RHS correction for <kbd>-secondary 1</kbd>). With <kbd>-secondary 0</kbd> secondary equations are always removed as soon as the overlap has been considered, but with <kbd>-secondary 1</kbd> the equation is retained if it had the better RHS.</p>
+<p>With <kbd>-secondary 2</kbd> and above secondary equations may be created deliberately, though the extent to which this will happen depends on whether word differences are being computed or not. If word differences are not being computed, the only secondary equations that are created are the right conjugates of primary equations: in other words for each primary equation <i>u*g=v</i> the conjugate equation <i>v*g^-1=u</i> will be created. Such equations may or may not be primary themselves.</p>
+<p>The difference between <kbd>-secondary 2</kbd> and <kbd>-secondary 3</kbd> is somewhat technical: in the former case the equation is only partially inserted into the index automaton which performs word reduction, whereas with <kbd>-secondary 3</kbd> the equation is fully inserted (a partially inserted equation will be seen if it occurs as a prefix of the word being reduced, but may be missed otherwise - if an equation is secondary this does not affect whether a word is reducible, though it may effect the final reduction while the system is not confluent). MAF spends a very high proportion of its time performing such updates, so using <kbd>-secondary 2</kbd> option instead of <kbd>-secondary 3</kbd> speeds up the construction of equations but reduces the potential benefit in terms of faster reduction that having secondary equations can bring. If a rewriting system uses a wreath type ordering it will usually be much better to use <kbd>-secondary 3</kbd> than <kbd>-secondary 2</kbd>.</p>
+<p><kbd>-secondary 4</kbd> results in the creation of a great many more secondary equations, which are again fully inserted into the tree. Sometimes when a wreath-product type ordering is in effect this is the only way of  making reduction feasible: the author knows of an input file where a single incompletely reduced right hand side in an otherwise confluent rewriting system has taken more than 24 hours to reduce - despite the fact that MAF's code for performing word-reduction is very highly optimised.</p>
+<p>The default value for <kbd>-secondary <i>n</i></kbd> depends both on the word-ordering, and on whether word differences are being computed. If a wreath type ordering is being used then the default value is 3, otherwise the default value is 2 if word differences are being computed and 1 if not.</p>
+<p>If you are using a non-geodesic word-ordering this option can be very important: there are many input files which work very well with <kbd>-secondary 3</kbd> but not <kbd>-secondary 1</kbd>, but almost as many for which the opposite is the case. Using <kbd>-secondary 0</kbd> is very risky if you use a wreath type word-ordering. MAF can easily get into a state where word reduction becomes extremely slow. If you feel that MAF is spending too long processing secondary equations then you can try the <kbd>-weed_secondary</kbd> option instead</p>
+<h4><a name="consider_secondary"></a><kbd>-consider_secondary</kbd></h4>
+<p>It should only ever be necessary to use this option when a non-geodesic word-ordering is used. It changes how 
+MAF treats an overlap in which the second equation is secondary. MAF's default behaviour is to ignore such overlaps (except perhaps when they arise as special overlaps). If this option is enabled, then MAF will consider such overlaps when it is known that the secondary equation gives a better reduction of its LHS than the corresponding primary does (or at least it did when the overlap between the secondary and its primary was considered). For a secondary equation to be in this state it must be the case that MAF was unable to insert the primary equation arising from the overlap at the time it was last considered. There is no point using this option when you are using a geodesic word-ordering, because it is more or less impossible for there to be any secondary equations in the required state.</p>
+<p>This option is not enabled by default. Experiments seem to indicate that it is helpful and unhelpful about equally often, but that the penalty when it is unhelpful is usually bigger than the the benefit when it is helpful. It is possibly more likely to be useful for input files with long relators.</p>
+<h4><a name="weed_secondary"></a><kbd>-weed_secondary</kbd></h4>
+<p>This option alters how MAF deals with secondary equations at the time it considers the overlap with the primary equation. MAF's normal policy is to retain the secondary if it was originally better than the primary, or if both equations lead to the same reduction and the secondary did not need to be repaired. If the <kbd>-weed_secondary</kbd> option is set MAF will only retain secondary equations if either the RHS is empty or the secondary equation is better and the necessary primary cannot yet be inserted. So if a geodesic word-ordering is used <kbd>-weed_secondary</kbd> will have much the same effect as <kbd>-secondary 0</kbd>. This option sometimes improves performance quite a lot when a non-geodesic word-ordering is used, because it can substantially reduce the number of secondary equations that get created. However, like <kbd>-secondary 0</kbd> it can cause word-reduction to become hopelessly slow when wreath type orderings are used.</p>
+<p>This option is incompatible with the <kbd>-secondary 4</kbd> option. If that option is in effect secondary equations are always retained, and the RHS is improved if removing the equation would otherwise improve the reduction of the LHS.</p>
+
+<h3>Options for rewriting systems using non-geodesic orderings</h3>
+<p>Recall that the word-ordering method associated with a rewriting system is said to be geodesic if the
+normal form for any element is a shortest word. The options described in this section are those which are only ever likely to be useful when the input rewriting system uses a non-geodesic word-ordering, and in may cases
+the options pertain to code which can in fact only be executed for such orderings. However, in a few cases, the options described apply generally.</p>
+<p>Implementing Knuth-Bendix is much more difficult for non-geodesic word-orderings than for geodesic orderings, because the effect of inserting a new equation into the tree is much harder to predict. For, example an equation like <i>a*b=b*a*a</i> may look fairly harmless, but it will result in rewriting <i>a*b^6</i> as <i>b^5*a^64</i>, so that unless <i>a</i> is known to have finite and small order, it may drastically impact the size of the irreducible words that represent group elements.</p>
+<h3>Balancing options</h3>
+<p>When a new equation is discovered, it may happen that it is possible to show that some subword of its left hand side (LHS) is reducible, by multiplying both sides of the equation - either on the left by the inverse of some prefix of the LHS, or on the right by some suffix of the LHS - and then cancelling on the left hand side and reducing, if need be, on the right hand side. This process is known as balancing and will tend to reduce the length of the LHS and increase the length of the RHS. In principle, the balancing of equations is unnecessary, because an equation that is found through balancing would also eventually be found by following the Knuth-Bendix procedure. Nevertheless, for geodesic orderings, it is almost always a good idea to balance equations as much as possible, as this this tends to reduce the number of changes that will need to be made to the rewriting system later on. However, when the word-ordering is non-geodesic it may or may not be a good plan to balance an equation, because it can easily happen that an equation that has been balanced as much as possible will tend to increase both memory usage, and the difficulty of performing word-reduction, and it might well be better to delay discovery of the more aggressively balanced equation until later. For example, when recursive word-ordering is used, it is often the case that the inverse of a generator is found to be reducible to some very long word, so that balancing the equation has the effect of severely increasing the length of the RHS. It might well be the case that later on a shorter reduction is known for the eliminated inverse generator, so that it would be best to delay discovery of the more balanced equation. Therefore, there are a number of options which can be used to control how MAF balances equations, and it may sometimes be worth using one or more of these options.</p>
+<p>Note that for a coset system, and where the equation involves the coset symbol, it is almost always possible to move all <i>H</i>-generators from the LHS to the RHS, and this is always done when it is possible.</p>
+<p>In MAF balancing is performed by moving one symbol at a time, and balancing may stop either when no more balancing is possible, or when some test involving both the unbalanced and the balanced equation indicates that no more balancing should be performed. MAF will also try to avoid balancing very long equations that are either going to be pooled or discarded.</p>
+<p>KBMAG does not balance equations at all when a non-geodesic word-ordering is used.</p>
+<h4><a name="balancing"></a><kbd>-balancing <i>n</i></kbd></h4>
+<p>This option, which should be a number between 0 and 7 controls balancing from the right. It is set to 1 by default, except when the word-ordering method is "rt_recursive" or "rt_wreathprod" when it defaults to 3. If the value is 0 no balancing on the right is performed, and in addition the next option, <kbd>-left_balancing</kbd> defaults to 0. In all other cases balancing on the right may be performed. The value of
+balancing is treated as a bit mask, but only 2 and 4 are significant. Therefore values 2 and 3, 4 and 5, and
+6 and 7 behave in the same way. If the 2 bit is set, a right balancing step will not be performed if the total length of the balanced equation is longer than the current "visible limit" for equations but the unbalanced equation is not. If bit 4 is set a balancing step will not be performed if the balanced equation is longer than the "visible limit" and the new RHS is longer than the new LHS and (new_rhs_length - new_lhs_length) &gt; (old_rhs_length - old_lhs_length). Therefore 1 is the most aggressive value for this option.</p>
+<p>You may like to note that MAF will never perform a right balancing step if the new LHS is greater than the new RHS prior to the RHS's being reduced, because the balanced equation will be the next equation to be considered.</p>
+<kbd><a name="left_balancing"></a>-left_balancing <i>n</i></kbd>
+<p>This option, which should be a number between 0 and 3 , controls balancing from the left. The default value for the option is 1 unless one of the rt_ word-orderings is used, in which case it is 3, but, if <kbd>-balancing 0</kbd> was specified then <kbd>-left_balancing</kbd> also defaults to 0. If left_balancing is 0 no left balancing is performed, 1,2,3 are progressively more aggressive in the amount of balancing performed.</p>
+<h4><kbd>-no_unbalance</kbd></h4>
+<p>"unbalancing" is an option that is on by default, except for coset systems where it is not available at all,  but which can be turned off with <kbd>-no_unbalance</kbd>. Suppose MAF has discovered a new equation, and has decided to insert it into the rewriting system (rather than discarding it, or placing it in the pool). If at that point the LHS is shorter than the RHS, and "unbalancing" is enabled, then MAF will move symbols from the RHS to the LHS by multiplying on the right by the inverse of the RHS for as long as it can do so without the LHS becoming reducible. It then inserts this equation into the tree instead. The idea is to mitigate any bad effect that inserting  the more balanced equation immediately would have. Eventually either conjugation or normal Knuth-Bendix will find the more balanced equation.</p>
+<h4><a name="swap_bad"></a><kbd>-swap_bad</kbd></h4>
+<p>The <kbd>-swap_bad</kbd> option enables another tactics for dealing with equations with a longer RHS than LHS which must be inserted into the tree. Instead of moving symbols from the RHS to the LHS, MAF attempts to make the equation over-balance by multiplying on the right by the inverse of the last symbol on the LHS. If by doing so it is possible to make the RHS later in the word-wording than the LHS before the RHS becomes reducible, then MAF inserts this swapped equation instead before inserting the original equation. One might imagine that this would be helpful if MAF is about to insert an equation such as A=a^26], but does not yet know that a^27=<code>IdWord</code>. 
+However, in practice this option does not often seem to be beneficial, so it is turned off by default.</p>
+
+<h3>Other tactical options for non-geodesic orderings</h3>
+
+<h4><a name="collapse"></a><kbd>-collapse <i>n</i></kbd></h4>
+<p>The <kbd>-collapse <i>n</i></kbd> option, which must be given a value from 0 to 2, and which is 0 by default enables some equations which might otherwise be pooled or discard to be inserted into the rewriting system instead. These equations are certain to eliminate some part of the tree, and so may help to promote a collapse. Using <kbd>-collapse 1</kbd> is quite often helpful, and unlikely to be very harmful. <kbd>-collapse 2</kbd> will allow potentially allow equations with a long RHS to be inserted much sooner than they otherwise would have been. <kbd>-collapse 2</kbd> usually had a bad effect.</p>
+
+<h4><a name="no_early_repair"></a><kbd>-no_early_repair</kbd></h4>
+<p>When new equations are inserted into a rewriting system it frequently happens that some of the existing equations become invalid because either the right hand side or a subword of the left hand side are now reducible. MAF tries to repair such equations as soon as possible. When a non-geodesic word-ordering is in use this can be difficult, and one of the tactics MAF usually uses in this case is to repair right hand sides which appear to be "better" very early on in this process. MAF regards an RHS as "better" if the new RHS is shorter than the LHS, or the old RHS was longer than the LHS and the new RHS is shorter than the old one.</p>
+<p>The <kbd>-no_early_repair</kbd> disables this favouritism towards shorter right hand-sides. This is almost always a bad idea.</p>
+
+<h3>"Non-geodesic" options that are always available</h3>
+<h4><a name="no_pool_below"></a><kbd>-no_pool_below <i>n</i></kbd></h4>
+<p>When non-geodesic word-ordering is used it can easily happen that one side of an equation is much longer than the other. For example, when recursive orderings are used it is common for inverse generators to be eliminated.
+It sometimes happens that such an equation gets stuck in the pool for a long time. One way to prevent this from happening is to try the <kbd>-collapse 2</kbd> option. Another is to use this option. If either side of an equation is no more than this value, it will be added to the tree. The default value of this option is 0: any equation with an empty RHS is always added to the tree.</p>
+<p>Although it can be frustrating to know that an equation with a short LHS is in the pool, if the RHS is long it is generally best to leave it there for a while. Setting this option rarely has a good effect.</p>
+
+<h3>Debugging option</h3>
+<h4><a name="check"></a><kbd>-check <i>fsaname</i></kbd></h4>
+<p>If, for whatever reason, you believe that MAF is producing incorrect results for a particular input file for a group, and you have available a word-difference machine that   solves the word problem for this input file, then you can tell MAF to check each equation it produces against this FSA by using the <kbd>-check <i>fsaname</i></kbd> option. In the unlikely event that an equation that is not recognised by the FSA is produced, MAF will terminate with an internal error. If you then send both the input file and the validating FSA to the author he will do his best to investigate to discover if MAF really is producing incorrect results, or if in fact the error is in the supposedly correct FSA you have used for validation. The author has not had cause to use this option since MAF was publicly released.</p>
+
+
+<h3><a name="automata_options_table"></a>Table of options for <tt>automata</tt></h3>
+
+<p>
+The table below lists all the options that may affect processing significantly. Options that are only accepted for KBMAG compatibility purposes are not listed. Many of the options are only relevant in specific circumstances, or relate to specific areas of processing within MAF: the second column of the table indicates this. Almost any option can have a drastic effect (either good or bad), on the amount of memory and the amount of time MAF uses in its computations. The third column indicates how useful/important the option is and any caveats. 
+</p>
+
+<table summary="Alphabetic list of command line options for automata" class="niceborder" cellspacing="0">
+<thead>
+<tr>
+<th>Option</th>
+<th>Importance/Caveats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#balancing"><kbd>-balancing <i>n</i></kbd></a></td>
+<td>Sometimes useful, unpredictable</td>
+</tr>
+
+<tr>
+<td><a href="#check"><kbd>-check <i>fsaname</i></kbd></a></td>
+<td>Used for debugging purposes only</td>
+</tr>
+
+<tr>
+<td><a href="#check_inverses"><kbd>-check_inverses</kbd></a></td>
+<td>Rarely useful, tends to degrade performance slightly (but severely with wreath type orderings). Increases memory usage</td>
+</tr>
+
+<tr>
+<td><a href="#collapse"><kbd>-collapse <i>n</i></kbd></a></td>
+<td>Rarely useful, tends to degrade performance, often has little effect</td>
+</tr>
+
+<tr>
+<td><a href="#confluent"><kbd>-confluent</kbd></a></td>
+<td>Important, Often useful, but must be used with care</td>
+</tr>
+
+<tr>
+<td><a href="#conjugation"><kbd>-conjugation <i>n</i></kbd></a></td>
+<td>Sometimes useful, but default value (1) usually works well</td>
+</tr>
+
+
+<tr>
+<td><a href="#consider_secondary"><kbd>-consider_secondary</kbd></a></td>
+<td>Occasionally useful. Unpredictable effect</td>
+</tr>
+
+
+<tr>
+<td><a href="#cos"><kbd>-cos</kbd></a></td>
+<td>N/A</td>
+</tr>
+
+<tr>
+<td><a href="#dense_rm"><kbd>-dense_rm</kbd></a></td>
+<td>Rarely relevant - only applies to rewriting systems with large alphabets (more than 8 generators)</td>
+</tr>
+
+<tr>
+<td><a href="#detect_finite_index"><kbd>-detect_finite_index</kbd></a></td>
+<td>Important, often useful</td>
+</tr>
+
+<tr>
+<td><a href="#"><kbd>-eliminate</kbd></a></td>
+<td>Rarely useful, it is usually be better to use <tt>simplify</tt> instead</td>
+</tr>
+
+<tr>
+<td><a href="#expand_all"><kbd>-expand_all</kbd></a></td>
+<td>Sometimes necessary, but usually degrades performance</td>
+</tr>
+
+<tr>
+<td><a href="#extended_consider"><kbd>-extended_consider</kbd></a></td>
+<td>Rarely useful, tends to degrade performance slightly (but severely with wreath type orderings), but also only likely ever to be beneficial with wreath orderings</td>
+</tr>
+
+<tr>
+<td><a href="#fast"><kbd>-fast</kbd></a></td>
+<td>Sometimes useful, but when it is <a href="#no_kb"><kbd>-no_kb</kbd></a> is usually better</td>
+</tr>
+
+<tr>
+<td><a href="#filters"><kbd>-filters <i>n</i></kbd></a></td>
+<td>Unlikely to have much effect</td>
+</tr>
+
+<tr>
+<td><a href="#force_differences"><kbd>-force_differences</kbd></a></td>
+<td>Useful as part of a preliminary investigation</td>
+</tr>
+
+<tr>
+<td><a href="#force_multiplier"><kbd>-force_multiplier</kbd></a></td>
+<td>Rarely useful, possibly risky</td>
+</tr>
+
+<tr>
+<td><a href="#ignore_h_length"><kbd>-ignore_h_length</kbd></a></td>
+<td>Often essential for coset systems with named subgroup generators. Tends to improve running time but increase relator lengths in any subgroup presentation generated</td>
+</tr>
+
+<tr>
+<td><a href="#left_balancing"><kbd>-left_balancing <i>n</i></kbd></a></td>
+<td>Occasionally useful. Unpredictable effect</td>
+</tr>
+
+<tr>
+<td><a href="#max_equations"><kbd>-max_equations <i>n</i></kbd></a></td>
+<td>Occasionally useful</td>
+</tr>
+
+
+<tr>
+<td><a href="#max_time"><kbd>-max_time <i>n</i></kbd></a></td>
+<td>Occasionally useful</td>
+</tr>
+
+<tr>
+<td><a href="#min_time"><kbd>-min_time <i>n</i></kbd></a></td>
+<td>Unlikely to be useful</td>
+</tr>
+
+
+<tr>
+<td><a href="#no_early_repair"><kbd>-no_early_repair</kbd></a></td>
+<td>Rarely useful. Unpredictable effect</td>
+</tr>
+
+<tr>
+<td><a href="#no_h"><kbd>-no_h</kbd></a></td>
+<td>Often useful for coset systems using named generators. Usually used in combination with <kbd>-ignore_h_length</kbd>, in which case it tends to mitigate the bad effects of the latter option on the subgroup presentation.</td>
+</tr>
+
+<tr>
+<td><a href="#no_hd"><kbd>-no_hd</kbd></a></td>
+<td>Usually enabled automatically when needed</td>
+</tr>
+
+<tr>
+<td><a href="#no_kb"><kbd>-no_kb</kbd></a></td>
+<td>Very useful but risky strategy option</td>
+</tr>
+
+<tr>
+<td><a href="#no_pool"><kbd>-no_pool</kbd></a></td>
+<td>Sometimes useful but risky strategy option</td>
+</tr>
+
+<tr>
+<td><a href="#no_pool_below"><kbd>-no_pool_below <i>n</i></kbd></a></td>
+<td>Rarely useful</td>
+</tr>
+
+<tr>
+<td><a href="#no_prune"><kbd>-no_prune</kbd></a></td>
+<td>Occasionally useful</td>
+</tr>
+
+<tr>
+<td><a href="#no_throttle"><kbd>-no_throttle</kbd></a></td>
+<td>Occasionally useful, risky</td>
+</tr>
+
+<tr>
+<td><a href="#no_unbalance"><kbd>-no_unbalance</kbd></a></td>
+<td>Rarely useful, unpredictable but usually bad effect</td>
+</tr>
+
+<tr>
+<td><a href="#validate"><kbd>-no_validate</kbd></a></td>
+<td>Risky, since may result in an incorrect automatic structure</td>
+</tr>
+
+<tr>
+<td><a href="#no_wd"><kbd>-no_wd</kbd></a></td>
+<td>Important, recommended if you do not want an automatic structure</td>
+</tr>
+
+<tr>
+<td><a href="#no_weak_acceptor"><kbd>-no_weak_acceptor</kbd></a></td>
+<td>Occasionally useful if MAF runs into trouble when building an automatic structure</td>
+</tr>
+
+
+<tr>
+<td><a href="#partial_reductions"><kbd>-partial_reductions <i>n</i></kbd></a></td>
+<td>Occasionally useful,unpredictable effect</td>
+</tr>
+
+<tr>
+<td><a href="#pool_above"><kbd>-pool_above <i>n</i></kbd></a></td>
+<td>Often useful for input files with long axioms</td></tr>
+
+<tr>
+<td><a href="#probe_style"><kbd>-probe_style <i>n</i></kbd></a></td>
+<td>Occasionally useful</td>
+</tr>
+
+<tr>
+<td><a href="#detect_finite_index"><kbd>-prove_finite_index</kbd></a></td>
+<td>Sometimes useful, risky</td>
+</tr>
+
+<tr>
+<td><a href="#repeat"><kbd>-repeat <i>n</i></kbd></a></td>
+<td>Rarely useful</td>
+</tr>
+
+<tr>
+<td><a href="#resume"><kbd>-resume</kbd></a></td>
+<td>Can be useful when automatic structure is wanted</td>
+</tr>
+
+<tr>
+<td><a href="#schreier"><kbd>-schreier</kbd></a></td>
+<td>N/A</td>
+</tr>
+
+<tr>
+<td><a href="#secondary"><kbd>-secondary <i>n</i></kbd></a></td>
+<td>Sometimes useful</td>
+</tr>
+
+<tr>
+<td><a href="#slow"><kbd>-slow</kbd></a></td>
+<td>Occasionally useful</td>
+</tr>
+
+<tr>
+<td><a href="#special_overlaps"><kbd>-special_overlaps <i>n</i></kbd></a></td>
+<td><kbd>-special_overlaps 0</kbd> often beneficial, but has unpredictable effect</td>
+</tr>
+
+<tr>
+<td><a href="#strategy"><kbd>-strategy <i>n</i></kbd></a></td>
+<td>Important</td>
+</tr>
+
+<tr>
+<td><a href="#swap_bad"><kbd>-swap_bad</kbd></a></td>
+<td>Rarely useful</td>
+</tr>
+
+<tr>
+<td><a href="#tight"><kbd>-tight</kbd></a></td>
+<td>Occasionally useful</td>
+</tr>
+
+<tr>
+<td><a href="#timeout"><kbd>-timeout <i>n</i></kbd></a></td>
+<td>Rarely useful</td>
+</tr>
+
+<tr>
+<td><a href="#validate"><kbd>-validate</kbd></a></td>
+<td>Important in theory. May be better to invoke <tt>gpaxioms</tt> separately</td>
+</tr>
+
+<tr>
+<td><a href="#ve"><kbd>-ve</kbd></a></td>
+<td>N/A</td>
+</tr>
+
+<tr>
+<td><a href="#vwd"><kbd>-vwd</kbd></a></td>
+<td>N/A</td>
+</tr>
+
+<tr>
+<td><a href="#wd"><kbd>-wd</kbd></a></td>
+<td>Needed to force construction of automatic structures for non-geodesic orderings when system will not be confluent</td>
+</tr>
+
+<tr>
+<td><a href="#weed_secondary"><kbd>-weed_secondary</kbd></a></td>
+<td>Occasionally useful</td>
+</tr>
+
+<tr>
+<td><a href="#"><kbd>-work_order <i>n</i></kbd></a></td>
+<td>Often useful, unpredictable effect</td>
+</tr>
+</tbody>
+</table>
+
+<h2><a name="KBMAGCompatibility"></a>Programs provided for compatibility with KBMAG</h2>
+<p>In order to maintain compatibility with KBMAG, MAF includes five utilities that would otherwise be superfluous, namely: <tt>kbprog</tt>, <tt>autgroup</tt>, <tt>gpmakefsa</tt>, <tt>kbprogcos</tt>, <tt>autcos</tt>. The MAF versions of these utilities are, broadly speaking, all just variants of <tt>automata</tt>, in which some options have different default values from normal, and an internal "compatibility flag" is set, which  makes minor modifications to the output. None of these  programs has any facilities not provided in <tt>automata</tt>. They are provided solely with the aim of improving compatibility between MAF and KBMAG, and for the benefit of users who are familiar with KBMAG. They can all safely be deleted if you do not have any special requirements for compatibility between MAF and KBMAG. A command line that invokes one of these programs should produce equivalent output, whether it is given to the KBMAG or the MAF version of the utility. If such a command line is changed to invoke MAF's <tt>automata</tt> instead it will still work, but some extra files may be created, and the names used for any "provisional" output files will differ.</p>
+<p><tt>automata</tt> includes all the functionality of KBMAG's separate <tt>autgroup</tt>, <tt>kbprog</tt>, <tt>gpmakefsa</tt>, <tt>gpaxioms</tt>, <tt>autcos</tt> (including <tt>gpsubwa</tt> and <tt>gpsubpres</tt>), and <tt>kbprogcos</tt>, and <tt>gpminkb</tt> and a little more besides. Unless you require strict compatibility with KBMAG, there will usually be no need to use these compatibility utilities, once you are used to the slightly different way in which <tt>automata</tt> is used.</p>
+
+<ul>
+<li><h3><tt>autgroup</tt></h3><p> This program is identical to <tt>automata</tt> except that:
+<ul>
+<li>Axiom checking is turned on by default, unlike for <tt>automata</tt>, where by default it is only turned on for coset systems.</li>
+<li>word-differences are computed by default, even for non-geodesic orderings. <tt>autgroup</tt> will follow <tt>automata</tt>'s plan A if at all possible.</li>
+<li>A file called <kbd><i>groupname</i>.success</kbd> is generated once the axiom check succeeds, for compatibility with what the KBMAG GAP package expects.</li>
+<li><tt>autgroup</tt> will not produce the <tt>.kbprog</tt> or <tt>.reduce</tt> files for a confluent rewriting system, even if you run it with the <kbd>-nowd</kbd> command line option. If you do that you only get the word-acceptor.</li>
+<li>By default <tt>autgroup</tt> will only create the basic automatic structure for a group, (i.e the word-acceptor, multiplier, and the word-difference machines). However, if you supply <kbd>-gpminkb</kbd> as a command line option it will in addition produce the automata that <tt>gpminkb</tt> normally would. (The KBMAG package in GAP always runs <tt>gpminkb</tt> when creating an automatic structure in order to compute the correct word difference machines). If the <kbd>-cos</kbd> option is supplied, then <tt>autgroup</tt> does not attempt to compute a subgroup word-acceptor, or a presentation of the subgroup. However the options <kbd>-p</kbd> or <kbd>-subpres</kbd> can be used to force a subgroup presentation to be computed. It should be noted that the presentation will always be on the Schreier generators (even when a coset system with named subgroup generators is used), and the subgroup presentation will only be output as GAP source code, with the suffix <tt>.pres</tt>.</li>
+</ul>
+</li>
+
+<li><h3><tt>autcos</tt></h3><p> This program is identical to <tt>autgroup</tt> except that the <kbd>-cos</kbd> option is automatically on.</li>
+
+<li><h3><tt>gpmakefsa</tt></h3><p> This program is identical to <tt>autgroup</tt> except that the <kbd>-nokb</kbd> option is turned on by default, and it will "import" at least one pre-existing difference machine if such a machine exists, whereas <tt>automata</tt> generally behaves as though it is being run for the first time against any input file it is asked to work on, even if it in fact has already completed successfully previously. <tt>gpmakefsa</tt> will exit with an error message if no word-difference machine has been computed for the input file. The detailed operation of <tt>gpmakefsa</tt> is rather different in MAF from KBMAG. MAF expects to have available the equations that prove word-differences, and in their absence is liable to remove genuine word-differences when correcting the difference machines unless the multiplier passes the checks first time. It is not at all a good idea to run this program unless absolutely necessary. It is not used at all by the MAF version of <tt>autgroup</tt> and <tt>autcos</tt>, which are executables rather than shell scripts, and it would probably be a bad idea to replace the KBMAG version with the MAF version when using the GAP KBMAG package.</li>
+
+<li><h3><tt>kbprog</tt></h3>
+<p> This program is similar to <tt>automata</tt> except that the <kbd>-nowd</kbd> option is the default, and word difference calculations must be turned on explicitly with <kbd>-wd</kbd>. It will exit without building any automata other than the confluent rewriting system and its index automaton (if the presentation is confluent) or the provisional difference machines, if the <kbd>-wd</kbd> option is specified. This program is described in more detail below.</p>
+
+<li><h3><tt>kbprogcos</tt></h3> 
+<p>This program is almost identical to the MAF version of <tt>kbprog</tt>, except that the <kbd>-cos</kbd> command line option is supplied automatically, so that the program always expects to process a coset system and adjusts its output and methods accordingly. (It does not matter if this option is supplied again).
+</p>
+<p><tt>kbprogcos</tt> accepts one special option. <kbd>-f</kbd> is treated as a synonym for <kbd>-detect_finite_index</kbd>. No other MAF components recognise this option with that meaning: most will treat it
+as the standard KBMAG option to request minimisation using files, and will therefore ignore it.</p>
+<p>Other than that the MAF command line options for <tt>kbprogcos</tt> are identical to those for <tt>kbprog</tt>.</p>
+</ul>
+
+<p>Fuller descriptions of the KBMAG options accepted in the MAF version of KGBMAG's two key programs <tt>gpmakefsa</tt> and <tt>kbprog</tt> are given below.</p>
+<h3><tt>gpmakefsa</tt></h3>
+<p><kbd>gpmakefsa [<i>loglevel</i>] [<i>format</i>] [-cos] <i>groupname</i> <i>subgroup_suffix</i></kbd></p>
+<p>Construct the word-acceptor and general multiplier finite state automata for the automatic group or automatic coset system, of which the rewriting system defining the group is in the file <kbd><i>groupname</i></kbd> or the coset system is in <kbd><i>groupname</i>.<i>cosname</i></kbd>.</p>
+<kbd>-diff1</kbd><br>
+<kbd>-diff2</kbd><br>
+<p>These options are ignored. MAF will make intelligent decisions about how to build the word-acceptor and multiplier.</p>
+<h4><kbd>-m <i>maxeqns</i></kbd> or <kbd>-me <i>maxeqns</i></kbd></h4>
+<p>These options are ignored. In the KBMAG version of <tt>gpmakefsa</tt> the <kbd>-m <i>maxeqns</i></kbd> option  specifies an upper limit on the number of equations that are processed when correcting the difference machines during a failed correctness test, but the documentation incorrectly describes the <kbd>-me <i>maxeqns</i></kbd>
+option, which is not recognised, as having this effect.</p>
+<p>MAF accepts, but effectively ignores, both options. In MAF as many equations as can be found are processed, but the correctness test is aborted once it appears that all the new equations that are being discovered would  be recognised by the updated word difference machine.</p>
+<h4><kbd>-mwd <i>maxwdiffs</i></kbd></h4>
+<p>This option is ignored. In the KBMAG version of <tt>gpmakefsa</tt> this puts an upper limit on the number of word-differences allowed after the correction. There is no good reason to have such an option.</p>
+
+<h3><tt>kbprog</tt></h3>
+<p>The information in this section applies equally to the MAF version of <tt>kbprogcos</tt>.
+<p><kbd>kbprog [<i>loglevel</i>] [-ve] [-vwd] [-r | -ro] [-both] [-me <i>n</i>] [-mlr <i>l</i> <i>r</i>] [-mo <i>n</i>] [-mt <i>n</i>] <i>rwsname</i></kbd></p>
+<p>The KBMAG version of <kbd>kbprog</kbd> has zillions of options. Only those that are actually supported in the MAF version are listed above. Remember that <tt>kbprog</tt> also supports all MAF's options for <tt>automata</tt>as well. In the detailed description that follows other KBMAG options that are accepted for compatibility purposes, but ignored, are also listed. In MAF <tt>kbprog</tt> is a version of <tt>automata</tt> that is modified so that it will only generate the automata that the KBMAG version of <tt>kbprog</tt> is capable of producing. This means that it will output either a confluent rewriting system, or word difference machines, <em>or possibly both</em>. However there are some differences in the output files:</p>
+
+<ul>
+<li>If <tt>kbprog</tt> is interrupted, and word differences are not being computed, its provisional output rewriting system file and index automaton will be given suffixes <tt>.kbprog</tt> and <tt>.reduce</tt> instead of <tt>.pkbrog</tt> and <tt>.preduce</tt>. This is for compatibility with KBMAG, and is a change from version 1 of MAF.</li>
+<li>Similarly, when the <kbd>-wd</kbd> option is used then the output is NOT to <tt>.pdiff1</tt> and <tt>.pdiff2</tt> as it should be (from MAF's point of view), but to the <tt>.diff1</tt> and <tt>.diff2</tt> files, or to <tt>.midiff1</tt> and <tt>.midiff2</tt> (instead of <tt>.pmidiff1</tt> and <tt>.pmidiff2</tt>) if a coset system is being processed.</li>
+<li>If <tt>kbprog</tt> does find a confluent rewriting system when the <kbd>-wd</kbd> option is in effect it will NOT output it (this is a change from earlier releases of MAF), because the KBMAG version would not have (with this option). However, you can force MAF's <tt>kbprog</tt> and <tt>kbprogcos</tt> to output the rewriting system and index automaton as well, by specifying the <tt>kbprog</tt>/<tt>kbprogcos</tt> specific option <kbd>-both</kbd>. <tt>kbprog</tt> will not compute any of the other output files that <tt>automata</tt> would have done however.</li>
+</ul>
+<p>The input file is shown as <kbd><i>rwsname</i></kbd> because kbprog accepts coset systems. In fact it also accepts the <kbd>-cos</kbd> option and the <kbd><i>subsuffix</i></kbd>, and in this case behaves identically to the MAF version of <tt>kbprogcos</tt> apart from the special handling of <kbd>-f</kbd> that is in the latter.</p>
+<h4>Options</h4>
+<p>In addition to the options listed here the MAF version of <tt>kbprog</tt> also accepts  the options accepted by the <tt>automata</tt> program.</p>
+
+<h4><kbd>-cn <i>n</i></kbd></h4>
+<p>This option has no effect. In the KBMAG version of <tt>kbprog</tt> it controls how often the set of equations is tested for confluence. In MAF this option is not relevant because the algorithm which finds overlaps is a test for confluence. A sign that a system is about to become confluent is that MAF is suddenly able to process very large numbers of equations in a very short time.</p>
+
+<h4><kbd>-hf <i>halting_factor</i></kbd></h4>
+<p>This option has no effect. Previous versions of the MAF documentation implied MAF tried to implement this option, but this was not in fact the case.</p>
+
+<h4><kbd>-me <i>maxeqns</i></kbd></h4>
+<p>This option is essentially synonymous with the <a href="max_equations"><kbd>-max_equations <i>n</i></kbd></a> option. However, since <tt>kbprog</tt> never builds automatic structures it will always behave as it does in <tt>automata</tt> when plan C is being followed. However, when word differences are being computed <tt>kbprog</tt> may take quite a while to stop if you use this option, because it might be difficult for MAF to construct word-difference machines that satisfy MAF's minimum consistency requirements.</p>
+<p>KBMAG's <tt>kbprog</tt> sets the very low default limit on the number of equations of 32767. In MAF <tt>kbprog</tt>'s default behaviour is not to limit the number of equations. This option can also be set using the field <kbd>maxeqns</kbd> in the input file.</p>
+
+<h4><kbd>-mlr <i>maxlenleft</i> <i>maxlenright</i></kbd></h4>
+<p>If this is used, then so far as possible only equations in which the left and right hand sides have lengths at most <i>maxlenleft</i> and <i>maxlenright</i>, respectively, are kept. MAF cannot always respect this option because it can cause inconsistencies in its internal data structures that it will not allow. In fact it is clear that even KBMAG does not always respect it, since on several of the examples where it is used several of the equations in the confluent system exceed the limits. With MAF, this option is not recommended. The author does not know of any input files in which using this option improves MAF's behaviour, and knows of several where it is <em>very</em> counter-productive. If you have used the corresponding option in KBMAG and now want to process the same input file in MAF then first try to run without this option. Only try with this option if necessary. In the author's limited experience values that work with KBMAG are always too small in MAF. Values that are each twice what was used in KBMAG, or equal to the correct maximums as given by the confluent rewriting system, if known, whichever is the greater, may work.</p>
+<p>This option can also be set as a field in the input file. The syntax for this is:</p>
+<p><kbd>maxstoredlen := [<i>maxlenleft</i>,<i>maxlenright</i>]</kbd> is recognised by KBMAG, but ignored (with a warning) by MAF.</p>
+<p><kbd>maf_maxstoredlen := [<i>maxlenleft</i>,<i>maxlenright</i>]</kbd> sets the option for MAF, but is ignored by KBMAG.</p>
+<h4><kbd>-mo <i>maxoverlaplen</i></kbd></h4>
+<p>The Knuth-Bendix procedure works by forming a word which contains two overlapping reducible words, so that if the reductions are not yet consistent with one another two different reductions for the same word will arise, giving rise to a new equation. This option limits the maximum length of this "overlap" word, and once all possible overlaps up to this length have been considered MAF will behave as though the rewriting system was confluent, even though it is not.</p>
+<p>The only good reason for using this option in MAF, is when you know that MAF will not be able to find correct automata, and you are willing to accept provisional automata. Even quite a "short" word-acceptor can usually eliminate most reducible words, so that a program that needs to enumerate group elements, and does not mind if  occasionally the same element is enumerated twice, but would prefer to enumerate each element as few times as possible, can benefit from having such an acceptor available.</p>
+<p>This parameter can also be set as the field <kbd>maxoverlaplen</kbd> in the input file.</p>
+<h4><kbd>-mrl <i>maxreducelen</i></kbd></h4>
+<p>This option does nothing. In KBMAG it controls the maximum length a word can reach. In MAF the limit is 2^16-3 = 65533 symbols and this cannot be changed, except by rebuilding MAF with a different value for the MAX_WORD constant, and a change in the definition of the Word_Length type. You are recommended not to try to do this, as if a word ever reaches such an extraordinary length MAF will probably become extremely slow and encounter stack overflow errors. This limit is only likely to be exceeded if you are using a wreath-product type word-ordering.</p>
+<h4><kbd>-ms <i>maxstates</i></kbd></h4>
+<p>This option does nothing. In KBMAG it controls the maximum number of states in the index automaton.</p>
+<h4><kbd>-mt <i>min_time</i></kbd></h4>
+<p>This option is synonymous with the <a href="#min_time"><kbd>-min_time <i>n</i></kbd></a> option of <tt>automata</tt>: when word-differences are being computed,unless confluence is achieved, <tt>kbprog</tt> will not abort until at least the specified amount of time has elapsed since Knuth-Bendix expansion began. </p>
+<h4><kbd>-mwd <i>maxworddiffs</i></kbd></h4>
+<p>This option is ignored, but is accepted for KBMAG compatibility. There is no special reason in MAF to limit the number of word differences. However, if a group has more than around 4000-5000 word differences then it is highly unlikely to be automatic unless it turns out to be finite, and even in this case the multiplier may well be too large to compute, and the index automaton will be a better choice for doing word reduction. 
+</p>
+<h4><kbd>-r</kbd></h4>
+<p>In MAF, this option is identical in effect to the <a href="#resume">-resume</a> option of <tt>automata</tt>.
+</p>
+<h4><kbd>-rk <i>minlen</i> <i>mineqns</i></kbd></h4>
+<p>This option does nothing. In the KBMAG version of <tt>kbprog</tt> it enables the "Rabin-Karp" algorithm for word-reduction. In MAF very long equations are are not usually available for performing reductions. However, if word differences are being computed then unusually long words are reduced with the word difference machine.</p>
+<h4><kbd>-ro</kbd></h4>
+<p>In MAF the <kbd>-ro</kbd> option is identical in effect to the <a href="#resume">-resume</a> option of <tt>automata</tt>.
+</p>
+<h4><kbd>-sort <i>maxoplen</i></kbd></h4>
+<p>This option does nothing. In the KBMAG version of <tt>kbprog</tt> it causes equations to be output in order of increasing length of their left hand sides. MAF always outputs equations in BFS order.</p>
+<h4><kbd>-t <i>tidyint</i></kbd></h4>
+<p>This option does nothing. In the KBMAG version of <tt>kbprog</tt> it controls the frequency at which equations are tidied. This option can be specify in input files as <code>tidyint := n</code></p>
+<h4>Unsupported options</h4>
+<p>The following are accepted as options by the KBMAG version of <tt>kbprog</tt> but are not recognised by the MAF version. <span class="star">This list is not guaranteed to be complete!</span></p>
+<kbd>-lex</kbd><br>
+<kbd>-rec</kbd><br>
+<kbd>-rt_rec</kbd><br>
+<p>In the KBMAG version of <tt>kbprog</tt> these options change the word-ordering from the one specified in the input file. In the MAF version using these options will cause MAF to exit immediately with an error message.
+</p>
+</body>
+</html>

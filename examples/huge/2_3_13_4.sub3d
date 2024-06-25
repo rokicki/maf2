@@ -1,0 +1,14 @@
+_RWS_Sub := rec
+(
+  subGenerators :=
+  [
+    a*b*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*B,
+    (a*b*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*B)^-1,
+#    b*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*B*a,
+#    (b*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*B*a)^-1,
+    B*a*b*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a,
+    (B*a*b*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a)^-1,
+    a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*B*a*b,
+    (a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*B*a*B*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*B*a*b)^-1
+  ]
+);

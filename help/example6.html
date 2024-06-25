@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : Tutorials :  6 - Intersecting subgroups</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Next" type="text/html" href="background.html" title="Background material">
+<link rel="Prev" type="text/html" href="example5.html" title="Tutorial 5: Discovering more about a group">
+
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="MAF.html#tutorials">Tutorials</a> :  6 - Intersecting subgroups
+<h2>Intersecting subgroups</h2>
+<p>Although it cannot (yet) search systematically for them, MAF can often disclose a great deal about about the quotients of an unknown group, if users are prepared to experiment a little. This tutorial shows how the use of various MAF utilities can discover generators for subgroups with very high indexes and correspondingly large quotients. This may guide us in deciding how to proceed. If, for example, one has already succeeded in computing the automata for a quotient of order several million, and then discovers another quotient that implies the group has several billion elements at least, then it may become necessary to transfer our attention to a subgroup, because it is unlikely that enough memory will be available to compute a solution to the word problem for the whole group.</p>
+<p>The file <tt>examples/lesson6/q33_xy</tt> is a presentation of the group <i>Q<sub>33</sub></i> mentioned in the preprint "One relator quotients of the modular group". The input file is shown below.</p>
+<pre>_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [y,Y,x],
+  ordering := "shortlex",
+  inverses :=       [Y,y,x],
+  equations := 
+  [
+    [y^2,Y],
+    [(x*y)^4*(x*Y)^2*(x*y)^2*(x*Y)^4*(x*y)^2*(x*Y)*(x*y)*(x*Y)^2),IdWord]
+  ]
+);</pre>
+<p>The structure of this group is unknown. In this tutorial we will find the largest known finite quotient of this group. In fact the subgroup which gives this quotient can easily be found by intersecting the derived subgroup with the subgroup which is the normal closure of the word you get by interchanging <code>y</code> and <code>Y</code> in the long relator: in other words, using the same technique as we used in the previous tutorial. In this tutorial we will use another technique : we shall use <kbd>gpsublowindex</kbd> to find a number of subgroups, and intersect their coset tables. It turns out that it is only necessary to find the subgroups of index 42 or below in order to do this. Of course in practice one would not know this in advance, and one would simply look as far as possible - the running time for <tt>gpsublowindex</tt> increases rapidly with the index and the number of group generators.</p>
+<p>The following command line can be used to do this, assuming your shell has the directory containing <tt>q33_xy</tt> as the current directory:</p>
+<p><kbd>../../bin/gpsublowindex q33_xy -stop 42 -table -rws -simplify -named</kbd></p>
+<p>This command tells <tt>gpsublowindex</tt> to generate presentations for the subgroups and to output the coset table for the subgroups using named subgroup generators. The <kbd>-simplify</kbd> option improves the quality of the presentations by removing some unnecessary subgroup generators. If this option is not used the subgroup will usually be given by a much larger generating set that includes several trivial subgroup generators.</p>
+<p>This command will take a minute or two to run, and outputs four coset tables for subgroups of index 42, three for subgroups of index 28, and one each for subgroups of index 2,3,6,14,19 ans 38. We can intersect the subgroups by using the <kbd>fsaand</kbd> utility repeatedly as follows:</p>
+<p><kbd>../../bin/fsaand q33_xy.coslow_i2_1.cosets q33_xy.coslow_i3_10.cosets xx</kbd><br>      
+   <kbd>../../bin/fsaand q33_xy.coslow_i6_13.cosets xx xx</kbd><br>
+   <kbd>../../bin/fsaand q33_xy.coslow_i14_2.cosets xx xx</kbd><br>
+   ...<br>
+   <kbd>../../bin/fsaand q33_xy.coslow_i42_12.cosets xx xx</kbd><br>
+</p>
+<p>At each stage the file <tt>xx</tt> that is output is a coset table for all the subgroups we have intersected so far. The final coset table has 124488 states (ignoring the inaccessible failure state). In fact we could a much smaller set of subgroups to intersect to get this subgroup - the subgroups of index 6,19,28 and two of the subgroups of index 42. We next need to find some generators for this subgroup. The easiest way to do this is to "and" the word acceptor for a suitable automatic group with the coset table. One can use the free group on the same generating set for example. In this case the obvious group to use is the modular group. So we create the word acceptor for the modular group by running <tt>automata</tt> against an input file for the modular group, and then using <tt>fsaand</tt> again as follows:</p>
+<p><kbd>../../bin/automata modular</kbd><br>      
+   <kbd>../../bin/fsaand modular.wa xx xx.wa</kbd></p>
+<p>Now we can use <tt>fsasenumerate</tt> to enumerate some words contained in this subgroup:</p>
+<p><kbd>../../bin/fsaenumerate 1 36 xx.wa</kbd></p>
+<p>This produces a file <tt>xx.wa.enumerate</tt> containing 24 words beginning with <code>x</code> and 12 each begining with <code>y</code> and <code>Y</code>. We create a new input file, <tt>q33_xyq</tt>, containing the 12 words beginning with <code>y</code> as extra relators (we expect the other words to be cyclic conjugates of these). In principle there is no reason why this subgroup should be normal, but since the paper says such a quotient exists it is reasonable to hope that we have found the right subgroup. We can use <tt>gptcenum</tt> to check if we have enough relators to give a new quotient:</p>
+<p><kbd>../../bin/gptcenum q33_xyq -table -strategy long</kbd></p>
+<p>This quickly confirms that we have a quotient of order 124488. We then double check that this has the same coset table as we found by intersecting subgroups using <tt>fsalequal</tt>
+<p><kbd>../../bin/fsalequal xx q33_xyq.cosets</kbd></p>
+<p><tt>fsalequal</tt> confirms that the coset tables accept the same language, and thus that the subgroup generated by the normal closure of these 12 words is a subgroup of index 124488. In fact, if we run <tt>simplify</tt> against <tt>q33_xyq</tt> we find that only one of these words, <i>(y*x*y*x*Y*x)^6</i>, is needed as an extra relator.</p>
+<p>In principle we could now create a substructure file for a normal closure coset system containing this word as the generator whose normal closure is to be found. Unfortunately MAF is not able to compute the presentation of this subgroup currently, because the multiplier has more than 32766 initial states. To compute the presentation it is necessary first to find a presentation of a larger subgroup and then find the subgroup as a subgroup of this. We can do this as follows:</p>
+<p><kbd>../../bin/gpsubmake -derived q33_xy</kbd><br>
+<kbd>../../bin/automata -cos q33_xy sub_derived -detect_finite_index -confluent<br>
+../../bin/simplify q33_xy.sub_derived.rws<br>
+../../bin/gpsubmake -named q33_xy sub_derived<br>
+../../bin/automata -cos q33_xy sub_derived_named -detect_finite_index -confluent<br>
+../../bin/reduce -kbprog q33_xy -cos sub_derived_named "-H*(y*x*y*x*Y*x)^6"</kbd></p>
+<p><tt>reduce</tt> will tell us that this word reduces to <code>b*A*b*A^2*B^2*a*B*a^2*B*_H</code>.</p>
+<p>We could now copy <tt>q33_xy.sub_derived_named.rws</tt> to <tt>q33comm</tt> and create <tt>q33comm.sub</tt> as a substructure file for the normal closure of <code>b*A*b*A^2*B^2*a*B*a^2*B</code>. <tt>gptcenum</tt> will quickly confirm that this subgroup has index 20748. We can try to create a subgroup presentation using <tt>gptcenum</tt> directly, but once again this requires too many generators for MAF to be able to handle. <tt>automata</tt> will probably evenutally be able to compute a subgroup presentation from the multiplier for the general multiplier, but unfortunately it turns out that it performs particularly poorly against this coset system: it is able to prove that the index is finite quickly, but then takes a very long time to check partial confluence. In future <tt>automata</tt> will probably be changed to use coset enumeration for this check.</p>
+<p>We could repeat the process - by finding a presentation of the derived subgroup of q33comm and finding generators for our desired subgroup in this group. However the presentation of the derived subgroup <tt>q33comm</tt> already has a largish number of generators, and if we reduce this with <tt>simplify -keep_going</tt> to 10 or 12 monoid generators (the latter is probably better, and is found by all strategies apart from strategy 3, which eliminates one more pair of generators), the relators become unpleasantly long.</p>
+<p>In fact even if we were to compute a subgroup presentation it would almost certainly be completely intractable, except that <tt>simplify -abelian</tt> would probably be able to show that the subgroup was a perfect group. Unfortunately this behaviour seems to be fairly typical with difficult presentations.</p>
+<p>The directory <tt>examples/onerelq</tt> contains several more presentations of difficult one relator modular group quotient groups mentioned in this paper. For several of these the author has been able to find very large finite quotients, though not in all cases the largest finite quotient. For example for <i>Q<sub>37</sub></i> similar techniques again yield a quotient of order 124488 in which <i>xyxY</i> has order 7*19. Experimenting by adding an additional relator of the form <code>[(x*y*x*Y)^<i>n</i>,IdWord]</code> for various values of <i>n</i>
+reveals another large finite quotient of order 10! in which <i>xyxY</i> has order 8. Most low values of <i>n</i> give trivial quotients, but for <i>n</i> &ge; 10 there are numerous values where neither <tt>automata</tt> nor <tt>gptcenum</tt> collapse quickly.</p>
+<p>For one of the 6 groups listed as having unknown structure, <i>Q<sub>27</sub></i>, <tt>automata</tt> is able to show that the group is in fact finite and isomorphic to the quotient that can be found with the same sort of techniques. However, this is a computation that requires several hours of CPU time and requires the 64-bit version of MAF.</p>
+</body>
+</html>

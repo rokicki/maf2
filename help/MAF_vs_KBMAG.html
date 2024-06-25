@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : Appendix A : MAF and KBMAG compared</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="MAF.html#appendices">Appendices</a> : (A) MAF and KBMAG compared
+<h2>Appendix A : MAF and KBMAG compared</h2>
+<h3>Compatibility</h3>
+<ul>
+<li><p>There are work-alike programs with the same names for all of the main KBMAG programs: <tt>kbprog</tt>, <tt>autgroup</tt>, <tt>kbprogcos</tt>, <tt>autcos</tt> (amongst others). If the KBMAG versions are replaced by the corresponding MAF programs, the GAP KBMAG package works. Refer to <a href="Using_MAF_from_GAP.html">Using MAF from the GAP package for KBMAG</a> for details.</p>
+<li>The MAF versions of the main KBMAG programs should accept almost all of the same command line options as the KBMAG versions, and given the same input file and command line, should produce compatible output files. Not all command line options are actually honoured, because many of KBMAG's command line options have no meaning in MAF.
+</li>
+<li>MAF also implements almost all the various utilities to be found in the KBMAG package, using identical or very similar command line options.</li>
+<li>MAF does not have the <tt>fsagrowth</tt> utility, and one or two other obscure utilities are also not provided. if you require them you can continue to use the KBMAG versions: they will work perfectly well against files produced by MAF.</li>
+</ul>
+
+<h3>Additional Facilities</h3>
+<ol>
+<li><h4>Groups and monoids</h4><p>For computations with groups and monoids MAF includes several new utilities which can:
+<ul>
+    <li>find the order of elements of a group or monoid (<a href="gp_usage.html#gporder"><tt>gporder</tt></a>)
+    <li>compute the coset table of the trivial subgroup of a finite group, either from previously computed automata (<a href="gp_usage.html#gpcosets"><tt>gpcosets</tt></a>), or by performing coset enumeration (<a href="gp_usage.html#gptcenum"><tt>gptcenum</tt></a>)
+    <li>test whether elements of a group are conjugates, and if so find an element which shows this, or, where, it is finite, compute the set of all conjugates of an element (<a href="gp_usage.html#isconjugate"><tt>isconjugate</tt></a>). 
+    <li>compute an FSA which solves the conjugacy problem for a finite group, and a file which tells you the number and size of the conjugacy classes (<a href="gp_usage.html#gpcclass"><tt>gpcclass</tt></a>).
+<li>compute and simplify new presentations of groups, (<a href="gp_usage.html#gpvital"><tt>gpvital</tt></a>, <a href="gp_usage.html#simplify"><tt>simplify</tt></a>)
+</ul>
+<li><h4>Coset systems</h4><p>For computations with coset systems MAF can:
+<ul>
+<li> build an automatic coset system for a subgroup without the need for named subgroup generators, which may be useful when the subgroup has very many generators, or when a coset system using named subgroup generators misbehaves because of very long words in coset equations.
+<li> calculate a subgroup presentation based on the original subgroup generators and the names given to them, rather than using an invented set of generators, when a coset system with named generators is used.</li>
+<li> calculate a subgroup presentation which can be used directly as MAF input file. For compatibility purposes MAF also calculates the presentation in the same format as KBMAG used, but you will rarely need to use this.</li>
+<li>support an entirely new type of coset system, that allows the normal closure of the generating set to be computed if it is finitely generated.</li>
+<li>compute the coset table of a finite-index subgroup of a group or monoid, either from previously computed automata (<a href="gp_usage.html#gpcosets"><tt>gpcosets</tt></a>), or by performing coset enumeration (<a href="gp_usage.html#gptcenum"><tt>gptcenum</tt></a>)
+<li>test subgroups for normality (<a href="gp_usage.html#isnormal"><tt>isnormal</tt></a>)
+<li>use the various utilities such as <tt>gporder</tt>, <tt>is conjugate</tt> to perform computations "modulo the subgroup"
+<li>Find representatives of the conjugacy classes of subgroups up to some specified index <a href="gp_usage.html#gpsublowindex"><tt>gpsublowindex</tt></a>. The difficulty of this computation increases exponentially as the index is increased, but the difficulty also varies greatly for different input files : for some groups the subgroups up to indexes of 50 or 60 can be computed quickly, while for other groups even a subgroup of index 10 may be hard to find.</li>
+</ul>
+<p>All these facilities, together with the new program <tt>simplify</tt>, make coset systems a much more useful feature than they were in KBMAG. These extra facilities require you to use MAF directly, because the GAP components of KBMAG would be confused otherwise.</p>
+</li>
+<li><h4>Non-shortlex automatic structures</h4>
+<p>MAF can, in principle, compute automatic structures using any supported word-ordering, not just <code>"shortlex"</code> automatic structures. However, such computations are often significantly more difficult than for <code>"shortlex"</code>. Such structures often do not exist, even when the rewriting system is confluent. In fact, the author has not been able to find any group which has an automatic structure that can be computed using MAF, but which does not have either a <code>"shortlex"</code> automatic structure (possibly using another set of generators) or else a confluent rewriting system for the choice of generators and ordering in question. So this new facility appears to be of limited use. The author would be very interested to learn of any groups for which it is genuinely useful. Success is very likely with word-orderings that can be recognised by a finite state automaton, or for orderings (such as "wtlex") that can be recognised by an automaton which only needs to keep a very small amount of information about words. Success is much less likely with wreath-product type word-orderings, and even less likely where these assign different levels to a generator and its inverse.</li>
+</ol>
+<h3>Performance with difficult input files</h3>
+<p><em>When MAF or KBMAG are asked to perform computations using very difficult presentations it is impossible to know in advance which will succeed faster, or indeed whether either will succeed at all. Though the author hopes that MAF will usually out-perform KBMAG by a wide margin this is by no means always the case. It is always possible that the groups you are interested in might be better suited to KBMAG than to MAF.</em></p>
+<ul><li>MAF has been able to compute several very large automatic structures, usually within a few hours, that KBMAG has taken days or even weeks to compute.</li>
+<li><p>MAF succeeds on many examples where KBMAG either fails, or requires a very careful selection of options to succeed. In particular, MAF will usually work better with recursive orderings.</p></li>
+<li><p>For very difficult rewriting systems, MAF is more likely to succeed more quickly, provided plenty of memory is available. For example the <kbd>degen4c</kbd> example (a famous presentation of the trivial group using three relators of length 125) can be solved in about 20 seconds or less on a modern PC. MAF tends also to be much quicker than KBMAG when processing rewriting systems for large finite groups that are otherwise not particularly difficult. For example it can find confluent rewriting systems for groups of orders of a million or so in around two or three minutes even when the confluent rewriting system may have up to a million or so equations. However, MAF has fewer options for limiting its memory use than KBMAG, and uses memory less conservatively in any case. MAF's default strategy may not always work as well as KBMAG's when a presentation has very long axioms (relators), especially when the word-ordering method used by the rewriting system means that it is possible to create very many shorter equations from the shorter axioms. For example, if default settings are used for both programs, KBMAG's <tt>kbprog</tt> performs much better than MAF's <tt>automata</tt> on the balanced presentation of SL(2,p). In such cases using a wreath-product word-ordering, or specifying special strategy options will often improve MAF's performance significantly.</p>
+<li><p>For some rewriting systems MAF may take longer to complete automatic structure calculations than KBMAG. This is partly because because it sometimes computes more automata, but mainly because it uses a different kind of criterion to determine when it should stop Knuth-Bendix completion. For example there is one coset system which KBMAG solves almost instantly, but which takes about 40 seconds using MAF, unless you supply a certain command line option, in which case it completes in under 2 seconds. For "difficult" presentations, it may sometimes happen that KBMAG is "lucky" when MAF is not.</p>
+<li><p>Although MAF is highly configurable, most of the time you should not have to give it any special options in order to solve a problem. While the programs that emulate KBMAG programs accept most of their command line and configuration options, many of them are ignored. MAF's "real" configuration options are often different from anything in KBMAG.</p>
+</ul>
+<h3>Migrating to MAF</h3>
+<p>For computation with input files representing groups or monoids, <tt>automata</tt> contains all the functionality contained in the <tt>kbprog</tt>, <tt>autgroup</tt>, <tt>gpaxioms</tt>, and <tt>gpminkb</tt> components of KBMAG.</p>
+<p>Computation with input files representing subgroups is also performed using <tt>automata</tt>, which also contains the functionality of the <tt>makecosfile</tt>, <tt>kbprogcos</tt>, <tt>autcos</tt>, and <tt>gpmakesubwa</tt> components of KBMAG.</p>
+<p>You can continue to invoke all the KBMAG programs separately rather than using <tt>automata</tt> if you wish but you may like to note that in MAF, <tt>kbprog</tt>, <tt>gpmakefsa</tt>, <tt>autgroup</tt>, <tt>kbprogcos</tt>, <tt>autcos</tt>, are all almost identical to MAF's <tt>automata</tt>.
+<h3>FSA programs included in KBMAG missing from MAF</h3>
+<ol><li><kbd>nfadeterminize</kbd> MAF cannot yet process non-deterministic automata at all. There is no reason for it to do so, since they are not needed. The forthcoming GAP package for MAF will support non-deterministic automata, but will, in the first instance, use KBMAG's <tt>nfadeterminize</tt> program to determinise them.</li>
+<li><kbd>fsagrowth</kbd>  In KBMAG these compute rational functions that describe the
+size of the language at various word lengths. The present author has not been at all interested in this functionality as yet. You can of course use the KBMAG <tt>fsagrowth</tt> with automata produced by MAF.</li>
+<li><kbd>fsafilter</kbd> Replaced in MAF by <a href="fsa_usage.html#fsaprint"><tt>fsaprint</tt></a> for reasons described in the documentation.</li>
+<li><kbd>fsalabmin</kbd> MAF's <a href="fsa_usage.html#fsamin"><tt>fsamin</tt></a> works with labelled FSA.</li>
+</ol>
+</body>
+</html>

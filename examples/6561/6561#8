@@ -1,0 +1,30 @@
+#This is a presentation from KBMAG. It is for a non-Abelian group of order
+#3^8 (6561)
+#All three generators have order 27, though this is not at all obvious.
+#With recursive orderings the behaviour is very unusual.
+#All these examples are probably completely impossible for KBMAG, though it
+#might eventually be able to do some given suitable values for the length
+#restricting parameters.
+#MAF can solve the presentation for some natural looking word orderings but
+#not for others. The time to find the RWS varies widely, from 1 minute or
+#under to possibly many hours. The times are incredibly sensitive: the
+#time might be faster on a slower computer, and can vary by several orders
+#of magnitude after apparently innocuous changes to the code of MAF.
+#With the addition of a^27=Idword, which is true but not easily proved,
+#all the examples become easy.
+#This ordering is one of the fairly easy ones.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B,c,C],
+  inverses := [A,a,B,b,C,c],
+  equations :=
+  [
+    [a*a*C*a*c,IdWord],
+    [a*c*b^2*A*C*b,IdWord],
+    [A*B*a*b*c^3,IdWord],
+#,    [a^27,IdWord]
+  ]
+);
+

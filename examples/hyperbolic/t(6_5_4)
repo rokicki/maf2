@@ -1,0 +1,14 @@
+#(6,5,4) triangle group - infinite hyperbolic 
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b,c],
+  inverses := [a,b,c],
+  equations :=
+  [
+    [(b*c)^6,IdWord],
+    [(c*a)^5,IdWord],
+    [(a*b)^4,IdWord]
+  ]
+);

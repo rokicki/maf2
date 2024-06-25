@@ -1,0 +1,17 @@
+#This is number 8 in the list of presentations of groups of order 7^5 in 
+#"Groups of Deficiency Zero". MAF can prove that the metabelian quotient has
+#order 7^5 but it seems not to be able to handle this file directly, either
+#with automata or gptcenum.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a,A,b,B],
+  inverses := [A,a,B,b],
+  equations :=
+  [
+   [B*A*b*a*B*a*b,a^8],
+   [A*B*a*b*A*b*a,B^6]
+  ]
+);
+

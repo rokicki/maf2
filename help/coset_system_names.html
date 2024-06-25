@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF: Reference: Coset system filenames</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="substructure_files.html" title="Substructure files">
+<link rel="Next" type="text/html" href="automata_FSA.html" title="Output files (groups and monoids)">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html">Reference</a> : <a href="file_formats.html">File names and formats</a> : Coset system filenames
+<h2>Coset system filenames</h2>
+<p>When you use the <kbd>-cos</kbd> option with a MAF utility, and supply MAF with an input file name <tt><i>group</i></tt>, and a substructure suffix <tt><i>subsuffix</i></tt>, then MAF will either generate (if you are running <tt>automata</tt>, <tt>gptcenum</tt>, or one of the KBMAG compatibility programs), or open (all other utilities) an input file for a coset system named <tt><i>group</i>.<i>cossuffix</i></tt>, created from the <a href="input_files.html">input file</a> <tt><i>group</i></tt>, and the <a href="substructure_files.html">substructure file</a> <tt><i>group</i>.<i>subsuffix</i></tt></p>
+<p>Here <tt><i>cossuffix</i></tt> is defined as follows. If (as is recommended), <tt><i>subsuffix</i></tt> has the form <tt><b>sub</b><i>string</i></tt> for some (possibly empty) string <tt><i>string</i></tt>, then <tt><i>cossuffix</i></tt> is <tt><b>cos</b><i>string</i></tt>. Otherwise, <tt><i>cossuffix</i></tt> is <tt><i>subsuffix</i><b>_cos</b></tt>. The default for <tt><i>subsuffix</i></tt> is just <tt>sub</tt>, and then <tt><i>cossuffix</i></tt> is just <tt>cos</tt>. If the file containing the coset rewriting system is named <tt><i>group</i>.<i>cossuffix</i></tt>, then most automata and other output files created from it will have names of the form <tt><i>group</i>.<i>cossuffix</i>.<i>suffix</i></tt>. However, a few files will have names of the form <tt><i>group</i>.<i>subsuffix</i>.<i>suffix</i></tt>. This applies in particular to the presentation that may be generated for the subgroup, and to the word-acceptor for the subgroup.</p>
+<p>If the subgroup suffix is <tt>sub<i>string</i></tt> <i>string</i> should not itself contain either <tt>cos</tt> or <tt>sub</tt>. Doing this is likely to cause MAF to become confused about your intentions.</p>
+<h3>Invoking MAF utilities with coset systems directly</h3>
+<p>MAF, but not KBMAG, will allow you to open a coset system file directly. Thus, if the file <tt><i>group</i>.<i>cossuffix</i></tt> already exists, the following two commands will have almost the same effect:</p>
+<p><kbd>automata -cos <i>group</i> <i>subsuffix</i></kbd></p>
+<p><kbd>automata <i>group</i>.<i>cossuffix</i></kbd></p>
+<div class="xpanel"><h5>Tip:</h5><p>Never rename a coset system to use some other filename. MAF must be able to deduce the names of both the original input file for the group, and of the substructure file, since these files, or files related to them, may be needed for some computations for the coset system.</p></div>
+<p>The only difference between the two commands, is that in the first case the coset system file will be generated, even if it already exists, whereas in the second case, the existing coset system file will be used (and the command will fail if the file does not yet exist). Therefore, if you need to modify a coset system input file created by MAF for some reason, then you should use the second command. This command will also be marginally quicker.</p>
+<p>Some utilities that accept the <kbd>-cos</kbd> option will expect the coset system to have been generated previously, since it only makes sense to use them once automata have been computed for the coset system. If you invoke them before the coset system input file is created they will complain.</p>
+<p>MAF will also allow you to use the <kbd>-cos</kbd> option in the following manner:</p>
+<p><kbd>automata -cos <i>group</i> <i>cossuffix</i></kbd></p>
+<p>If MAF sees the <kbd>-cos</kbd> option being used like this, it will interpret the command line just as though <i>subsuffix</i> had been supplied. This is because KBMAG's <tt>kbprogcos</tt> expects <i>cossuffix</i> whereas <tt>autcos</tt> expects a <i>subsuffix</i>. As this is confusing for the user MAF attempts to be flexible. This is the reason why you should follow the advice given above when choosing a subgroup suffix.</p>
+</body>
+</html>

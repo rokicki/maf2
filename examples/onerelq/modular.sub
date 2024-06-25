@@ -1,0 +1,17 @@
+_RWS_Sub := rec
+(
+  normalSubGenerators := [(x*y)^7,(x*y*x*Y)^4]
+);
+  subGenerators :=
+  [
+    r,R,s,S,x
+  ],
+  subGeneratorNames :=
+  [
+    r_,R_,s_,S_,x_
+  ],
+  subGeneratorInverseNames :=
+  [
+    R_,r_,S_,s_,x_
+  ]
+);

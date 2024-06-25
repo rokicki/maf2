@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>MAF : Reference (Usage) : FSA utilities</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="gp_usage.html" title="Usage: RWS Utilities">
+<link rel="Next" type="text/html" href="example1.html" title="Tutorial 1: Processing an input file with automata">
+
+
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html#usage">Reference (Usage)</a> : FSA utilities
+<h2>Usage information for FSA utilities</h2>
+
+<h3><a name="fsaand"></a><tt>fsaand</tt></h3>
+<p><kbd>fsaand <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-first] <i>filename1</i> <i>filename2</i> [<i>output file</i>]</kbd></p>
+<p>Two finite state automata, which must have the same alphabet, are read in from the files <i>filename1</i> and <i>filename2</i>. An automaton that accepts a word <i>w</i> in the alphabet if and only if both of the input automata accept <i>w</i> is computed, minimised, and output. Output is to <kbd><i>output file</i></kbd> if three filenames are specified and to <tt>stdout</tt> otherwise.</p>
+<p>The <kbd>-first</kbd> option modifies the language of the output automaton in the following way: The output automaton accepts a word <i>w</i> if both input automata accept it, and no prefix of <i>w</i> was accepted by both automata (so that any accepting state is also final).</p>
+<p><tt>fsaand</tt> may be used to compute the intersection of two subgroups. For an example refer to <a href="example6.html">Tutorial 6: Intersecting subgroups</a>.
+<h3><a name="fsaandnot"></a><tt>fsaandnot</tt></h3>
+<p><kbd>fsaandnot <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-first] <i>filename1</i> <i>filename2</i> [<i>output file</i>]</kbd></p>
+<p>Two finite state automata, which must have the same alphabet, are read in from the files <i>filename1</i> and <i>filename2</i>. A new automaton is computed and output. The output automaton accepts a word <i>w</i> if and only if the first input automaton accepts <i>w</i> but the second input automaton does not. Output is to <kbd><i>output file</i></kbd> if three filenames are specified and to <tt>stdout</tt> otherwise.</p>
+<p>The <kbd>-first</kbd> option modifies the language of the output automaton in the following way: The output automaton accepts a word <i>w</i> if the first accepts <i>w</i> but the second does not, <em>and no prefix of <i>w</i> was accepted by the first and rejected by the second</em>.</p>
+<p>"and not" automata are very often useful where one is trying to construct an automaton whose language should be closed under some function <i>op()</i>. The general method of proceeding is to first construct a candidate automaton, then to construct a candidate two-variable automaton which should accept (<i>w</i>,<i>op(w)</i>), then form the "exists" automaton of this and then combine it with the candidate automaton using the "and not" operation. The aim is for the "and not" automaton to have an empty language. If it does not, then one submits some of its accepted words to some error correcting code. Indeed, this is more or less how <tt>automata</tt> constructs the word-acceptor and general multiplier for an automatic group, and indeed many other automata. In most cases the internal equivalent of the <kbd>-first</kbd> option is used to limit the size of the output language.</p>
+
+<h3><a name="fsabfs"></a><tt>fsabfs</tt></h3>
+<kbd>fsabfs <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd>
+<p>A finite state automaton is read in, and then its states are permuted into bfs-order (bfs = breadth-first-search), and it is printed out again. This means that the states are numbered 1,2, ..., n, and if one
+examines the transition-table, in order of increasing states, then the states first occur in sequence. <tt>fsamin</tt> and <tt>fsabfs</tt> used together can be used to check whether two deterministic automata with the same alphabet have the same language. First apply <tt>fsamin</tt> and then <tt>fsabfs</tt>. If they have the same language, then the resulting automata should be identical. In fact this is exactly what <tt>fsalequal</tt> does.</p>
+<p>The default output filename is <tt><i>input file</i>.bfs</tt>.</p>
+<h3><tt>fsacartesian</tt></h3>
+<kbd><a name="fsacartesian"></a>fsacartesian <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <i>filename1</i> <i>filename2</i> [<i>output file</i>]</kbd>
+<p>Two finite state automata are read in, which should both be single-variable automata using the same alphabet. A new finite state automaton is computed, minimised, and output. The output automaton is a two variable FSA that accepts a word pair (u,v) if and only if the first automaton accepts u and the second automaton accepts v. The accepted language is therefore the Cartesian product of the two input languages. If the input automata were word-acceptors for two groups, the output automaton is in effect the word-acceptor for the direct product of the two groups. Output is to <kbd><i>output file</i></kbd> if three filenames are specified and to <tt>stdout</tt> otherwise.</p>
+
+<h3><a name="fsacompose"></a><tt>fsacompose</tt></h3>
+<kbd>fsacompose <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <i>filename1</i> <i>filename2</i> [<i>output file</i>]</kbd>
+<p>Two finite state automata are read in, which should both be two-variable automata using the same alphabet. A new finite state automaton is computed, minimised, and output. The output automaton is a two variable FSA that accepts a word pair (<i>u</i>,<i>v</i>) if and only if there is some <i>w</i> such that the first automaton accepts (<i>u</i>,<i>w</i>) and and the second automaton accepts (<i>w</i>,<i>v</i>). If the input automata were the multipliers for words <i>w1</i> and <i>w2</i> respectively in some group or coset system, then the output automaton is the multiplier for the word <i>w1*w2</i>. Presumably because of this, and because this is almost the only practical use made of this operation,  the KBMAG version of this utility is called <tt>gpcomp</tt>, but the method of construction is in principle applicable to any two two-variable FSA, not just multipliers, and could, for example, be used to help verify whether some FSA that purported to encode a total order of the words in the alphabet actually did so. Output is to <kbd><i>output file</i></kbd> if three filenames are specified and to <tt>stdout</tt> otherwise.</p>
+<p>If you do want to create a composite multiplier for some reason, it will usually be better to use MAF's <a href="gp_usage.html#gpmult"><tt>gpmult</tt></a> program to do so, because the multiplier will then be labelled correctly, whereas <tt>fsacompose</tt> creates unlabelled automata.</p>
+
+<h3><a name="fsaconcat"></a><tt>fsaconcat</tt></h3>
+<p><kbd>fsaconcat <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <i>filename1</i> <i>filename2</i> [<i>output file</i>]</kbd></p>
+<p>Two finite state automata, which must have the same alphabet, are read in from the files <i>filename1</i> and <i>filename2</i>. An new automaton with the same alphabet is computed and output. The new automaton accepts a word if and only if is identical to a concatenation of two words <i>w1*w2</i>, where <i>w1</i> is accepted by the first input automaton and <i>w2</i> by the second. Output is to <kbd><i>output file</i></kbd> if three filenames are specified and to <tt>stdout</tt> otherwise.</p>
+<h3><a name="fsacount"></a><tt>fsacount</tt></h3>
+<p><kbd>fsacount <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> [-is n] <a href="standard_options.html#input_file">-i | <i>input file</i></a> [<i>start_word1</i>] [<i>start_word2</i>]</kbd>
+<p>A finite state automaton is read in, and the size of the accepted language is computed. Unless you 
+specify the <kbd>-silent</kbd> the result of the calculation is then printed as part of a message. If you do specify <kbd>-silent</kbd> then the only output sent to <tt>stdout</tt> is a number representing the answer (which may of course be infinite). If the size of the accepted language is infinite the number output is -1. If the size of the input language is not infinite, but is greater than or equal to 2^64-2, the number output is -2. Otherwise the output is the normal decimal representation of the size of the language.</p>
+<p>If the FSA is one-variable and <kbd><i>start_word1</i></kbd> is specified then the size of the accepted language from that point is computed: i.e. the size of the intersection between the accepted language of the FSA and the set consisting of words having start_word1 as a prefix and start_word1 itself. If the FSA is two-variable then the size of the language from the pair [start_word1,start_word2] is similarly computed.</p>
+<p>If you specify the <kbd>-is n</kbd> option, then the initial_state of the automaton is first changed to n, and the resulting automaton is minimised. This is included for compatibility with KBMAG. The purpose of this option was to facilitate the computation of the index of a subgroup. In MAF the same result will be achieved
+in a less obscure manner by using the <kbd>start_word1</kbd>,<kbd>start_word2</kbd> facility.</p>
+
+<h3><a name="fsacut"></a><tt>fsacut</tt></h3>
+<p><kbd>fsacut <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A finite state automaton is read in, and a modified automaton computed and then output. The modified automaton has the same states and transitions as the original automaton, except that any transitions which create a loop are removed. Therefore the accepted language is only changed if the original FSA had an infinite accepted language, and the new language is the largest finite subset of this that can be recognised by an FSA with the same number of states as the original FSA.
+</p>
+
+<h3><a name="fsadiagonal"></a><tt>fsadiagonal</tt></h3>
+<p><kbd>fsadiagonal <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A finite state automaton, which must be two-variable, is read in, and a single-variable automaton is computed and then output. The computed automaton accepts a word u if and only if the input automaton accepted (u,u). This utility, together with <tt>gpmult</tt> could be used to extract the identity multiplier from a general multiplier, and then to convert it to the word-acceptor.
+</p>
+
+
+<h3><a name="fsaenumerate"></a><tt>fsaenumerate</tt></h3>
+<p><kbd>fsaenumerate [-bfs | -dfs] <i>min</i> <i>max</i> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a> [-l] [-s] [-equation] [-is <i>n</i>] [-sw <i>w1</i>] [-rw <i>w2</i>]</kbd></p>
+<p>A finite state automaton is read in. <i>min</i> and <i>max</i> should be non-negative integers with <i>min</i> &le; <i>max</i>. The words in the accepted language having lengths at least <i>min</i> and at most <i>max</i> are enumerated, and output as a GAP list of words.</p>
+<p>If the option <kbd>-dfs</kbd> is called (depth-first search - the default), then the words in the list will be in lexicographical order, whereas with <kbd>-bfs</kbd> (breadth-first-search), they will be in order of increasing length, and in lexicographical order for each individual length (i.e. in shortlex order). Depth-first-search is marginally quicker.</p>
+<p>If the <kbd>-l</kbd> option is specified the number of the label of the accepting state is printed with each accepted word or word pair. If the <kbd>-s</kbd> option is specified then the number of the accepting state is printed with each accepted word or word pair. If the <kbd>-equation</kbd> option is specified and the input FSA is a multiplier, then the accepted word pairs are printed out in the form of equations.</p>
+<p>If you are enumerating words to feed into a C++ application it is better to link MAF directly into your program and use MAF's FSA::Word_Iterator class, because in this case you can use a flexible scheme to decide how far to explore each FSA. Or you can simply write your own code to load and run the FSA if you prefer.</p>
+<p>The default output filename is <tt><i>input file</i>.enumerate</tt>.</p>
+
+<h3><a name="fsaexists"></a><tt>fsaexists</tt></h3>
+<p><kbd>fsaexists <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-sticky] [-swapped] <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A two-variable finite state automaton is read in, and a one-variable automaton, which accepts a word <i>u</i> if and only if the input automaton accepts <i>(u,v)</i> for some word <i>v</i> is computed. If the <kbd>-sticky</kbd> option is specified then the output automaton accepts a word <i>u</i> provided (p(<i>u</i>),<i>v</i>) is accepted where p(<i>u</i>) is some prefix of <i>u</i> and <i>v</i> is any word. In the case where the input file is a word difference machine then the accepted language is the same with and without <kbd>-sticky</kbd>, and the <kbd>-sticky</kbd> automaton is much easier to calculate.</p>
+<p>If <kbd>-swapped</kbd> is specified then the roles of u,v are interchanged, so that the output automaton accepts <i>u</i> if and only if <i>(v,u)</i> is accepted for some <i>v</i>.
+<p>The default output filename is <tt><i>input file</i>.exists</tt>, or if <kbd>-swapped</kbd> is specified <tt><i>input file</i>.swapped.exists</tt>.</p>
+
+<h3><a name="fsafl"></a><tt>fsafl</tt></h3>
+<p><kbd>fsafl <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <i>rws</i> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A list of words in the alphabet used by the rewriting system <i>rws</i> is read in from either <tt>stdin</tt> (if the <kbd>-i</kbd> option is specified, or from <i>input_file</i> otherwise, and an automaton whose
+accepted language is precisely this list of words is computed, minimised, and output.</p>
+<p>The default output filename is <tt><i>rws</i>.fl</tt>.</p>
+<p>This is an exceptional FSA utility, because it reads a rewriting system. However, it makes no use of this other than to  use it to parse the list of words. An RWS has to be used for this purpose, because the GASP format for the alphabet of a finite state automata does not carry information about inverses (there is no reason that it should do so), so that were <tt>fsafl</tt> to use another FSA to set the alphabet, it would not be possible for it to understand expressions involving negative powers, (except perhaps in the same way KBMAG does). In any case, MAF's routine for parsing a list of words currently requires a rewriting system.</p>
+<h3><a name="fsakernel"></a><tt>fsakernel</tt></h3>
+<p><kbd>fsakernel <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-accept_all | -a] [-no_minimise] [-infinite] [-midfa] <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A finite state automaton is read in, and a modified automaton is computed and then output. The modified automaton has the same states and transitions as the original automaton and accepts the same language, except that states to which the automaton cannot return after entering them are made non accepting. In other words, when reading a word, the output automaton will reach its failure state, unless there were infinitely many accepted words having that word as a prefix in the original automaton, and it will not be in an accepting state if the original automaton was in a state than can only occur a finite number of times. So <tt>fsakernel</tt> is only of any interest when an automaton has an infinite accepted language.</p>
+<p>The <kbd>-accept_all</kbd> or <kbd>-a</kbd> option makes all states that remain after this pruning accept states. The <kbd>-infinite</kbd> option extends the set of states that are allowed to remain accepting to include any state that can be reached infinitely often. So in this case the only states that are made not accepting are the states that only occur a finite number of times.</p>
+<p>If the <kbd>-midfa</kbd> option is specified all the states which can recur are made initial states, and all the other states are removed entirely.</p>
+<p>The <kbd>-no_minimise</kbd> option prevents the output FSA from being minimised or trimmed, so that it
+has the same states as the original FSA (unless you used the <kbd>-midfa</kbd> option).</p>
+<p><tt>fsakernel</tt> and <tt>fsaprune</tt> are similar utilities, and both identify the set of states that can recur. They differ in how they treat the states that can only occur finitely often. <tt>fsakernel</tt> makes all these states non-accepting, <tt>fsaprune</tt> only makes them non accepting if they are also states from which the accepted language is finite.</p>
+<p>The suffix used with the "." filename is ".kernel".</p>
+
+<h3><a name="fsalequal"></a><tt>fsalequal</tt></h3>
+<p><kbd>fsalequal <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <i>filename1</i> <i>filename2</i></kbd></p>
+<p>Two finite state automata are read in from the files <i>filename1</i> and <i>filename2</i>. This program tests whether they have the same language. The exit code is 0 if they do, and a non-zero value of 4 or more if not. The various possible non-zero exit code values are:
+<table class="niceborder" cellspacing="0" summary="Exit codes from fsalequal">
+<tr>
+<th>
+Exit Code
+</th>
+<th>
+Meaning
+</th>
+</tr>
+<tr><td>1</td><td>Usage error</td></tr>
+<tr><td>3</td><td>I/O error</td></tr>
+<tr><td>4</td><td>The alphabets are not the same size</td></tr>
+<tr><td>5</td><td>The alphabets are not the same</td></tr>
+<tr><td>6</td><td>The canonical FSA for the languages have a different number of states</td></tr>
+<tr><td>7</td><td>The canonical FSA for the languages have different transition tables</td></tr>
+</table>
+
+<h3><a name="fsamerge"></a><tt>fsamerge</tt></h3>
+<p><kbd>fsamerge <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A finite state automaton, which should have labelled states, is read in, and a modified automaton is computed and then output. The modified automaton is created by merging states which have the same labels. This is only possible if the original FSA did not contain any pair of states with the same label for which both states had a transition for the same input symbol(other than to state 0), for which the new states had different labels. If the FSA had such pairs of states then the program will exit with exit code 1.</p>
+<p>MAF uses this functionality to create the "correct difference machines" associated with an automatic structure.</p>
+<p>The default output filename is <tt><i>input file</i>.merge</tt>.</p>
+
+<h3><a name="fsamin"></a><tt>fsamin</tt></h3>
+<kbd>fsamin <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-mergelabels | -mergeinitiallabels | -nolabels] <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd><br>
+<p>A finite state automaton is read in. An FSA with as few states as possible but with the same accepted language is generated and printed out. If the input FSA has labelled states (including the case where each state has its own unique label), then normally minimisation is subject to the additional condition that the label of the state that is reached by reading the same input is the same in both the input and the output FSA, except that if a word is not accepted and is not a prefix of an accepted word then it will have reached the failure state in the second FSA, but may not have done in the first FSA. So in the case of an FSA with labelled
+states <tt>fsamin</tt> may not strictly minimise the FSA, because states which would be combined by a strict minimisation are kept apart because they have different labels. If the <kbd>-nolabels</kbd> option is specified, then any labels on the input FSA are removed prior to minimisation. Alternatively, the <kbd>-mergelabels</kbd> option, keeps the labels, but ignores them when deciding which states to combine, but afterwards the labels are changed, so that each state in the new FSA has all the labels from the original states. Thus <tt>fsamin</tt> without <kbd>-nolabels</kbd> is roughly equivalent to KBMAG's <tt>fsalabmin</tt> (except in the case where the input FSA has labels attached to states that are failing), and <kbd>fsamin -nolabels</kbd> or <kbd>fsamin -mergelabels</kbd> is equivalent to KBMAG's <tt>fsamin</tt>. The <kbd>-mergeinitiallabels</kbd> option is similar to <kbd>-mergelabels</kbd>, but does not combine so many states: it keeps apart accept states with different labels, but not other states. Minimising a MIDFA coset multiplier or a determinised multiplier with <kbd>-mergelabels</kbd> will invalidate it if it contains more than one multiplier, but it will still be valid if the <kbd>-mergeinitiallabels</kbd> option is used.</p>
+<p>The default output filename is <tt><i>input file</i>.min</tt>.</p>
+
+<h3><a name="fsan"></a><tt>fsan</tt></h3>
+<p><kbd>fsan <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> -all | [-exact] <i>n</i> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>This program can create a number of simple automata that are sometimes useful as one of the input automata for utilities that combine more than one automaton. The created automaton always uses the same alphabet as the input automaton, but no other use is made of the input automaton.</p>
+<p>If <kbd>-all</kbd> is specified then the automaton accepts all words in the alphabet. Otherwise you must specify a number between 0 and 65533, possibly prefixed by <kbd>-exact</kbd>. The output automaton accepts all words of length n or less, or of length exactly n, according to whether or not <kbd>-exact</kbd> is specified.
+In principle you could use the combination of <tt>fsan</tt> and <tt>fsaand</tt>, to create a truncated version of a language. However, this is unlikely to be a good idea, as the truncated automaton is quite likely to be larger than the original unless the original already had a finite language.</p>
+
+<h3><a name="fsanot"></a><tt>fsanot</tt></h3>
+<kbd>fsanot <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-first] <a href="standard_options.html#input_file">-i | <i>input file</i></a> [<i>-o | output file</i>]</kbd><br>
+<p>A finite state automaton is read in, and an automaton with the same alphabet is computed and output. The output automaton accepts a word <i>w</i> if and only if the input automaton does not accept <i>w</i>.</p>
+<p>If the <kbd>-first</kbd> option is used then the language of the output automaton is modified in the following way: the output automaton accepts a word <i>w</i> if and only if the input automaton does not accept <i>w</i> <em>and the input automaton had not already reached its failure state before reading the last symbol of <i>w</i></em>. The <kbd>-first</kbd> language is usually the more interesting. For example if the input automaton is a word-acceptor, then the output with <kbd>-first</kbd> is the automaton which accepts just those reducible words which have an irreducible prefix. (MAF refers to this language as the L2 language).</p>
+<p>The default output filename is <tt><i>input file</i>.min</tt>, or <tt><i>input file</i>.firstnot</tt> if <kbd>-first</kbd> is used.</p>
+
+<h3><a name="fsaor"></a><tt>fsaor</tt></h3>
+<p><kbd>fsaor [-op d/s] <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <i>filename1</i> <i>filename2</i> <i>output file</i></kbd></p>
+<p>Two finite state automata, which must have the same alphabet, are read in from the files <i>filename1</i> and <i>filename2</i>. A new automaton with the same alphabet is computed and output. The output automaton accepts a word <i>w</i> in the alphabet if and only if at least one of the two input automata accept <i>w</i>.</p>
+
+<h3><a name="fsapad"></a><tt>fsapad</tt></h3>
+<p><kbd>fsapad <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> -all | [-exact] <i>n</i> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>This program creates the automaton that accepts the language of all correctly padded pairs of words (for the alphabet of the input FSA). In other words it accepts all pairs of words (u,v) which do not contain an interior padding character. It is sometimes useful to "and" this automaton with a word difference machine since the latter normally do not reject input contain interior padding, whereas multipliers do.</p>
+
+<h3><a name="fsaprint"></a><tt>fsaprint</tt></h3>
+<p><kbd>fsaprint <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd>
+<p>This merely reads in a finite state automaton and prints it out again. Its main use is for changing the format of an automaton from dense to sparse or vice-versa, or to annotate the FSA so that you can understand it more easily.</p>
+<p>The KBMAG equivalent of this utility is called <tt>fsafilter</tt>. The name has been changed, because, if a user is interested in questions of compatibility between MAF and KBMAG he or she may well want sometimes use MAF's <tt>fsaprint</tt> to convert an FSA created by KBMAG into the format used by MAF, and sometimes use KBMAG's <tt>fsafilter</tt> to perform the reverse operation. MAF uses quite a different style of output from KBMAG, which reflects the author's rather different preferences. Perhaps at some future date, extra formatting options will be added, to make <tt>fsaprint</tt> more flexible.</p>
+<p>The default output filename is <tt><i>input file</i>.print</tt>.</p>
+
+<h3><a name="fsaproduct"></a><tt>fsaproduct</tt></h3>
+<p><kbd>fsaproduct <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <i>filename1</i> <i>filename2</i> <i>filename3</i> [<i>output file</i>]</kbd></p>
+<p>This program reads three input automata and computes a fourth, which is minimised and output. The first input automaton must be two-variable, the other two must both be single-variable. The computed automaton accepts a word pair (u,v) if and only if the first automaton accepts (u,v) the second accepts u and the third accepts v.
+Output is to <kbd><i>output file</i></kbd> if four filenames are specified and to <tt>stdout</tt> otherwise.
+<p>In essence this is how the general multiplier is constructed, and it is how closely related automata such as the primary equation recogniser and reduction recogniser actually are created.</p>
+
+<h3><a name="fsaprune"></a><tt>fsaprune</tt></h3>
+<p><kbd>fsaprune <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-accept_all | -a] <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A finite state automaton is read in, and a modified automaton is computed and then output. The modified automaton has the same states and transitions as the original automaton and accepts the same language, except that states from which the accepted language was finite have been removed. In other words, when reading a word, the output automaton will reach its failure state, unless there were infinitely many accepted words having that word as a prefix in the original automaton. In particular, words from the original language that were accepted, but were inextensible, or only finitely extensible, are now rejected, so <tt>fsaprune</tt> will always produce a completely empty automaton if the original automaton had a finite language. Another, possibly better, name for this program might have been "fsaspine", though "prune" is quite suggestive too - the states that are removed, though not yet dead, are terminally ill. The <kbd>-accept_all</kbd> or <kbd>-a</kbd> option makes all states that remain after pruning accept states. This is not quite the same as KBMAG's <kbd>-a</kbd> option, which makes all states of the input FSA accepting before pruning it. In this case MAF will still correctly remove cycles of failing states from a non-trim input FSA, but KBMAG will not.</p>
+<p>It is the author's belief that MAF's <kbd>fsaprune</kbd> creates the same automaton that KBMAG's <kbd>fsaprune</kbd> is <em>intended</em> to produce. However, the KBMAG version of <kbd>fsaprune</kbd> frequently only produces this automaton if its <kbd>-a</kbd> option is used, and then only if the input automaton was trim. In other cases KBMAG uses a much more complicated algorithm than seems necessary and produces an automaton which does not seem at all consistent with KBMAG's definition of what <kbd>fsaprune</kbd> should do, and for which the present author can see no discernible use.</p>
+<p>There are some peculiarities in this program compared with most other MAF utilities: in particular it is one of the few FSA utilities that outputs an automaton that may not be "trim". Frequently the output language is in fact empty unless you use the <kbd>-accept_all</kbd> option. When this happens the line <tt>accepting := []</tt> will appear in the output. It should also be noted that KBMAG has a <kbd>-i</kbd> option for this program, which means something quite different and is not supported. The automaton produced by KBMAG's <kbd>fsaprune -i</kbd> also seems to be very obscure, since there is no obvious manner of relating its states to those of the original. However MAF's <tt>fsakernel</tt> utility does something similar.</p>
+<p>The default output filename is <tt><i>input file</i>.prune</tt>.</p>
+
+<h3><a name="fsareverse"></a><tt>fsareverse</tt></h3>
+<p><kbd>fsareverse <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-s] [-midfa] <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A finite state automaton is read in, and an automaton with the same alphabet, which accepts the same words, but read in the opposite direction, is computed and output.
+<p>If <kbd>-s</kbd> is used, then the states of the output automaton will be labelled as lists of integers, which specify the corresponding subsets of the states of the input automaton. This option is not recommended.</p>
+<p>If <kbd>-midfa</kbd> is used, then the output automaton will be a MIDFA, and the initial states  will correspond to the accepting states of the input automaton.</p>
+<p>The default output filename is <tt><i>input file</i>.reverse</tt>, or, if with the <kbd>-midfa</kbd> option, <tt><i>input file</i>.mireverse</tt>.</p>
+<p>The MAF version of <tt>fsareverse</tt> is much faster than the KBMAG one on large FSA.</p>
+<p>This program is useful if you want to investigate what accepted words a particular word occurs as a subword of. It is also interesting to compare the accepted languages of an automaton and its reverse as this shows how far from being "time symmetric" the language is. <tt>fsareverse</tt> also shows up the difference between the accepted language of a group and a coset word-acceptor: although both languages are prefix closed, when reversed usually only the group word-acceptor will still be prefix closed.</p>
+
+<h3><a name="fsaseparate"></a><tt>fsaseparate</tt></h3>
+<p><kbd>fsaseparate <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>] <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>This program computes and outputs an FSA which accepts the same language as the input FSA, but in the output FSA no state can be reached via transitions from different symbols. In other words if s1^g1=s2^g2 then g1=g2.
+Many word-acceptor FSA are close to having this property in any case. This facility has been added because when drawing limit sets of Kleinian groups it is useful to be able to associate data indexed by the last symbol, and by state, so separating states like this avoids the need to store information for more than one generator with some states. If the original FSA has unlabelled states then the output states are labelled by the generator which reaches them (with initial states left unlabelled). 
+</p>
+
+<h3><a name="fsashortlex"></a><tt>fsashortlex</tt></h3>
+<p><kbd>fsashortlex <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-strict] [-lt] <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>This program creates an FSA which decides the shortlex order of two words in the alphabet of the input automaton. The output automaton accepts a pair of words (u,v) if and only if u &gt; v in shortlex order. If the <kbd>-lt</kbd> option is specified the automaton instead accepts a pair of words (u,v) if and only if u &lt; v in shortlex order. Usually the output automaton allows interior padding on the side which must contain the lesser word. However, if you specify the <kbd>-strict</kbd> option, interior padding is disallowed on both sides.</p>
+<p>The default output filename is <tt><i>input file</i>.shortlex.gt</tt>, or, if with the <kbd>-lt</kbd> option, <tt><i>input file</i>.shortlex.lt</tt>.</p>
+
+<h3><a name="fsastar"></a><tt>fsastar</tt></h3>
+<p><kbd>fsastar <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A finite state automaton is read in and a new automaton with the same alphabet is computed and output. The output automaton accepts a word <i>w</i> if and only if it is the concatenation of 0 or more words accepted by the input automaton.</p>
+<p>The default output filename is <tt><i>input file</i>.star</tt>.</p>
+
+<h3><a name="fsaswapcoords"></a><tt>fsaswapcoords</tt></h3>
+<p><kbd>fsaswapcoords <a href="standard_options.html#format">[<i>format</i>]</a> <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd>
+<p>A two-variable finite state automaton is read in. A new automaton that accepts a pair of words <i>(u,v)</i> if and only if the original automaton accepts <i>(v,u)</i> is computed and output. In KBMAG this functionality is needed for quantifying over the second variable of a two variable automaton with <tt>fsaexists</tt>, but <tt>fsaexists</tt> supports this directly in MAF through its <kbd>-swapped</kbd> option.</p>
+<p>The FSA produced by running <tt>fsaswapcoords</tt> against the the multiplier for a word w is necessarily the multiplier for w^-1, except that the labels also need to be inverted. MAF uses this fact to reduce the number of composite multipliers it needs to build when checking axioms or performing other tasks that require the computation of composite multipliers.
+</p>
+<p>The default output filename is <tt><i>input file</i>.swapcoords</tt>.</p>
+
+<h3><a name="fsatrim"></a><tt>fsatrim</tt></h3>
+<kbd>fsatrim <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd><br>
+<p>A finite state automaton is read in. States which cannot be reached from an initial state are removed, as are states from which no accepting state can be reached. The first category of removed state is called <dfn>inaccessible</dfn>, so that all remaining states are accessible. States from which an accepting state can be reached are sometimes called <dfn>co-accessible</dfn>. An FSA with no states in either of the offending categories is called trim.  The trim operation does not change the language of the FSA. Generally speaking, the <tt>fsamin</tt> utility should be preferred to <tt>fsatrim</tt>; <tt>fsamin</tt> will often reduce the size of the automaton significantly more than can <tt>fsatrim</tt>. However, sometimes <tt>fsatrim</tt> runs much faster, and on certain automata, such as "and not first" automata <tt>fsamin</tt> may take a very long time to run and may not be able to improve the automaton significantly.</p>
+<p>The default output filename is <tt><i>input file</i>.trim</tt>.</p>
+<p>Running this utility against a <tt>.diff2c</tt> automaton created by the KBMAG version of <tt>gpminkb</tt> will demonstrate it has the TRIM flag set incorrectly.</p>
+
+<h3><a name="midfadeterminize"></a><tt>midfadeterminize</tt></h3>
+<p><kbd>midfadeterminize <a href="standard_options.html#loglevel">[<i>loglevel</i>]</a> <a href="standard_options.html#format">[<i>format</i>]</a> [-identical | -equal] [-nolabels] [-all] <a href="standard_options.html#input_file">-i | <i>input file</i></a> <a href="standard_options.html#output_file">[-o | <i>output file</i>]</a></kbd></p>
+<p>A  MIDFA (multiple initial state deterministic finite state automaton) is read in, and a minimized deterministic automaton that accepts the same language is output. Unless the <kbd>-nolabels</kbd> option is specified, or the labels are not words, the output FSA is given labels by combining all the labels from merged states into a list of labels.</p>
+<p>The <kbd>-identical</kbd> and <kbd>-equal</kbd> options are useful with composite MIDFA multipliers which you do not want to fully determinise. In such multipliers it is commonly the case that more than one initial state has the same label (for example because composition will involve multiplication on the left and right by the identity). There is no good reason to keep such states separate. The <kbd>-identical</kbd> option combines initial states with the same label,  but keeps other states apart. The <kbd>-equal</kbd> option performs a stronger kind of merging: initial states are merged if any one of the labels attached to the state are equal. This is necessarily done transitively, so that two states each with a label in common with a third state will both be merged with that state. Internally MAF uses the <kbd>-equal</kbd> option when building composite MIDFA multipliers. As a result MIDFA multipliers usually have many fewer states when built with MAF as compared with KBMAG. When determinised the multipliers accept the same language, so they are equivalent.</p>
+<p>If the <kbd>-all</kbd> option is specified then the states of the input automaton are all made initial (which  will generally change the accepted language). MAF uses this option internally when it is determines which G equations are needed for coset word reduction. This option may also be used to check if a coset word-acceptor is for a normal subgroup: if the subgroup is normal then running <kbd>midfadeterminize -all</kbd> against it will produce an identical FSA, for other subgroups the output FSA will have a larger language.</p>
+<p>The default output filename is <tt><i>input file</i>.midfadeterminize</tt>.</p>
+</body>
+</html>

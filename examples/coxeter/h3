@@ -1,0 +1,24 @@
+# Coxeter graph
+#      
+#     5 
+#  a-b-c
+#
+# Coxeter Matrix (above upper diagonal)
+# 1 3 2   
+#   1 5  
+#     1  
+#               
+#Weyl group H3 (all gens involutory).
+#Symmetry group of icosahedeon/dodecahedron
+_RWS := rec(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b,c],
+  inverses := [a,b,c],
+  equations :=
+  [
+    [b*a*b,a*b*a],
+    [c*a,a*c],
+    [(b*c)^5,IdWord],
+ ]
+);

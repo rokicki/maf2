@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Background : Orderings</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="fpmonoids.html" title="Finitely presented monoids">
+<link rel="Next" type="text/html" href="Word_problem.html" title="The word problem">
+
+
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="background.html">Background</a> : Orderings
+<h2><a name="ordering"></a>Orderings</h2>
+<p>If <i>S</i> is any set and <i>R</i> is a subset of the Cartesian product <i>S</i>&times;<i>S</i> then <i>R</i> is a <dfn>binary relation</dfn> on <i>S</i>. If <span class="nobr"><i>s</i>,<i>t</i> &isin; <i>S</i></span> and <span class="nobr">(s,t) &isin; <i>R</i></span> then one can write <i>s R t</i> to denote the fact that <i>s</i> and <i>t</i> are <i>R</i>-related.</p>
+<p>A <dfn>partial ordering</dfn> of a set <i>S</i> is a relation <i>&le;</i> with the following additional properties for all <span class="nobr"><i>s,t,u</i> &isin; <i>S</i></span>.</p>
+<ol>
+<li>(Reflexivity). <i>s &le; s</i>
+<li>(Transitivity). if <i>s &le; t</i> and <i>t &le; u</i> then <i>s &le; u</i>
+<li>(Antisymmetry). if <i>s &le; t</i> and <i>t &le; s</i> then <i>s = t</i>
+</ol>
+<p>The notation <span class="nobr"><i>s &lt; t</i></span> means <span class="nobr"><i>s &le; t</i></span> and <span class="nobr"><i>s &ne; t</i></span>. The notation <span class="nobr"><i>t &ge; s</i></span> is a synonymous with <span class="nobr"><i>s &le; t</i></span>, and <span class="nobr"><i>t &gt; s</i></span> is synonymous with <span class="nobr"><i>s &lt; t</i></span>.
+</p>
+<p>Elements <i>s</i> and <i>t</i> are said to be <dfn>comparable</dfn> if either <span class="nobr"><i>s &le; t</i></span> or <span class="nobr"><i>t &le; s</i></span>. A partial ordering of <i>S</i> in which any two elements are comparable is called a <dfn>total ordering</dfn> or <dfn>linear ordering</dfn> of <i>S</i>. A total ordering is a <dfn>well-ordering</dfn> if there is no infinite sequence of elements of <i>S</i> <span class="nobr"><i>s<sub>1</sub>, s<sub>2</sub></i>...</span> such that, for all <i>i</i>, <span class="nobr"><i>s<sub>i</sub></i> &gt; <i>s<sub>i+1</sub></i></span>.</p>
+<h4><a name="reduction"></a>Reduction orderings</h4>
+<p>If <i>X</i> is an alphabet then a partial ordering of <i>X<sup>*</sup></i> (words on <i>X</i>) is said to be <dfn>translation invariant</dfn> if for all <span class="nobr"><i>u,v,a,b</i> &isin; <i>X<sup>*</sup></i></span> <span class="nobr"><i>u &lt; v</i></span> implies <span class="nobr"><i>aub &lt; avb</i></span>. A translation invariant well-ordering is called a <dfn>reduction ordering</dfn>. In such an ordering, words are necessarily
+greater than any of their proper subwords (because otherwise we would find a word <i>w</i> with w &gt; <i>awb</i> with <i>a</i> and <i>b</i> not both empty, and then we would have <i>awb</i> &gt; <i>aawbb</i> by translation invariance, and clearly we can get an infinite descending chain of words by repetition). This shows that the empty word is first in the ordering.</p>
+<p>
+A total ordering of <i>X<sup>*</sup></i> is said to be <dfn>geodesic</dfn> or <dfn>consistent with length</dfn> if <i>l(u)</i> &lt; <i>l(v)</i> implies <i>u</i> &lt; <i>v</i>. Such an ordering is necessarily a well ordering.</p>
+<p>Pages 41-50 of <a href="bib.html#Sims94">[Sims94]</a> contain a number of results about reduction orderings. In particular it is shown that shortlex (there called length + lexicographic ordering) and wreath product orderings are reduction orderings.</p>
+</body>
+</html> 
+

@@ -1,0 +1,19 @@
+#Men(5) another example from ACE
+#I have removed a unnecessary generator d=a*b*c
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,e],
+  inverses := [A,a,b,e],
+  equations :=
+  [
+    [a^4,IdWord],
+    [e*a*b*a^2*b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b*a^2*e*b*a^2*b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b*a^2*a,IdWord],
+    [a*b*a^2*b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b*a^2*a*b*a^2*b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b*a^2,IdWord],
+    [e*A*b*a^2*b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b*a^2*b*a*e*b*A*a^2*b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b*a^2*a*b,IdWord],
+    [e*a^2*b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b*a^2*a*a^2*b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b*a^2*e*A*b*A*b*a,IdWord],
+    [(b*a^2*b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b*a^2)^5,IdWord],
+    [b*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*a*b*a*b*a^3*b*a^3*b*a^3*b*a^3*b*a^3*b*a*b*a^2*b*a^2*b,IdWord]
+  ]
+);

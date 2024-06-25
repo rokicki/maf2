@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : Appendix B : Using MAF from the GAP package for KBMAG</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="standard_options.html" title="Standard options">
+<link rel="Next" type="text/html" href="gp_usage.html" title="Usage: RWS utilities">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="MAF.html#appendices">Appendices</a> : (B) Using MAF from the GAP package for KBMAG
+<h2><a name="UsingMAFfromGAP"></a>Appendix B : Using MAF from the GAP package for KBMAG</h2>
+<p>The author is not a GAP expert, so the contents of this section should be read with some caution. He is currently preparing a new set of GAP modules which will be designed to work well with MAF and will also allow the user to use KBMAG to perform the same tasks (either via the existing KBMAG package, or by setting an option in the new package), so that users will be able to use either package to verify results produced by the other. However, it is already possible to access MAF from within GAP by using the existing KBMAG package, as the next two paragraphs explain.</p>
+<p>KBMAG is published as a GAP package for Unix only. However it is certainly also possible to get it running under GAP 4.4.x on a Windows machine (the author has done this on both Windows 2000 and Windows XP machines). If the binary files in the <tt>gap/kbmag/bin/<i>architecture</i>/</tt> directory are replaced with the corresponding files from MAF, then this package continues to work well - at least with all the examples contained in the KBMAG documentation. This is probably the easiest way to use MAF from within GAP. In fact it is probably best initially only to replace <tt>autgroup</tt>, <tt>autcos</tt>, <tt>kbprog</tt> and <tt>kbprogcos</tt>. In particular he has not tested whether all the FSA utilities common to KBMAG and MAF can be replaced with MAF versions. </p>
+<p>A second possibility is to copy the <tt>kbmag</tt> subdirectory of GAP's pkg directory to <tt>maf</tt> and again to replace the binary files. In this case you would also need to edit various .g files to get them to refer to MAF rather than KBMAG. But it is probably best to leave function names unchanged, since there is no GAP documentation for MAF. The author can supply suitably modified files if anyone is interested. If this is done it is possible to use either MAF or KBMAG to investigate groups. However, unless you go to the trouble of changing a large number of function names, it is not possible to have both packages loaded at the same time.</p>
+<p>One notable difference between the existing KBMAG package and the package the author is developing is that the new interface will use the same generator labels in the rewriting system and FSA as you use in GAP, and will use the case change convention for inverses. Therefore the files produced by the new interface would be more easily usable from outside GAP, and you will therefore be able to save them. This will make it easier to do things like changing the order or names of generators, which is currently error-prone.</p>
+</body>
+</html>

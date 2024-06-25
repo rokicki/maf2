@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Reference : File names and formats</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="limits.html" title="Internal limits">
+<link rel="Next" type="text/html" href="input_files.html" title="Input files">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html">Reference</a> :  File names and formats
+<h2>File names and formats</h2>
+<p>All the files written and read by MAF generally conform to the format used by KBMAG and are structured either as a GAP record or as a GAP list. Files produced by MAF are cosmetically different from KBMAG, since MAF's output reflects the author's different preferences for file layout. KBMAG and MAF can each read files produced by the other package. There are some differences in the file format for coset systems, but MAF can read KBMAG's files, and can produce files in the format it expects.</p>
+<h3>Input files</h3>
+<p>Four types of input file are handled:</p>
+<ol>
+<li>The rewriting system input files used by <tt>automata</tt> and the RWS utilities are described in <a href="input_files.html">Input files</a>. Necessary information about GAP syntax can also be found there.</li>
+<li>For applications related to cosets of subgroups, an additional input file, called a substructure file,  defining generators of the subgroup must also be supplied by the user. See <a href="substructure_files.html">Substructure files</a> for further information. MAF uses the combination of an ordinary input file and a substructure file to generate a coset system, according to the scheme described in <a href="coset_system_names.html">Coset system names</a></li>
+<li>A few applications, notably <tt>reduce</tt> and <tt>gporder</tt>, can process an input file containing a list of words. Such files are formatted as a GAP list of words formatted like this:
+<pre>
+words :=
+[
+  a*b*A*B,
+  a*b^3*A,
+  b^5
+]
+</pre>
+<li>Files containing the finite state automata produced by <tt>automata</tt> or other programs, which are used by input by many MAF components.</li>
+</ol>
+<h3>Output files</h3>
+<p>Almost all output files produced by MAF follow use one of the formats listed above. The formats used for automata and rewriting systems files are specified in the <a href="http://www.geom.uiuc.edu/~dfh/gasp.html">GASP Standard Format Document</a>.</p>
+<p>The documents <a href="automata_FSA.html">Output files (groups and monoids)</a> and <a href="cosets_FSA.html">Output files (coset systems)</a> describe the names and purpose of all the automata and related files constructed by <tt>automata</tt> or other RWS utilities, and the circumstances under which they are produced.</p>
+<p>Any output files not conforming to one of these formats will generally be structured as a GAP list, or list
+of lists. Such files are described in the documentation for the relevant utility.</p>
+</body>
+</html>
+

@@ -1,0 +1,11 @@
+#Free abelian group of rank 2 - the coset system created
+#from this file when you use makecosfile and then run KBMAG's kbprogcos
+#cause KBMAG to hang.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "rt_recursive",
+  generatorOrder := [a,b,A,B],
+  inverses := [A,B,a,b],
+  equations := [ [b*a,a*b] ]
+);

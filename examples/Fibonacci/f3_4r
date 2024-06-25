@@ -1,0 +1,19 @@
+#Fibonacci group F(3,4).
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B,c,C,d,D],
+  inverses := [A,a,B,b,C,c,D,d],
+  equations :=
+  [
+    [a*b*c,d],
+    [b*c*d,a],
+    [c*d*a,b],
+    [d*a*b,c],
+    [c*b*a,D],
+    [d*c*b,A],
+    [a*d*c,B],
+    [b*a*d,C]
+  ]
+);

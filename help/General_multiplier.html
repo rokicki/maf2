@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Background material : The general multiplier automaton and word-differences</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Next" type="text/html" href="sub_wa.html" title="Subgroup word acceptors">
+<link rel="Prev" type="text/html" href="Automatic_structures.html" title="Automatic structures">
+
+
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="background.html">Background</a> : The general multiplier and word-differences
+<h2>The general multiplier and word-differences</h2>
+<h3>The general multiplier automaton</h3>
+<p>If an automatic structure exists for a group or coset system, all the information contained in the word-acceptor and the various multipliers can be stored in a single FSA. This FSA is called the <dfn>general multiplier</dfn>, and it has labelled accept states. If the word pair (<i>u,v</i>) is accepted then <i>u</i> and <i>v</i> are both accepted words (accepted by the word-acceptor that is), and the label for the accept state consists of a list of words. Each word in the list of words forming the label is either <code>IdWord</code> or a word consisting of one of the generating symbols from the alphabet. A word <i>w</i> is on the list when it is true that <i>u*w =<sub>G</sub> v</i>, (or, in the case of a coset system that <i>H*uw = H*v</i>. In the usual case where none of the generators is itself reducible to one of the other generators, each label will contain exactly one word: either <code>IdWord</code> or one of the generators. In fact, it is not hard to see that we can extend this concept further, and include any word in the label for a word pair (<i>u,v</i>) that makes <i>uw=v</i> a true equation. However, it is only useful to do so if we have a complete solution to <i>uw=v</i> for every <i>u</i> &isin; <i>L(W)</i>. To do this for words other than the empty word and the generators, we generally would need more states in the FSA, and the number of states would increase as we increase the number of multipliers we support. If we start from the general multiplier an algorithm exists for producing the multiplier for any finite set of elements from the group. </p>
+<h3>The finite set of word-differences of an automatic structure</h3>
+<p>The existence of a word-acceptor and multipliers gives us some important information about a group, which we have already hinted at in the discussion of the general multiplier FSA. Let us consider what it means if, in the process of testing two distinct word pairs (<i>u,v</i>), and (<i>t,w</i>) for acceptance by a general multiplier, both pass through some state &sigma;.  So, we have found that we can reach state &sigma; by two distinct routes <span class="nobr">(<i>u<sub>0</sub>*u<sub>1</sub>*...*u<sub>n</sub>,v<sub>0</sub>*v<sub>1</sub>*...*v<sub>n</sub></i>)</span> and <span class="nobr">(<i>t<sub>0</sub>*t<sub>1</sub>*...*t<sub>m</sub>,w<sub>0</sub>*w<sub>1</sub>*...*w<sub>m</sub></i>)</span>. But, assuming we have constructed the a "trim" FSA, we can now find two further words, <span class="nobr">(<i>r<sub>0</sub>*r<sub>1</sub>*...*r<sub>k</sub>,s<sub>0</sub>*s<sub>1</sub>*...*s<sub>k</sub></i>)</span> such that both <span class="nobr">(<i>u<sub>0</sub>*...*u<sub>n</sub>*r<sub>0</sub>*...*r<sub>k</sub>,v<sub>0</sub>*...*v<sub>n</sub>*s<sub>0</sub>*...*s<sub>k</sub></i>)</span> and <span class="nobr">(<i>t<sub>0</sub>*...*t<sub>m</sub>*r<sub>0</sub>*...*r<sub>k</sub>,w<sub>0</sub>*...*w<sub>m</sub>*s<sub>0</sub>*...*s<sub>k</sub></i>)</span> are accepted with some label <i>g</i>. </p>
+<p>This means that with each state of the FSA we can associate a definite element from the group, because, <span class="nobr"><i>r<sub>0</sub>*...*r<sub>k</sub>*<sub>g</sub>*S<sub>k</sub>*...S<sub>0</sub> =<sub>G</sub> U<sub>n</sub>*...*U<sub>0</sub>*v<sub>0</sub>*...*v<sub>n</sub></i></span> and <span class="nobr"><i>r<sub>0</sub>*...*r<sub>k</sub>*g*S<sub>k</sub>*...S<sub>0</sub> =<sub>G</sub> T<sub>n</sub>*...*T<sub>0</sub>*w<sub>0</sub>*...*w<sub>n</sub></i></span> </p>
+<p>So given any equation between words of the form <i>ug = v</i>, we can form the series of elements, 1, <i>U<sub>0</sub>*v<sub>0</sub></i>, <i>U<sub>1</sub>*U<sub>0</sub>*v<sub>0</sub>*v<sub>1</sub></i>,<i>U<sub>n</sub>*...U<sub>n</sub>*U<sub>1</sub>*U<sub>0</sub>*v<sub>0</sub>*v<sub>1</sub>*...v<sub>n</sub></i> =g, G*g=1. Each such element will be represented by the reduced word for the element. This is a path from and back to the identity element of the group, or from <code>IdWord</code> and back. Each of these elements is called a "word-difference", and we have just shown that if the general multiplier exists there are only finitely many of them. Also, we can use the fact that there are finitely many word-differences in order to construct the word-acceptor and then the general multiplier.</p>
+<p>we shall make a few general comments about the properties of the set of word-differences: </p><ol start="0">
+<li>The set of word-differences always includes <code>IdWord</code>. This is obvious from the construction. 
+<li>The set of word-differences always includes each generator <code>g</code>, except in the case where the generator is reducible. This is because our original set of generators is closed under inversion so that for every <i>g</i>, <code>G*g=IdWord</code> is an equation, and the element <i>g</i> arises as a word-difference of this equation. 
+<li>The set of word-differences is closed under inversion. This is because every word-difference by definition arises from an equation of the form <i>ug =<sub>G</sub> v</i> is which <i>u</i> and <i>v</i> have no common prefix and both are reduced. If <i>ug =<sub>G</sub> v</i> is an equation and <i>v</i> is not <code>IdWord</code>, then <i>vG =<sub>G</sub> u</i> must also be an equation. For <i>vG</i> is certainly equal to <i>u</i>, and <i>vG &gt; u</i> because if <i>vG =<sub>G</sub>  u</i> we could cancel <i>v</i> from the right and left of the equation <i>ug =<sub>G</sub>  v</i> contrarary to our claim that <i>u</i> and <i>v</i> have no common prefix. Finally <i>vG</i> is not less than <i>u</i> because if it were then it would be a reduction of <i>u</i> contrary to <i>u</i> being irreducible. To deal with case of equations of the form <i>ug =<sub>G</sub>  Idword</i>: these must be those of the form <i>Gg</i> =<sub>G</sub> <code>Idword</code>, and we insisted that our alphabet was itself closed under inversion. </li></ol>
+</body>
+</html> 

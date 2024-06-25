@@ -1,0 +1,6 @@
+_RWS_Sub:= rec
+(
+  subGenerators := [a,A,c,C]
+#  subGeneratorNames := [x,X,y,Y],
+#  subGeneratorInverseNames := [X,x,Y,y]
+);

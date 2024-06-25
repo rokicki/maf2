@@ -1,0 +1,20 @@
+#Hyperbolic Knot 4 1
+#It is clear that the third equation lets us express Z in terms of x and y
+#and that then we can express also express t this way
+#so we use wreathprod ordering to force these generators to be eliminated
+#MAF can then calculate what is effectively the same automatic structure
+#as would be obtained from a presentation using just generators x and y
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "wreathprod",
+  generatorOrder := [x,X,y,Y,z,Z,t,T],
+        inverses := [X,x,Y,y,Z,z,T,t],
+        level    := [1,1,1,1,2,2,2,2],
+  equations :=
+  [
+    [X*Z*t*z,IdWord],
+    [Y*t*x*T,IdWord],
+    [Z*X*y*x,IdWord]
+  ]
+);

@@ -1,0 +1,14 @@
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [u,U,x],
+  ordering := "shortlex",
+  inverses :=  [U,u,x],
+  equations := 
+  [
+    [((x*U*x)*U*(x*U*x))^2,IdWord],
+    [(U*(x*U*x))^3,IdWord],
+    [(u^2*(x*U*x)*u*(x*U*x)*u^2*(x*U*x)^2)^2,IdWord],
+  ]
+);

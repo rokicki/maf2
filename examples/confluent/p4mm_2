@@ -1,0 +1,21 @@
+#Presentation of P4MM that is confluent but not automatic
+#h is horizontal translation by 1 to the right
+#v vertical translation by 1 up
+#q quarter revolution about origin
+#x reflection in x axis
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "short_rtlex",
+  generatorOrder := [q,Q,x,h,H,v,V],
+        inverses := [Q,q,x,H,h,V,v],
+  equations := 
+  [
+    [v*x,x*V],
+    [h*x,x*h],
+    [v*h,h*v],
+    [x*q*q,q*q*x],
+    [x*Q*x,q],
+    [Q*H*q,v]
+  ]                                 
+);

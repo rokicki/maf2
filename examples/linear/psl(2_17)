@@ -1,0 +1,14 @@
+#deficiency 0 presentation of sl(2,p) for p=17
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [x,y,Y],
+  ordering := "recursive",
+  inverses := [x,Y,y],
+  tidyint := 100,
+  equations :=
+  [
+    [x*x*(Y*x)^3,IdWord],
+    [(x*y^4*x*y^9)^2*y^17*x^10,IdWord]
+  ]
+);

@@ -1,0 +1,26 @@
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [
+  #h1,H1,h2,H2,h3,H3,h4,H4,h5,H5,h6,H6,h7,H7,h8,H8,h9,H9,ha,Ha,hb,Hb,
+                     x,y,Y
+#                     ,u,U,v,V
+],
+ # ordering := "rt_wreathprod",
+#  level    :=       [
+  #1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+#  2,2,2,3,3,3,3],
+  inverses :=       [
+  #H1,h1,H2,h2,H3,h3,H4,h4,H5,h5,H6,h6,H7,h7,H8,h8,H9,h9,Ha,ha,Hb,hb,
+  x,Y,y
+  #,U,u,V,v
+  ],
+  equations := 
+  [
+    [y^3,IdWord],
+#    [x*y,u],
+#    [x*Y,v]
+  ]
+);
+

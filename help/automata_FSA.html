@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Output files (groups and monoids)</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="coset_system_names.html" title="Coset system filenames">
+<link rel="Next" type="text/html" href="cosets_FSA.html" title="Output files (Coset systems)">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html">Reference</a> : <a href="file_formats.html">File names and formats</a> :  Output files (groups and monoids)
+<h2>Output files (groups and monoids)</h2>
+<p>The following table summarises the names of all the output files that might be produced for an input file for a group or monoid named <tt>group</tt>, what the files are, and the circumstances in which they are produced. In the "When produced" column, the formula "if input file is proved automatic" is used several times. This means that MAF has been able to generate an automatic structure, and has been able to verify that the general multiplier is closed for each multiplier. It can happen that MAF is able to prove that such a structure exists, but that it is beyond its capacity to actually compute it. Similarly, the formula "proved confluent" mean that MAF has succeeded in finding a confluent rewriting system. In theory, MAF might discover that such a system exists, without being able to find it, but this will be, we hope, a very rare occurrence.</p>
+<p>For completeness, various suffixes used with automata for coset systems are also shown here. Such files are described more fully in the equivalent of this table that appears in <a href="cosets_FSA.html">Output files (coset systems)</a>. Subgroup and coset automata can be recognised in the table below by the fact that the filename is shown as <tt>cosname</tt> rather than <tt>group</tt>.</p>
+<table summary="Output files produced by MAF for groups and monoids"  class="niceborder"
+cellspacing="0">
+<tr><th>File name</th><th>File description</th><th>When produced</th></tr>
+
+<tr><td><tt>group.akbprog</tt></td><td>This is a rewriting system for <tt>group</tt> from which the automatic structure can be reconstructed quickly. It contains at least one equation for every transition in the word-difference machine  of the general multiplier. This rewriting system is currently not canonical - running <tt>automata</tt> with a different options might result in a different set of equations appearing in the file. A canonical version of it surely exists, and MAF will hopefully generate it one day.</td><td>When <tt>automata</tt> has proved an input file automatic but it is not confluent.</td></tr>
+
+
+<tr><td><tt>group.diff1</tt></td><td>This FSA is produced by KBMAG. MAF does not produce this FSA, unless a KBMAG emulation program is used. If MAF's <tt>autgroup</tt> is used and completes successfully then this file is the same FSA as <a href="#diff1c"><tt>group.diff1c</tt></a>; this will also be the case with MAF's <kbd>kbprog -wd</kbd> when a confluent rewriting system is found. If one of these programs is interrupted then the file is still produced but is equivalent to the <a href="#pdiff1"><tt>group.pdiff1</tt></a> file which <tt>automata</tt> generates if it is interrupted.</td><td>
+<tt>kbprog</tt> (with <kbd>-wd</kbd>) and <tt>autgroup</tt> will produce this file, both in KBMAG and MAF.</td></tr>
+
+<tr><td><tt>group.diff1c</tt></td><td>This is the word-difference machine of the (possibly infinite) minimal confluent rewriting system for the input file.</td><td><a name="diff1c"></a>If input file is proved automatic or confluent by <tt>automata</tt> (without <kbd>-nowd</kbd> and when word-differences can be computed) or automatic by <tt>autgroup</tt> with <kbd>-gpminkb</kbd> and is also output by <tt>gpminkb</tt> when run against an input file for which the automatic structure has been computed.</td></tr>
+
+<tr><td><tt>group.diff2</tt></td><td>This FSA is the word-difference machine that contain all the word-differences needed for the general multiplier, and the <a href="#rr">reduction recogniser</a>, and all possible transitions between these, not just transitions that actually occur in some equation. In MAF this FSA is guaranteed to be correct if <tt>automata</tt> completes successfully (i.e. it really does contain all such word-differences and there are no spurious word-differences). In KBMAG it often contains spurious word-differences. See also <tt>group.pdiff2</tt>.</td><td>If input file is proved automatic.</td></tr>
+
+<tr><td><tt>group.diff2c</tt></td><td>This is the FSA that contains all the word-differences needed for the (possibly infinite) directly reducing confluent rewriting system, and just the transitions that occur in these equations. If the word-ordering is geodesic then it also contains all the transitions needed for the general multiplier. An FSA with this name is also produced by KBMAG's version of <tt>gpminkb</tt>, but is a different FSA, which is useless for any purpose other than rebuilding the general multiplier (and has the TRIM flag set incorrectly).</td><td> See entry for <a href="#diff1c"><tt>group.diff1c</tt></a>.</td></tr>
+
+
+<tr><td><tt>group.fastkbprog</tt></td><td>This is a "fast" confluent rewriting system for <tt>group</tt>. It contains all the equations in the minimal confluent rewriting system, and as many other equations as MAF has discovered of the form [<i>u*g,v</i>] where <i>u</i> and <i>v</i> are accepted words, <i>g</i> is a generator, <i>u*g=v</i> is a true equation, and <i>u</i> and <i>v</i> have no common cancellable prefix or suffix. If <tt>group</tt> is automatic this rewriting system will contain at least one equation for every transition in the <tt>.diff2c</tt> word difference machine (by which is meant that the every transition in this word-difference machine is taken by at least one equation when the equation is used as input to the word-difference machine). This rewriting system is currently not canonical - running <tt>automata</tt> with a different options might result in a different set of equations appearing in the file.</td><td>When <tt>automata</tt> has proved an input file confluent.</td></tr>
+
+
+<tr><td><tt>group.fastreduce</tt></td><td>This is the index automaton for <tt>group.fastkbprog</tt>.</td><td>When <tt>automata</tt> has proved a rewriting system confluent.</td></tr>
+
+<tr><td><tt>group.geodiff</tt></td><td>This is the geodesic word-difference machine for <tt>group</tt>; like the <tt>group.geopairs</tt> it accepts all equal pairs of geodesics, but it may accepts other equal words as well.</td><td>When <a href="gp_usage.html#gpgeowa"><tt>gpgeowa</tt></a> has proved a group word-hyperbolic.</td></tr>
+
+<tr><td><tt>group.geopairs</tt></td><td>This is the geodesic pair recogniser for <tt>group</tt>. It accepts all pairs of words that are equal as group elements and which are shortest words for the corresponding group element. In other words it is the identity multiplier for the geodesic automatic structure</td><td>When <tt>gpgeowa</tt> has proved a group word-hyperbolic.</td></tr>
+
+
+<tr><td><tt>group.geowa</tt></td><td>This is the geodesic word acceptor group for <tt>group</tt>.</td><td>When <tt>gpgeowa</tt> has proved a group word-hyperbolic.</td></tr>
+
+
+
+<tr><td><tt>group.gm</tt></td><td>The general multiplier. This is the FSA that which accepts all those pairs of reduced words (<i>u</i>,<i>v</i>), at an accept state labelled with all those words <i>x</i> (with <i>x</i> either <code>IdWord</code> or a generator), for which <i>u*x = v</i> is a true equation. MAF makes much more use of this FSA than KBMAG. For example, in the absence of a confluent rewriting system, it is the preferred method of performing word reduction.</td><td>If input file is proved automatic. If an input file is proved confluent and finite, the group is automatic, but it can happen that the multiplier is too large to compute. In this case MAF does not generate the general multiplier. If a group is proved confluent and infinite, then the group may or may not be automatic. MAF will perform a certain number of iterations to try to prove it automatic, but if the number of word-differences continues to increase it will give up because it probably is not.</td></tr>
+
+<tr><td><tt>group.kbprog</tt></td><td>This may either be the minimal confluent rewriting system for the or, if you are using <tt>kbprog</tt>, a provisional rewriting system. </td><td>When either <tt>automata</tt>, or <tt>kbprog</tt> (without <kbd>-wd</kbd> or with <kbd>-both</kbd>) have found a confluent rewriting system for the input file.</td></tr>
+
+
+<tr><td><tt>group.maxkb</tt></td><td>This is the FSA which reaches its single accept state, for just those word pairs (<i>u</i>,<i>v</i>) in which <i>u</i> is not accepted by <tt>group.wa</tt>, but every prefix of <i>u</i> is and <i>v</i> is accepted by <tt>group.wa</tt>, and for which <i>u</i>=<i>v</i> is a true equation, and in which <i>u</i>,<i>v</i> have no common prefix or suffix. The accepted language of this automaton is the set of all equations which <em>ought</em> to be in <tt>group.fastkbprog</tt>.</td><td>When <tt>automata</tt> has proved an input file automatic.</td></tr>
+
+<tr><td><tt><i>cosname</i>.midiff1<br>
+            <i>cosname</i>.midiff1c<br>
+            <i>cosname</i>.midiff2<br>
+            <i>cosname</i>.midiff2c<br>
+            <i>cosname</i>.migm<br>
+            <i>cosname</i>.pmidiff1<br>
+            <i>cosname</i>.pmidiff2</tt></td><td>These are "MIDFA" automata produced during the construction of an automatic structure for a coset system</td><td>All these automata are produced when <tt>automata</tt> or one of the KBMAG compatibility programs is processing a coset system. See <a href="cosets_FSA.html">Output files (coset systems)</a> for details.</td></tr>
+
+<tr><td><tt>group.minkb</tt></td><td>This is the FSA which reaches its single accept state, for just those word  pairs (<i>u</i>,<i>v</i>) in which <i>u</i> is accepted by <tt>group.minred</tt>, and <i>v</i> by <tt>group.wa</tt>, and for which <i>u</i> = <i>v</i> is a true equation.</td><td> See entry for <a href="#diff1c"><tt>group.diff1c</tt></a>.</td></tr>
+
+<tr><td><tt>group.minred</tt></td><td>This the FSA that accepts <a href="Word_problem.html#MinimallyReducible">minimally reducible</a> words. Elsewhere in MAF documentation this is called the L1-acceptor <tt>automata</tt> will compute this to prove that there is no finite confluent rewriting system, or as an additional check that it has been found correctly when there is.</td><td>If input file is proved automatic or confluent by <tt>automata</tt> or automatic by <tt>autgroup</tt> with <kbd>-gpminkb</kbd> and it is also output by <tt>gpminkb</tt> when run against an input file for which the automatic structure has been computed.</td></tr>
+
+<tr><td><tt>group.near_geodiff</tt></td><td>This is the word-difference machine for the geodesic general multiplier of <tt>group</tt>, which means that it accepts all pairs of the form (<i>u</i>,<i>v</i>) where <i>u</i> and <i>v</i> are geodesics and <i>u^-1*v</i> is the identity element or a generator, but it usually accepts some other pairs of words as well. The accept states are labelled by the word-difference as for a multiplier.</td><td>When <tt>gpgeowa</tt> with the <kbd>-near</kbd> option has proved a group word-hyperbolic.</td></tr>
+
+<tr><td><tt>group.near_geopairs</tt></td><td>As constructed by MAF this is the general multiplier for the  geodesic automatic structure for <tt>group</tt> (except that reducible generators are omitted). Its accepts a pair of words (<i>u</i>,<i>v</i>) at a state labelled by <i>g</i> with <i>g</i> a generator or the identity if and only if <i>u</i> and <i>v</i> are geodesics and <i>u*g = v</i> is a true equation in the group. KBMAG's version of <tt>gpgeowa</tt> constructs the same FSA if the <kbd>-n</kbd> option is used, except that the states are not labelled. </td><td>When <tt>gpgeowa</tt> with the <kbd>-near</kbd> option has proved a group word-hyperbolic.</td></tr>
+
+<tr><td><tt>group.pdiff1</tt></td><td><a name="pdiff1"></a>Provisional primary word-difference machine. This contains all the word-differences and transitions between them, thought to be needed for the equations in the minimal confluent rewriting system at the time MAF exited. There may be equations that the provisional complete word-difference machine can prove that this machine cannot. In fact, this is more often than not the case. This FSA is given the <tt>.diff1</tt> suffix by KBMAG, and also by MAF's KBMAG compatibility programs <tt>kbprog</tt> (with <kbd>-wd</kbd>) and <tt>autgroup</tt></td>
+<td>If <tt>automata</tt> is interrupted while trying to prove an input file automatic.</td></tr>
+
+<tr><td><tt>group.pdiff2</tt></td><td>Provisional complete difference machine. It contains all the word differences and transitions between them that were known at the time MAF exited. KBMAG uses the <tt>.diff2</tt> suffix for this FSA, as do MAF's KBMAG compatibility programs <tt>autgroup</tt> and <tt>kbprog</tt>.</td><td>If <tt>automata</tt> is interrupted while trying to prove an input file automatic.</td></tr>
+
+<tr><td><tt>group.preduce</tt></td><td>This is the index automaton for <tt>group.pkbprog</tt>.</td><td>When MAF has generated <tt>group.pkbprog</tt> and word-differences are not being computed</td></tr>
+
+<tr><td><tt>group.reduce</tt></td><td>This is the index automaton for <tt>group.kbprog</tt>.</td><td>When MAF has generated the file <tt>group.kbprog</tt></td></tr>
+
+<tr><td><tt>group.rr</tt></td><td><a name="rr"></a>This, "the reduction recogniser" is the FSA which reaches its single accept state, for just those word pairs (<i>u</i>,<i>v</i>) in which <i>u</i> is not accepted by <tt>group.wa</tt>, but every prefix of <i>u</i> is and <i>v</i> is accepted by <tt>group.wa</tt>, and for which <i>u</i>=<i>v</i> is a true equation. It is the FSA from which MAF's <tt>group.diff2c</tt> FSA is computed.</td><td>When <tt>automata</tt> has proved an input file automatic.</td></tr>
+
+
+<tr><td><tt>group.wa</tt></td><td>This the word-acceptor for the group.</td><td>If input file is proved confluent by <tt>automata</tt>, or proved automatic by <tt>automata</tt> or <tt>autgroup</tt></td></tr>
+</table>
+
+<p>Several of the automata above can be used for reducing words to their unique minimal representative in
+the group or monoid described in the input file under the word-ordering specified there. See <a href="gp_usage.html#reduce"><tt>reduce</tt></a> for further information.
+</p>
+
+</body>
+</html>

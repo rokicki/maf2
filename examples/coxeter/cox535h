@@ -1,0 +1,27 @@
+#  5 3 5
+# a-b-c-d
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "wtlex",
+#  generatorOrder := [d,c,b,a],
+#  inverses := [d,c,b,a],
+  generatorOrder := [e,f,g,h,i,j,d,c,b,a],
+  inverses := [e,f,g,h,i,j,d,c,b,a],
+  weight :=   [5,5,4,4,4,4,1,1,1,1],
+  equations :=
+  [
+    [(a*b)^5,IdWord],
+    [(a*c)^4,IdWord],
+    [(a*d)^4,IdWord],
+    [(b*c)^4,IdWord],
+    [(b*d)^4,IdWord],
+    [(c*d)^5,IdWord],
+    [e,a*b*a*b*a],
+    [f,c*d*c*d*c],
+    [g,b*c*b*c],
+    [h,a*c*a*c],
+    [i,a*d*a*d],
+    [j,b*d*b*d]
+  ]
+);

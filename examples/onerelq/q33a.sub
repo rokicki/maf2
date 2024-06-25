@@ -1,0 +1,4 @@
+_RWS_Sub := rec
+(
+  subGenerators := [r*q,(r*q*p*r*q*p)^4]
+);

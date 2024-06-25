@@ -1,0 +1,1906 @@
+#Copyright 2008,2009,2010 Alun Williams
+#This file is part of MAF.
+#MAF is free software: you can redistribute it and/or modify it
+#under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+
+#MAF is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#You should have received a copy of the GNU General Public License
+#along with MAF.  If not, see <http://www.gnu.org/licenses/>.
+
+dllcrt0.v32 : \
+  awwin.h \
+  initterm.h \
+  awcc.h
+
+mafdll.v32 : \
+  awwin.h \
+  heap.h \
+  awcc.h
+
+exit.v32 : \
+  awwin.h \
+  initterm.h \
+  awcc.h
+
+mafbase.o32 : \
+  mafbase.h \
+  mafctype.h \
+  sstream.h \
+  variadic.h \
+  awdefs.h \
+  awcc.h \
+  stream.h
+
+container.o32 : \
+  awcc.h \
+  variadic.h \
+  container.h \
+  platform.h \
+  heap.h \
+  mafbase.h \
+  awdefs.h
+
+platform.v32 : \
+  awcc.h \
+  wstream.h \
+  fstream.h \
+  platform.h \
+  variadic.h \
+  awwin.h \
+  stream.h \
+  mafbase.h
+
+stream.v32 : \
+  awcc.h \
+  stream.h \
+  variadic.h \
+  x_to_str.h \
+  mafbase.h \
+  awcrt.h
+
+maf.o32 : \
+  mafauto.h \
+  mafword.h \
+  container.h \
+  maf_rm.h \
+  maf_rws.h \
+  maf_dr.h \
+  maf_we.h \
+  rubik.h \
+  mafcoset.h \
+  fsa.h \
+  maf.h \
+  awcc.h \
+  awdefs.h \
+  mafbase.h \
+  alphabet.h \
+  maf_ew.h \
+  equation.h \
+  node_status.h \
+  arraybox.h \
+  maf_ssi.h \
+  certificate.h \
+  nodelist.h \
+  nodebase.h
+
+present.o32 : \
+  maf.h \
+  mafword.h \
+  equation.h \
+  container.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  alphabet.h \
+  nodebase.h
+
+equation.o32 : \
+  mafnode.h \
+  maf_nm.h \
+  equation.h \
+  container.h \
+  awdefs.h \
+  maf.h \
+  mafword.h \
+  nodebase.h \
+  node_status.h \
+  certificate.h \
+  mafbase.h \
+  awcc.h \
+  alphabet.h
+
+mafload.o32 : \
+  container.h \
+  maf_rws.h \
+  maf.h \
+  mafbase.h \
+  awdefs.h \
+  fsa.h \
+  arraybox.h \
+  mafword.h \
+  awcc.h \
+  maf_ssi.h \
+  alphabet.h
+
+mafread.o32 : \
+  variadic.h \
+  mafword.h \
+  mafctype.h \
+  container.h \
+  fsa.h \
+  maf_sub.h \
+  maf_el.h \
+  maf_rws.h \
+  awcc.h \
+  awdefs.h \
+  mafbase.h \
+  alphabet.h \
+  maf_ssi.h \
+  maf.h \
+  arraybox.h
+
+alphabet.o32 : \
+  maf.h \
+  mafword.h \
+  mafctype.h \
+  container.h \
+  maf_sdb.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  alphabet.h \
+  hash.h \
+  arraybox.h
+
+maf_avl.o32 : \
+  awcc.h \
+  awdefs.h \
+  maf_avl.h \
+  mafbase.h
+
+maf_cfp.o32 : \
+  awcc.h \
+  maf_cfp.h \
+  maf_el.h \
+  maf_spl.h \
+  mafbase.h \
+  awdefs.h
+
+maf_dr.o32 : \
+  mafbase.h \
+  mafword.h \
+  fsa.h \
+  container.h \
+  maf.h \
+  maf_dr.h \
+  maf_el.h \
+  awcc.h \
+  awdefs.h \
+  alphabet.h \
+  maf_ssi.h
+
+maf_dt.o32 : \
+  container.h \
+  maf_dt.h \
+  maf_nm.h \
+  mafbase.h \
+  awdefs.h \
+  mafnode.h \
+  ltfsa.h \
+  maf_we.h \
+  maf_el.h \
+  maf.h \
+  certificate.h \
+  nodebase.h \
+  awcc.h \
+  mafword.h \
+  node_status.h \
+  keyedfsa.h \
+  maf_ew.h \
+  equation.h \
+  alphabet.h \
+  fsa.h \
+  hash.h \
+  nodelist.h \
+  maf_ssi.h \
+  arraybox.h
+
+maf_el.o32 : \
+  awcc.h \
+  maf_el.h \
+  awdefs.h \
+  mafbase.h
+
+maf_em.o32 : \
+  awcc.h \
+  maf_rm.h \
+  maf_em.h \
+  maf_we.h \
+  mafnode.h \
+  maf_nm.h \
+  container.h \
+  maf.h \
+  maf_ew.h \
+  equation.h \
+  node_status.h \
+  mafbase.h \
+  awdefs.h \
+  mafword.h \
+  nodebase.h \
+  certificate.h \
+  nodelist.h \
+  alphabet.h
+
+maf_ew.o32 : \
+  maf_rm.h \
+  mafnode.h \
+  maf_nm.h \
+  container.h \
+  maf_wdb.h \
+  maf_ew.h \
+  maf.h \
+  equation.h \
+  node_status.h \
+  awdefs.h \
+  mafword.h \
+  nodebase.h \
+  certificate.h \
+  mafbase.h \
+  hash.h \
+  nodelist.h \
+  awcc.h \
+  alphabet.h \
+  arraybox.h
+
+maf_jm.o32 : \
+  maf_jm.h \
+  mafnode.h \
+  maf_wdb.h \
+  container.h \
+  maf_we.h \
+  maf_rm.h \
+  mafqueue.h \
+  maf_ont.h \
+  node_status.h \
+  awdefs.h \
+  maf.h \
+  mafword.h \
+  nodebase.h \
+  hash.h \
+  mafbase.h \
+  maf_ew.h \
+  equation.h \
+  maf_avl.h \
+  maf_nm.h \
+  awcc.h \
+  alphabet.h \
+  arraybox.h \
+  certificate.h \
+  nodelist.h
+
+maf_mult.o32 : \
+  mafword.h \
+  keyedfsa.h \
+  maf.h \
+  container.h \
+  maf_spl.h \
+  maf_wdb.h \
+  maf_el.h \
+  maf_ss.h \
+  equation.h \
+  awcc.h \
+  awdefs.h \
+  mafbase.h \
+  alphabet.h \
+  fsa.h \
+  hash.h \
+  bitarray.h \
+  maf_ssi.h \
+  nodebase.h \
+  arraybox.h
+
+maf_nm.o32 : \
+  mafnode.h \
+  maf_nm.h \
+  maf_rm.h \
+  maf_jm.h \
+  container.h \
+  maf_we.h \
+  arraybox.h \
+  maf_el.h \
+  awdefs.h \
+  maf.h \
+  mafword.h \
+  nodebase.h \
+  node_status.h \
+  certificate.h \
+  maf_ew.h \
+  equation.h \
+  mafqueue.h \
+  maf_ont.h \
+  mafbase.h \
+  awcc.h \
+  alphabet.h \
+  nodelist.h \
+  maf_avl.h
+
+maf_rm.o32 : \
+  fsa.h \
+  maf_rm.h \
+  maf_nm.h \
+  maf_jm.h \
+  mafnode.h \
+  equation.h \
+  keyedfsa.h \
+  container.h \
+  variadic.h \
+  maf_dt.h \
+  maf_dr.h \
+  maf_ont.h \
+  maf_wdb.h \
+  maf_rws.h \
+  maf_em.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  maf.h \
+  maf_ew.h \
+  node_status.h \
+  certificate.h \
+  nodebase.h \
+  mafqueue.h \
+  awdefs.h \
+  mafword.h \
+  hash.h \
+  ltfsa.h \
+  maf_we.h \
+  maf_el.h \
+  maf_avl.h \
+  arraybox.h \
+  nodelist.h \
+  alphabet.h
+
+maf_rws.o32 : \
+  maf.h \
+  mafword.h \
+  keyedfsa.h \
+  maf_rws.h \
+  maf_rm.h \
+  mafnode.h \
+  maf_nm.h \
+  container.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  alphabet.h \
+  fsa.h \
+  hash.h \
+  arraybox.h \
+  maf_ew.h \
+  equation.h \
+  node_status.h \
+  nodebase.h \
+  certificate.h \
+  maf_ssi.h \
+  nodelist.h
+
+maf_spl.o32 : \
+  awcc.h \
+  maf_spl.h \
+  awdefs.h \
+  mafbase.h
+
+maf_so.o32 : \
+  awcc.h \
+  container.h \
+  maf_so.h \
+  fsa.h \
+  mafctype.h \
+  mafbase.h \
+  awdefs.h \
+  maf_ssi.h
+
+maf_ss.o32 : \
+  awcc.h \
+  maf_ss.h \
+  container.h \
+  bitarray.h \
+  maf_el.h \
+  maf_ssi.h \
+  mafbase.h \
+  awdefs.h
+
+maf_sub.o32 : \
+  maf_sub.h \
+  equation.h \
+  container.h \
+  mafword.h \
+  maf.h \
+  nodebase.h \
+  mafbase.h \
+  awdefs.h \
+  awcc.h \
+  alphabet.h
+
+maf_subwa.o32 : \
+  container.h \
+  keyedfsa.h \
+  maf.h \
+  mafword.h \
+  maf_dr.h \
+  maf_wdb.h \
+  equation.h \
+  maf_ss.h \
+  maf_spl.h \
+  mafbase.h \
+  awdefs.h \
+  fsa.h \
+  hash.h \
+  awcc.h \
+  alphabet.h \
+  nodebase.h \
+  bitarray.h \
+  maf_el.h \
+  maf_ssi.h \
+  arraybox.h
+
+maf_we.o32 : \
+  maf_rm.h \
+  mafnode.h \
+  maf_nm.h \
+  container.h \
+  maf_wdb.h \
+  maf_we.h \
+  maf.h \
+  maf_ew.h \
+  equation.h \
+  node_status.h \
+  awdefs.h \
+  mafword.h \
+  nodebase.h \
+  certificate.h \
+  mafbase.h \
+  hash.h \
+  awcc.h \
+  nodelist.h \
+  alphabet.h \
+  arraybox.h
+
+mafqueue.o32 : \
+  mafqueue.h \
+  mafnode.h \
+  maf_nm.h \
+  container.h \
+  maf.h \
+  nodebase.h \
+  awdefs.h \
+  mafword.h \
+  node_status.h \
+  certificate.h \
+  mafbase.h \
+  awcc.h \
+  alphabet.h
+
+mafctype.o32 : \
+  mafbase.h \
+  mafctype.h \
+  awcc.h
+
+mafword.o32 : \
+  mafword.h \
+  container.h \
+  awcc.h \
+  awdefs.h \
+  mafbase.h \
+  alphabet.h
+
+hash.o32 : \
+  awdefs.h \
+  hash.h \
+  mafbase.h \
+  arraybox.h \
+  awcc.h
+
+keyedfsa.o32 : \
+  awcc.h \
+  keyedfsa.h \
+  fsa.h \
+  hash.h \
+  mafbase.h \
+  maf_ssi.h \
+  arraybox.h
+
+bitarray.o32 : \
+  awcc.h \
+  bitarray.h \
+  mafbase.h \
+  awdefs.h
+
+heap.v32 : \
+  awwin.h \
+  heap.h \
+  awcc.h
+
+rubik.o32 : \
+  awcc.h \
+  rubik.h \
+  container.h \
+  mafbase.h \
+  awdefs.h
+
+fsa.o32 : \
+  awcc.h \
+  awdefs.h \
+  mafword.h \
+  fsa.h \
+  keyedfsa.h \
+  maf.h \
+  alphabet.h \
+  container.h \
+  maf_cfp.h \
+  maf_el.h \
+  maf_spl.h \
+  maf_wdb.h \
+  maf_ss.h \
+  mafbase.h \
+  maf_ssi.h \
+  hash.h \
+  bitarray.h \
+  arraybox.h
+
+mafauto.o32 : \
+  awdefs.h \
+  fsa.h \
+  maf_rm.h \
+  mafnode.h \
+  keyedfsa.h \
+  mafauto.h \
+  container.h \
+  maf_dr.h \
+  maf_rws.h \
+  maf_cfp.h \
+  maf_el.h \
+  maf_spl.h \
+  maf_we.h \
+  maf_wdb.h \
+  maf_ss.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  maf.h \
+  maf_ew.h \
+  equation.h \
+  node_status.h \
+  mafword.h \
+  nodebase.h \
+  hash.h \
+  arraybox.h \
+  bitarray.h \
+  certificate.h \
+  nodelist.h \
+  alphabet.h
+
+mafconj.o32 : \
+  maf.h \
+  maf_rws.h \
+  container.h \
+  maf_wdb.h \
+  maf_el.h \
+  keyedfsa.h \
+  maf_cfp.h \
+  awcc.h \
+  mafbase.h \
+  fsa.h \
+  arraybox.h \
+  mafword.h \
+  awdefs.h \
+  hash.h \
+  maf_ssi.h \
+  alphabet.h
+
+mafcoset.o32 : \
+  container.h \
+  mafcoset.h \
+  fsa.h \
+  maf.h \
+  mafword.h \
+  maf_wdb.h \
+  maf_ss.h \
+  mafbase.h \
+  awdefs.h \
+  awcc.h \
+  maf_ssi.h \
+  alphabet.h \
+  hash.h \
+  bitarray.h \
+  maf_el.h \
+  arraybox.h
+
+mafgeowa.o32 : \
+  container.h \
+  mafword.h \
+  keyedfsa.h \
+  maf_cfp.h \
+  maf_rm.h \
+  maf_we.h \
+  mafbase.h \
+  awdefs.h \
+  awcc.h \
+  alphabet.h \
+  fsa.h \
+  hash.h \
+  maf.h \
+  maf_ew.h \
+  equation.h \
+  node_status.h \
+  maf_ssi.h \
+  arraybox.h \
+  certificate.h \
+  nodelist.h \
+  nodebase.h
+
+mafminkb.o32 : \
+  container.h \
+  mafword.h \
+  keyedfsa.h \
+  maf_cfp.h \
+  maf_wdb.h \
+  maf_el.h \
+  maf_rm.h \
+  maf_dr.h \
+  mafauto.h \
+  mafbase.h \
+  awdefs.h \
+  awcc.h \
+  alphabet.h \
+  fsa.h \
+  hash.h \
+  maf.h \
+  maf_ew.h \
+  equation.h \
+  node_status.h \
+  maf_ssi.h \
+  arraybox.h \
+  certificate.h \
+  nodelist.h \
+  nodebase.h
+
+nodelist.o32 : \
+  nodelist.h \
+  mafnode.h \
+  awcc.h \
+  mafbase.h \
+  nodebase.h \
+  awdefs.h \
+  maf.h \
+  mafword.h \
+  container.h \
+  node_status.h \
+  alphabet.h
+
+mafnode.o32 : \
+  mafnode.h \
+  maf_ew.h \
+  equation.h \
+  maf_nm.h \
+  container.h \
+  awdefs.h \
+  maf.h \
+  mafword.h \
+  nodebase.h \
+  node_status.h \
+  certificate.h \
+  nodelist.h \
+  mafbase.h \
+  awcc.h \
+  alphabet.h
+
+ltfsa.o32 : \
+  awcc.h \
+  ltfsa.h \
+  keyedfsa.h \
+  nodebase.h \
+  fsa.h \
+  hash.h \
+  mafbase.h \
+  maf_ssi.h \
+  arraybox.h
+
+maf_tc.o32 : \
+  maf.h \
+  fsa.h \
+  arraybox.h \
+  maf_el.h \
+  mafword.h \
+  tietze.h \
+  container.h \
+  maf_tc.h \
+  relators.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  alphabet.h \
+  bitarray.h
+
+relators.o32 : \
+  relators.h \
+  tietze.h \
+  maf_tc.h \
+  arraybox.h \
+  mafword.h \
+  maf.h \
+  bitarray.h \
+  mafbase.h \
+  awcc.h \
+  awdefs.h \
+  alphabet.h
+
+lowindex.o32 : \
+  container.h \
+  arraybox.h \
+  mafword.h \
+  fsa.h \
+  maf.h \
+  relators.h \
+  lowindex.h \
+  mafbase.h \
+  awdefs.h \
+  awcc.h \
+  alphabet.h \
+  maf_ssi.h
+
+subpres.o32 : \
+  container.h \
+  mafword.h \
+  fsa.h \
+  maf.h \
+  equation.h \
+  maf_wdb.h \
+  hash.h \
+  maf_rws.h \
+  maf_ss.h \
+  mafcoset.h \
+  mafbase.h \
+  awdefs.h \
+  awcc.h \
+  alphabet.h \
+  maf_ssi.h \
+  nodebase.h \
+  arraybox.h \
+  bitarray.h \
+  maf_el.h
+
+tietze.o32 : \
+  maf.h \
+  tietze.h \
+  equation.h \
+  container.h \
+  awcc.h \
+  mafbase.h \
+  mafword.h \
+  bitarray.h \
+  nodebase.h \
+  awdefs.h \
+  alphabet.h
+
+initterm.v32 : \
+  awwin.h \
+  initterm.h \
+  awcc.h
+
+argcargv.v32 : \
+  awwin.h \
+  argcargv.h
+
+atoi.o32 : \
+  mafctype.h \
+  awcc.h
+
+clock.v32 : \
+  awwin.h \
+  awcc.h \
+  awcrt.h
+
+malloc.v32 : \
+  heap.h \
+  awcc.h
+
+printfw.v32 : \
+  awcc.h \
+  wstream.h \
+  variadic.h \
+  awwin.h \
+  stream.h \
+  mafbase.h
+
+signal.v32 : \
+  awwin.h
+
+sprintf.o32 : \
+  awcc.h \
+  variadic.h \
+  sstream.h \
+  mafbase.h \
+  stream.h
+
+time.v32 : \
+  awwin.h
+
+x_to_str.o32 : \
+  awcc.h \
+  awcrt.h \
+  x_to_str.h
+
+maf.rbj : \
+  mafver.rc \
+  maf.ico
+
+example.o32 : \
+  maf.h \
+  mafword.h \
+  heap.h \
+  container.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  alphabet.h
+
+example.rbj : \
+  mafver.rc \
+  maf.ico
+
+crt0tcon.v32 : \
+  awwin.h \
+  argcargv.h \
+  initterm.h
+
+crt0twin.v32 : \
+  awwin.h \
+  initterm.h
+
+automata.o32 : \
+  maf.h \
+  fsa.h \
+  container.h \
+  maf_sub.h \
+  maf_so.h \
+  mafctype.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  alphabet.h
+
+automata.rbj : \
+  mafver.rc \
+  maf.ico
+
+autcos.o32 : \
+  automata.cpp \
+  maf.h \
+  fsa.h \
+  container.h \
+  maf_sub.h \
+  maf_so.h \
+  mafctype.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  alphabet.h
+
+autcos.rbj : \
+  mafver.rc \
+  maf.ico
+
+autgroup.o32 : \
+  automata.cpp \
+  maf.h \
+  fsa.h \
+  container.h \
+  maf_sub.h \
+  maf_so.h \
+  mafctype.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  alphabet.h
+
+autgroup.rbj : \
+  mafver.rc \
+  maf.ico
+
+kbprog.o32 : \
+  automata.cpp \
+  maf.h \
+  fsa.h \
+  container.h \
+  maf_sub.h \
+  maf_so.h \
+  mafctype.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  alphabet.h
+
+kbprog.rbj : \
+  mafver.rc \
+  maf.ico
+
+kbprogcos.o32 : \
+  automata.cpp \
+  maf.h \
+  fsa.h \
+  container.h \
+  maf_sub.h \
+  maf_so.h \
+  mafctype.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  alphabet.h
+
+kbprogcos.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaand.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaand.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaandnot.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaandnot.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsabfs.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsabfs.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsacartesian.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsacartesian.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsacompose.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsacompose.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaconcat.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaconcat.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsacount.o32 : \
+  mafword.h \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  awcc.h \
+  awdefs.h \
+  mafbase.h \
+  alphabet.h \
+  maf_ssi.h
+
+fsacount.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsacut.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsacut.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsadiagonal.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsadiagonal.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaenumerate.o32 : \
+  mafword.h \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  awcc.h \
+  awdefs.h \
+  mafbase.h \
+  alphabet.h \
+  maf_ssi.h
+
+fsaenumerate.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaexists.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaexists.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsafl.o32 : \
+  maf.h \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafword.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  alphabet.h
+
+fsafl.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsakernel.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsakernel.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsalequal.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  alphabet.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsalequal.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsamerge.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsamerge.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsamin.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsamin.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsatrim.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsatrim.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsanot.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsanot.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaor.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaor.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaprint.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaprint.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaproduct.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaproduct.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaprune.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaprune.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaread.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafword.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h \
+  alphabet.h
+
+fsaread.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsareverse.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsareverse.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsan.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafctype.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsan.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsapad.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafctype.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsapad.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaseparate.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaseparate.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsashortlex.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsashortlex.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsastar.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsastar.rbj : \
+  mafver.rc \
+  maf.ico
+
+fsaswapcoords.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+fsaswapcoords.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpaxioms.o32 : \
+  maf.h \
+  container.h \
+  maf_so.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h
+
+gpaxioms.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpcclass.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  maf.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gpcclass.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpcosets.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gpcosets.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpdifflabs.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gpdifflabs.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpgenmult2.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafword.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h \
+  alphabet.h
+
+gpgenmult2.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpgeowa.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gpgeowa.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpmakefsa.o32 : \
+  automata.cpp \
+  maf.h \
+  fsa.h \
+  container.h \
+  maf_sub.h \
+  maf_so.h \
+  mafctype.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  alphabet.h
+
+gpmakefsa.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpmigmdet.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gpmigmdet.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpmigenmult2.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafword.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h \
+  alphabet.h
+
+gpmigenmult2.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpmimult.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_sub.h \
+  maf_so.h \
+  equation.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  nodebase.h \
+  alphabet.h
+
+gpmimult.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpmimult2.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafword.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h \
+  alphabet.h
+
+gpmimult2.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpminkb.o32 : \
+  maf.h \
+  container.h \
+  mafauto.h \
+  maf_so.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  fsa.h \
+  maf_ssi.h
+
+gpminkb.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpmorphism.o32 : \
+  maf_tc.h \
+  maf.h \
+  container.h \
+  alphabet.h \
+  mafword.h \
+  maf_dr.h \
+  maf_so.h \
+  fsa.h \
+  mafctype.h \
+  equation.h \
+  mafbase.h \
+  awcc.h \
+  awdefs.h \
+  maf_ssi.h \
+  nodebase.h
+
+gpmorphism.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpmult.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_sub.h \
+  maf_so.h \
+  equation.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  nodebase.h \
+  alphabet.h
+
+gpmult.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpmult2.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafword.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h \
+  alphabet.h
+
+gpmult2.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpovlwa.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gpovlwa.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpstabiliser.o32 : \
+  maf.h \
+  mafctype.h \
+  container.h \
+  alphabet.h \
+  mafword.h \
+  maf_so.h \
+  fsa.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  maf_ssi.h
+
+gpstabiliser.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpsublowindex.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafctype.h \
+  maf_sub.h \
+  maf_sdb.h \
+  lowindex.h \
+  tietze.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  hash.h \
+  bitarray.h \
+  alphabet.h \
+  arraybox.h
+
+gpsublowindex.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpsubmake.o32 : \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafctype.h \
+  maf_sub.h \
+  maf_sdb.h \
+  fsa.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  mafword.h \
+  hash.h \
+  maf_ssi.h \
+  alphabet.h \
+  arraybox.h
+
+gpsubmake.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpsubpres.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gpsubpres.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpsubwa.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  equation.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  nodebase.h \
+  alphabet.h
+
+gpsubwa.rbj : \
+  mafver.rc \
+  maf.ico
+
+gptcenum.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_tc.h \
+  maf_so.h \
+  mafctype.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gptcenum.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpvital.o32 : \
+  maf.h \
+  container.h \
+  maf_so.h \
+  alphabet.h \
+  mafword.h \
+  fsa.h \
+  equation.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  maf_ssi.h \
+  nodebase.h
+
+gpvital.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpwa.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gpwa.rbj : \
+  mafver.rc \
+  maf.ico
+
+gpxlatwa.o32 : \
+  fsa.h \
+  maf.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+gpxlatwa.rbj : \
+  mafver.rc \
+  maf.ico
+
+midfadeterminize.o32 : \
+  fsa.h \
+  container.h \
+  maf_so.h \
+  mafbase.h \
+  awcc.h \
+  maf_ssi.h \
+  awdefs.h
+
+midfadeterminize.rbj : \
+  mafver.rc \
+  maf.ico
+
+reduce.o32 : \
+  maf.h \
+  mafctype.h \
+  container.h \
+  alphabet.h \
+  mafword.h \
+  maf_dr.h \
+  maf_so.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h
+
+reduce.rbj : \
+  mafver.rc \
+  maf.ico
+
+gporder.o32 : \
+  maf.h \
+  container.h \
+  alphabet.h \
+  mafword.h \
+  maf_dr.h \
+  maf_so.h \
+  fsa.h \
+  mafctype.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  maf_ssi.h
+
+gporder.rbj : \
+  mafver.rc \
+  maf.ico
+
+rwsprint.o32 : \
+  maf.h \
+  fsa.h \
+  container.h \
+  maf_rws.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  arraybox.h \
+  mafword.h \
+  alphabet.h
+
+rwsprint.rbj : \
+  mafver.rc \
+  maf.ico
+
+makecos.o32 : \
+  maf.h \
+  fsa.h \
+  container.h \
+  maf_sub.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  mafword.h \
+  alphabet.h
+
+makecosfile.rbj : \
+  mafver.rc \
+  maf.ico
+
+isconjugate.o32 : \
+  maf.h \
+  fsa.h \
+  container.h \
+  alphabet.h \
+  mafword.h \
+  maf_so.h \
+  maf_wdb.h \
+  awcc.h \
+  mafbase.h \
+  maf_ssi.h \
+  awdefs.h \
+  hash.h \
+  arraybox.h
+
+isconjugate.rbj : \
+  mafver.rc \
+  maf.ico
+
+isnormal.o32 : \
+  maf.h \
+  container.h \
+  alphabet.h \
+  mafword.h \
+  maf_so.h \
+  equation.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  nodebase.h
+
+isnormal.rbj : \
+  mafver.rc \
+  maf.ico
+
+simplify.o32 : \
+  maf.h \
+  container.h \
+  maf_so.h \
+  alphabet.h \
+  mafword.h \
+  fsa.h \
+  equation.h \
+  bitarray.h \
+  tietze.h \
+  awcc.h \
+  mafbase.h \
+  awdefs.h \
+  maf_ssi.h \
+  nodebase.h
+
+simplify.rbj : \
+  mafver.rc \
+  maf.ico
+

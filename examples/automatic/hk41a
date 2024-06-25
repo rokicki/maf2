@@ -1,0 +1,19 @@
+#Hyperbolic Knot 4 1 with extra generator a representing path round knot
+#Presentation mentioned in Sarah Rees's Paper 
+#"Automatic groups associated with orders other than shortlex"
+#This presentation is much more difficult to prove automatic than the usual one
+#and is not automatic using wtlex for any obvious choice of weights.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,x,X,y,Y,z,Z,t,T],
+        inverses := [A,a,X,x,Y,y,Z,z,T,t],
+  equations :=
+  [
+    [A*x*Y*z*T,IdWord],
+    [X*Z*t*z,IdWord],
+    [Y*t*x*T,IdWord],
+    [Z*X*y*x,IdWord]
+  ]
+);

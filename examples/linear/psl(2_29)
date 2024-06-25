@@ -1,0 +1,14 @@
+#deficiency 0 presentation of psl(2,p) for p=29
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [x,y,Y],
+  ordering := "shortlex",
+  inverses := [x,Y,y],
+  equations :=
+  [
+    [(Y*x)^3,IdWord],
+    [y^29,IdWord],
+    [(x*y^4*x*y^15)^2,IdWord]
+  ]
+);

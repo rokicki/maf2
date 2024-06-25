@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Background material : Rewriting systems</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Next" type="text/html" href="fsa_background.html" title="Finite state automata">
+<link rel="Prev" type="text/html" href="Word_problem.html" title="The word problem">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="background.html">Background</a> : Rewriting systems
+<h2><a name="rewritingsystem"></a>Rewriting systems</h2>
+<p>If <span class="nobr"><i>G</i> = &lang; <i>X</i> | <i>R</i> &rang;</span> is a finitely presented monoid or group, <i>&le;</i> is a partial ordering of <i>X<sup>*</sup></i>, and <span class="nobr">(<i>u,v</i>) &isin; <i>R</i></span> then <span class="nobr"><i>u</i>&rarr;<i>v</i></span> is a <dfn>rewriting rule</dfn> with respect to <i>&le;</i> if <span class="nobr"><i>v</i> <i>&lt;</i> <i>u</i></span>. If <i>r</i> is a rewriting rule, <i>u</i> is the <dfn>left hand side</dfn> or LHS of <i>r</i>, and <i>v</i> is the <dfn>right hand side</dfn> or RHS.</p>
+<p>If <i>&le;</i> is a <a href="Orderings.html">total ordering</a> then any element of <i>R</i> can be expressed as a rewriting rule, by interchanging <i>u</i> and <i>v</i> if necessary. A presentation of a group or monoid given in a form where all the relations take the form of rewriting rules (relative to an ordering <i>&le;</i>) is called a <dfn>rewriting system</dfn> (for <i>G</i> over <i>&le;</i>). Some authors regard the set <i>R</i> of rewriting rules on its own as constituting the rewriting system, because then one can consider the rewriting system independently of <i>G</i> and <i>&le;</i>. However in MAF, the writing system is best viewed as the triple <span class="nobr">(<i>X</i>,<i>R</i>,&le;)</span>.</p>
+<p>If <span class="nobr"><i>u,v,a,b</i> &isin; <i>X<sup>*</sup></i></span>,<span class="nobr"><i>u&rarr;v</i> &isin; <i>R</i></span> and <span class="nobr"><i>w = aub</i></span> then <span class="nobr"><i>w =<sub>G</sub> avb</i></span>. Clearly <i>w</i> is a reducible word. Replacing <i>w</i> by <i>avb</i> is called <dfn>rewriting</dfn> <i>w</i>. It is possible that after doing so the rewritten <i>w</i> will still contain an LHS. If a word <i>q</i> can be obtained by rewriting another word <i>p</i> in one step we extend the notation <span class="nobr"><i>u</i>&rarr;<i>v</i></span> and write <span class="nobr"><i>p&rarr;q</i></span> to indicate this. If <i>q</i> can be obtained by a sequence of rewriting steps then we write <span class="nobr"><i>p&rarr;*q</i></span>. We can use the <dfn>rewrite procedure</dfn>, defined informally as "while <i>w</i> contains an LHS as a subword replace this LHS with the corresponding RHS", or "while <i>w = aub</i> with <i>u</i>&rarr;<i>v</i> &isin; <i>R</i> then rewrite <i>w</i> as <i>avb</i>" to try to find an irreducible word representing the same element as <i>w</i>. However, if <i>&le;</i> is an arbitrary total ordering this procedure might not terminate. Termination is only guaranteed if <i>&le;</i> is a <a href="Orderings.html#reduction">reduction ordering</a>. A word <i>w</i> is reducible or irreducible with respect to the rewriting system  <span class="nobr">(<i>X</i>,<i>R</i>,&le;)</span> according to whether or not the rewrite procedure alters it. It is clear that a word that is reducible in this sense is also reducible in terms of our original non-constructive definition, but in general, a word that is irreducible with respect to a rewriting system might be still be reducible in the first sense.</p>
+<p>In the "rewrite" procedure just given, we did not specify how to choose the rule to apply in the case where <i>w</i> contains more than one LHS. It is perfectly possible that the word we finish up with will be different according to the choice we make in such cases. If a rewriting system has the property that the final word is independent of any such choices  then it said to be <dfn>confluent</dfn>. If a rewriting system is not confluent there must be some words <i>w,u,v</i> such that both <i>w&rarr;*u</i> and <i>w&rarr;*v</i> but there is no word <i>q</i> such that <i>u&rarr;*q</i> and <i>v&rarr;*q</i>. If this undesirable state of affairs arises then we can attempt to remedy it by adding either <span class="nobr">(<i>u</i>,<i>v</i>)</span> or <span class="nobr">(<i>v</i>,<i>u</i>)</span> to <i>R</i> as a new rewriting rule. It is clear that this does not change the congruence generated by <i>R</i>. Knuth-Bendix completion is the procedure which results when one attempts to systematically identify all such rules which might need to be added.</p>
+<p>If (<i>u,v</i>) is a rule then it does not necessarily follow that <i>v</i> is a reduced word. A rewriting system is said to be <dfn>reduced </dfn> if for every rule <i>u</i> is minimally reducible (with respect to the current set of rules), and <i>v</i> is irreducible (with respect to the current rules). Any rewriting system can be modified so that all its rules are reduced.</p>
+<p>The reduced confluent rewriting system for a group or monoid contains precisely the primary equations for that ordering of words in the group or monoid. It can correctly reduce all words, so that the words that are reducible by the rewriting system are precisely the reducible words in the original non-constructive definition,  but words that are not minimally reducible may need to be reduced more than once.</p>
+</body>
+</html> 

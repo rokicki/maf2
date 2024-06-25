@@ -1,0 +1,7 @@
+#Von Dyck subgroup -  reflections knocked out.
+_RWS_Sub:= rec
+(
+  subGenerators:= [b*c,c*b,c*a,a*c,a*b,b*a],
+  subGeneratorNames :=        [x,X,y,Y,z,Z],
+  subGeneratorInverseNames := [X,x,Y,y,Z,z]
+);

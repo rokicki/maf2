@@ -1,0 +1,31 @@
+#Rubik slice group
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "wreathprod",
+  generatorOrder := [a,A,b,B,c,C],
+  level    :=       [1,1,2,2,3,3],    
+  inverses :=       [A,a,B,b,C,c],
+  equations :=
+  [
+    [a*a*a*a,IdWord],
+    [b*b*b*b,IdWord],
+    [c*c*c*c,IdWord],
+    [a*b*C*a*c*B*A*c,IdWord],
+    [b*c*A*b*a*C*B*a,IdWord],
+    [c*a*B*c*b*A*C*b,IdWord],
+    [c*b*a*c*A*B*C*A,IdWord],
+    [a*c*b*a*B*C*A*B,IdWord],
+    [b*a*c*b*C*A*B*C,IdWord],
+    [A*b*c*A*C*B*a*C,IdWord],
+    [B*c*a*B*A*C*b*A,IdWord],
+    [C*a*b*C*B*A*c*B,IdWord],
+    [a*c*a*c*a*c*a*c*a*c*a*c,IdWord],
+    [b*a*b*a*b*a*b*a*b*a*b*a,IdWord],
+    [c*b*c*b*c*b*c*b*c*b*c*b,IdWord],
+    [a*b*C*a*a*b*C*a*a*b*C*a,IdWord]
+  ]
+);
+
+
+

@@ -1,0 +1,14 @@
+#Von Dyck (3,7,2) group - infinite hyperbolic
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B],
+  inverses := [A,a,B,b],
+  equations :=
+  [
+    [a*a,A],
+    [b*b*b*b,B*B*B],
+    [B*A,a*b]
+  ]
+);

@@ -1,0 +1,5 @@
+_RWS_SUb := rec
+(
+subGenerators := [u*v]
+);
+

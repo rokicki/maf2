@@ -1,0 +1,21 @@
+# Coxeter graph
+#      
+#   4  
+#  a-b
+#
+# Coxeter Matrix (above upper diagonal)
+# 1 4    
+#   1   
+#       
+#Weyl group B2/I2(4) (all gens involutory).
+#Symmetry group of square
+_RWS := rec(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b],
+  inverses := [a,b],
+  equations :=
+  [
+    [(a*b)^4,IdWord]
+  ]
+);

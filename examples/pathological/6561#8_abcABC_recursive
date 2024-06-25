@@ -1,0 +1,23 @@
+#This is the same presentation as obrien8_aAbBcC_recursive, but with the
+#order of the generators altered.
+#Since the group is finite, A,B,C should all be eliminated, and a
+#the confluent RWS should be the same as for that presentation
+#But MAF cannot find it, because A,B,C are eliminated too soon leaving it
+#with hopelessly long equations. Eventually a promising looking collapse
+#takes place, but all that has happened is that finally it has eliminated
+#generator c from the reduction of A. With the addition of a^27=IdWord as
+#an axiom, the confluent RWS system is found in seconds.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a,b,c,A,B,C],
+  inverses := [A,B,C,a,b,c],
+  equations :=
+  [
+    [a*a*C*a*c,IdWord],
+    [a*c*b^2*A*C*b,IdWord],
+    [A*B*a*b*c^3,IdWord]
+#,  [a^27,IdWord]
+  ]
+);

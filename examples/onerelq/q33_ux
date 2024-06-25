@@ -1,0 +1,29 @@
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [u,U,x],
+  ordering := "shortlex",
+  inverses :=  [U,u,x],
+
+  equations := 
+  [
+    [x^2,IdWord],
+    [(U*x)^3,IdWord],
+#    [u^4*(x*U*x)^2*u^2*(x*U*x)^4*u^2*(x*U*x)*u*(x*U*x)^2,IdWord],
+
+    [(u^2*(x*U*x))^12,IdWord],  # ^6 is the  missing axiom
+
+    [(u^4*(x*U*x))^6,IdWord],
+    [(u^2*(x*u*x)^2)^21,IdWord],
+    [(u*u*u*(x*U*x))^21,IdWord],
+    [(u*(x*U*x))^19,IdWord], #really at least 114
+#    [(u^2*(x*U*x)^2)^7,IdWord], #really at least 133
+    [(u^2*(x*U*x)*u*(x*U*x))^6,IdWord]
+
+#    [u^4*(x*u*x)^3*U*(x*u*x)^2*U*(x*u*x)^2*U*(x*u*x)^2*U*(x*u*x)^3,IdWord],
+#    [U^4*(x*u*x)*U*(x*u*x)*U^2*(x*u*x)^2*U*(x*u*x)*U*(x*u*x)^4,IdWord],
+#   [u*(x*U*x)*U*(x*u*x)*u*(x*u*x)*U*(x*U*x),u*(x*u*x)*U*(x*U*x)*u*(x*U*x)*U*(x*u*x)]
+  ]
+);
+

@@ -1,0 +1,15 @@
+#This is the group that #11 is supposed to be
+#The generators here do not match the generators in #11
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [c,C,a,A,b,B],
+  inverses := [C,c,A,a,B,b],
+  equations :=
+  [
+    [B*c*A*B*A*C*A*B,IdWord],
+#    [a*c*B*A*B^2*C,IdWord],
+    [C^2*B^2*A*C*B*a,IdWord]
+  ]
+);

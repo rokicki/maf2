@@ -1,0 +1,14 @@
+# presentation of psl(2,p) for p=73
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [x,y,Y],
+  ordering := "shortlex",
+  inverses := [x,Y,y],
+  equations :=
+  [
+    [(Y*x)^3,IdWord],
+    [(x*y^4*x*y^37)^2,IdWord],
+    [y^73,IdWord]
+  ]
+);

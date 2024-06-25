@@ -1,0 +1,60 @@
+# Coxeter graph
+#      d       i
+#      |       |
+#  a-b-c-e-f-g-h
+#
+# Coxeter Matrix (above upper diagonal)
+# 1 3 2 2 2 2 2 2 2
+#   1 3 2 2 2 2 2 2
+#     1 3 3 2 2 2 2
+#       1 2 2 2 2 2
+#         1 3 2 2 2
+#           1 3 2 2
+#             1 3 2
+#               1 3
+#                 1
+#Weyl group E~8.
+_RWS := rec(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a,b,c,d,e,f,g,h,i],
+  inverses := [a,b,c,d,e,f,g,h,i],
+  equations :=
+  [
+    [b*a*b,a*b*a],
+    [c*a,a*c],
+    [d*a,a*d],
+    [e*a,a*e],
+    [f*a,a*f],
+    [g*a,a*g],
+    [h*a,a*h],
+    [i*a,a*i],
+    [c*b*c,b*c*b],
+    [d*b,b*d],
+    [e*b,b*e],
+    [f*b,b*f],
+    [g*b,b*g],
+    [h*b,b*h],
+    [i*b,b*i],
+    [d*c*d,c*d*c],
+    [e*c*e,c*e*c],
+    [f*c,c*f],
+    [g*c,c*g],
+    [h*c,c*h],
+    [e*d,d*e],
+    [f*d,d*f],
+    [g*d,d*g],
+    [h*d,d*h],
+    [i*d,d*i],
+    [f*e*f,e*f*e],
+    [g*e,e*g],
+    [h*e,e*h],
+    [i*e,e*i],
+    [g*f*g,f*g*f],
+    [h*f,f*h],
+    [i*f,f*i],
+    [h*g*h,g*h*g],
+    [i*g,g*i],
+    [i*h*i,h*i*h]
+ ]
+);

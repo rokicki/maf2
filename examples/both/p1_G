@@ -1,0 +1,15 @@
+#P1G
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  tidyint := 20,
+  generatorOrder := [h,H,v,V,g,G],
+  inverses := [H,h,V,v,G,g],
+  equations :=
+  [
+    [v*h,h*v],
+    [g*g,v],
+    [G*h*g,H],
+  ]
+);

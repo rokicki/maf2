@@ -1,0 +1,19 @@
+#An infinite quotient of the Von Dyck (7,2,3) group 
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "wreathprod",
+  generatorOrder := [a,b,B,x],
+  level    := [1,1,1,2],
+  inverses := [a,B,b,x],
+  equations :=
+  [
+    [x*a*x,a],
+    [x*b*x,B],
+    [(a*b*x)^9,IdWord],
+    [b^3,IdWord],
+    [(a*b)^7,IdWord],
+    [(a*b*a*B)^9,IdWord]
+  ] 
+);
+            

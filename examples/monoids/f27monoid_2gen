@@ -1,0 +1,15 @@
+#monoid presentation of F(2,7) - should produce a monoid of length 30
+#which is the same as the group, together with the empty word.
+#This is a very difficult calculation indeed, however.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [a,b],
+  inverses := [],
+  equations :=
+  [
+    [b*a*b*a*b*b*a*b*a*b*b*a*b*b*a*b*a*b*b*a*b,a],
+    [a*b*b*a*b*b*a*b*a*b*b*a*b*a,b]
+  ]
+);

@@ -1,0 +1,15 @@
+#Heineken group with balanced presentation.
+#Computation of automatic structure proves it infinite.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [x,X,y,Y,z,Z],
+  inverses := [X,x,Y,y,Z,z],
+  equations :=
+  [
+    [Y*(Y*Z*y*z)^-1*y*(Y*Z*y*z),x],
+    [Z*(Z*X*z*x)^-1*z*(Z*X*z*x),y],
+    [X*(X*Y*x*y)^-1*x*(X*Y*x*y),z]
+  ]
+);

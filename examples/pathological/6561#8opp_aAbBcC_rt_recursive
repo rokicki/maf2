@@ -1,0 +1,15 @@
+#This is the same group as 6561#8. The relators have been reversed, so the
+#generators a,b,c from the original presentation are A,B,C in this one.
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "rt_recursive",
+  generatorOrder := [a,A,b,B,c,C],
+        inverses := [A,a,B,b,C,c],
+  equations :=
+  [
+    [c*a*C*a*a,IdWord],
+    [b*C*A*b^2*c*a,IdWord],
+    [c^3*b*a*B*A,IdWord]
+  ]
+);

@@ -1,0 +1,22 @@
+#Multiplication modulo 12
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := true,
+  generatorOrder := [g2,g3,g5,g7],
+  ordering := "shortlex",
+  inverses :=       [,,g5,g7],
+  equations := 
+  [
+    [g2*g7,g2],
+    [g3*g2,g2*g3],
+    [g3*g5,g3],
+    [g3*g7,g3^2],
+    [g5*g2,g2*g5],
+    [g5*g3,g3],
+    [g7*g2,g2],
+    [g7*g3,g3^2],
+    [g7*g5,g5*g7],
+    [g2^2*g5,g2^3]
+  ]
+);

@@ -1,0 +1,13 @@
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B,c,C],
+  inverses := [A,a,B,b,C,c],
+  equations :=
+  [
+      [b^2*c*b*C,IdWord],
+      [c^2*A*c*a,IdWord],
+      [a*b*a^2*b^2,IdWord]
+  ]
+);

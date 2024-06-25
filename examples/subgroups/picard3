@@ -1,0 +1,19 @@
+#This is another presentation of SL(2,Z[i]). See picard for details
+#Generators m,M and j have been removed, since they are not needed.
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [a,A,t,T,u,U],
+  ordering := "short_rtlex",
+  inverses :=       [A,a,T,t,U,u],
+  equations := 
+  [
+    [A*u*A*U*a*u,a*U*A*u*a*U],
+    [t*a*t,a*T*A],
+    [t*a*u*A*U*a*u,a*u*A*U*a*u*T],
+    [u*t,t*u],
+    [a*a*t,t*a*a],
+    [a*a*u,u*a*a]
+  ]
+);

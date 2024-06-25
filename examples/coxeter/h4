@@ -1,0 +1,28 @@
+# Coxeter graph
+#      
+#       5
+#  a-b-c-d
+#
+# Coxeter Matrix (above upper diagonal)
+# 1 3 2 2  
+#   1 3 2 
+#     1 5 
+#       1 
+#               
+#Weyl group H4 (all gens involutory).
+#Symmetry group of 120-cell/600-cell
+_RWS := rec(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b,c,d],
+  inverses := [a,b,c,d],
+  equations :=
+  [
+    [b*a*b,a*b*a],
+    [c*a,a*c],
+    [d*a,a*d],
+    [c*b*c,b*c*b],
+    [d*b,b*d],
+    [(c*d)^5,IdWord],
+ ]
+);

@@ -1,0 +1,43 @@
+#Subgroup of index 2 without 4 rotation i.e. P2MM
+#t(4,2,4) is the simplest possible presentation of P4MM. It is based on the
+#reflections in the edges of an isoceles right angled triangle. Sides a & c
+#are the equal legs, with side c lying on the x axis with vertex bc at the
+#origin. and vertex ac at (0.5,0). (This orientation puts angle A at the origin)
+#          |       + 
+#          y     / |
+#          |   b   a    
+#          | /     |      
+#          O---c---+--x---  
+#                  
+#a,b,c are reflections in the sides of this reference triangle, and
+#transformations are written right to left, so that c*a means
+#reflect in side a, then reflect in side c
+#The sub generators below correspond to some of the more obvious symmetries
+#By knocking out generators we are going to find subgroups of P4MM that
+#are isomorphic to all of the wallpaper groups without 3 roto-centers.
+#However for the groups with glide reflection symmetries we are going to
+#start from sub_P4MM_2 instead.
+_RWS_Sub:= rec
+(
+  subGenerators:=
+  [
+    b*c*b,
+    c,
+    a,
+    b*a*b
+  ],
+  subGeneratorNames :=
+  [
+    y,
+    x,
+    z,
+    w
+  ],
+  subGeneratorInverseNames :=
+  [
+    y
+    ,x
+    ,z
+    ,w
+  ]
+);

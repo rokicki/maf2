@@ -1,0 +1,18 @@
+_RWS := rec                    
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [y,u,U,v,V],
+  inverses := [y,U,u,V,v],
+  equations :=
+  [
+    [y*u*y*u,IdWord],
+    [u^3,IdWord],
+    [y*v*y*v,IdWord],
+    [v^3,IdWord],
+    [(u*v)^6,IdWord],
+    [(u*V)^6,IdWord],
+    [(y*u*v)^6,IdWord],
+    [(y*(u*v)^3)^6,IdWord]
+  ]
+);

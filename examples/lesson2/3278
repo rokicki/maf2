@@ -1,0 +1,14 @@
+#A largish finite quotient of the Von Dyck (3,2,7) group 
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b],
+  inverses := [A,a,b],
+  equations :=
+  [
+    [a*a,A],
+    [(a*b)^7,IdWord],
+    [(a*b*A*b)^8,IdWord]
+  ]
+);

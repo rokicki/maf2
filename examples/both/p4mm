@@ -1,0 +1,31 @@
+#This is the presentation of P4MM I am using to find subgroups isomorphic
+#to other wallpaper groups.
+#It is both automatic and confluent
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := true,
+  generatorOrder := [h,H,v,V,
+#                     f,F,
+#                     g,G,
+                     q,Q,r,x,y,d,e],
+  ordering := "shortlex",
+  inverses := [H,h,V,v,
+#               F,f,
+#               G,g,
+               Q,q,r,x,y,d,e],
+  equations := 
+  [
+    [v*h,h*v],
+    [y*v,v*y],
+    [y*h,H*y],
+    [x*y,r],
+    [q*q,r],
+    [q*x,d],
+    [r*d,e],
+    [Q*h*q,V],
+    [x*Q*x,q],
+#    [h*d*x*d*x*d,g]
+#    ,[x*d*h*d*x*d,f]
+  ]
+);

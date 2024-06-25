@@ -1,0 +1,15 @@
+#Braid group B4 - MAF cannot do this one at all
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [s1,s1^-1,s2,s2^-1,s3,s3^-1],
+  inverses       := [s1^-1,s1,s2^-1,s2,s3^-1,s3],
+  equations :=
+  [
+    [s2*s1*s2,s1*s2*s1],
+    [s3*s2*s3,s2*s3*s2],
+    [s3*s1,s1*s3],
+  ]
+);
+

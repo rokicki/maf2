@@ -1,0 +1,14 @@
+#Von Dyck (4,4,4) group 
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B],
+  inverses := [A,a,B,b],
+  equations := 
+  [
+   [a^4,IdWord], 
+   [b^4,IdWord], 
+   [(a*b)^4,IdWord]
+  ]
+);

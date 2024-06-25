@@ -1,0 +1,13 @@
+#Braid group B3 
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [s1,s1^-1,s2,s2^-1],
+  inverses       := [s1^-1,s1,s2^-1,s2],
+  equations :=
+  [
+    [s2*s1*s2,s1*s2*s1]
+  ]
+);
+

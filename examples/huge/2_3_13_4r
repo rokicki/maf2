@@ -1,0 +1,21 @@
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+
+  generatorOrder := [d,D,b,B,e,E,f,h,a],
+  ordering := "wreathprod",
+  level    :=       [1,1,1,1,2,2,3,4,5],
+  inverses :=       [D,d,B,b,E,e,f,h,a],
+  equations := 
+  [
+    [(a*b*a*B)^4,IdWord],
+    [(a*b)^13,IdWord],
+    [b^3,IdWord],
+    [a*B*a*B*a*B*a*b*a*b*a*b*a*b*a*B*a*B*a*B*a*b*a*b*a*b*a,d],
+    [a*b*a*B*a*B*a*b*a*b*a*B*a*b*a*b*a*B*a*b*a*b*a*B*a*B*a*b*a,e],
+    [a*b*a*b*a*B*a*b*a*b*a*b*a*B*a*B*a*B*a*b*a*b*a,f],
+#    [a*b*a*b*a*b*a*B*a*b*a,g],
+    [a*b*a*B*a,h]
+  ]
+);

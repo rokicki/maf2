@@ -1,0 +1,29 @@
+#Picard group SL(2,Z[i]) 
+#This choice of generating set is consistent with the following
+#set of matrices:
+#a= 0 -1  t = 1 1   u = 1 i  l = -i 0  j = -1 0
+#   1  0      0 1       0 1       0 i      0 -1
+#If l is replaced by m = A *l = 0 i the group is still automatic, and the 
+#                               i 0
+#presentation and automata are both simpler. See picard2
+#The axioms can also be simplified for this generating set. See picard1
+_RWS := rec                    
+(
+  isRWS := true,
+  ordering := "short_fptp",
+  generatorOrder := [a,A,t,T,u,U,l,L,j],
+  inverses :=       [A,a,T,t,U,u,L,l,j],
+  equations :=
+  [
+    [a*a,j],
+    [l*l,j],
+    [A*t*a*t*a*t,IdWord],
+    [A*l*a*l,IdWord],
+    [t*L*t*l,IdWord],
+    [u*L*u*l,IdWord],
+    [u*A*l*u*a*l*u*a*l,IdWord],
+    [u*t,t*u],
+    [t*j,j*t],
+    [u*j,j*u],
+  ]
+);

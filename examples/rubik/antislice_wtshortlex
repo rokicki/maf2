@@ -1,0 +1,31 @@
+#A presentation of the antislice group.
+#This is a set of independent axioms
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [rl,LR,td,DT,fb,BF],
+  ordering := "wtshortlex",
+#  ordering := "wreathprod",
+#  level := [1,2,3,4,5,6],
+#  weight := [1,8,64,512,4096,32768],
+  weight := [1,8,1,8,1,8],
+  inverses := [LR,rl,DT,td,BF,fb],
+  equations := 
+  [
+    [td*rl*BF*rl,LR*fb*LR*DT],
+    [td*rl*BF*LR,rl*fb*LR*DT],
+    [td*fb*td*rl,LR*DT*BF*DT],
+    [td*fb*td*LR,rl*DT*BF*DT],
+    [td*fb*DT*rl,LR*td*BF*DT],
+    [td*BF*td*rl,LR*DT*fb*DT],
+    [fb*rl*td*rl,LR*DT*LR*BF],
+    [fb*rl*td*LR,rl*DT*LR*BF],
+    [fb*rl*DT*rl,LR*td*LR*BF],
+    [fb*rl*fb*td,DT*BF*LR*BF],
+    [fb*rl*fb*DT,td*BF*LR*BF],
+    [fb*rl*BF*td,DT*fb*LR*BF],
+    [td*rl*td*rl*td*rl,LR*DT*LR*DT*LR*DT],
+    [td*fb*rl*td*fb*rl,rl*fb*td*rl*fb*td],
+    [td*fb*rl*DT*fb*rl,rl*fb*DT*rl*fb*td]
+  ]
+);

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : Tutorials  : 1 - Processing an input file with automata</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+<link rel="Prev" type="text/html" href="fsa_usage.html" title="Usage: FSA Utilities">
+<link rel="Next" type="text/html" href="example2.html" title="Tutorial 2: Choosing generators">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="MAF.html#tutorials">Tutorials</a> : 1 - Processing an input file with <tt>automata</tt>
+<h2>MAF Tutorial 1 : Processing an input file with <tt>automata</tt></h2>
+<p>Open a command prompt window (shell), and log to the directory where you installed MAF. The <tt>bin</tt> subdirectory contains all the MAF executable files. The <tt>examples</tt> subdirectory contains a large number of files, most of which have no suffix. These files are used as input to MAF (or KBMAG), and describe rewriting systems, but the MAF documentation will generally refer to them simply as <dfn>input files</dfn>. Each is, roughly speaking, a presentation of a group or a monoid; many of them probably well known to you. A good proportion of these example files come originally from KBMAG. Files with suffixes beginning with <tt>.sub</tt> are a different type of file, called a <a href="substructure_files.html">substructure file</a>. They describe subgroups of presentations described in a rewriting system.</p>
+<p>Let us look briefly at one of these input files: <tt>d(2_3_5)</tt>, which can be found in the <tt>examples/both</tt> subdirectory. It looks like this:</p>
+<pre>
+#Von Dyck (2,3,5) group - isomorphic to Alt(5)
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b,B],
+  inverses := [a,B,b],
+  equations := 
+  [
+    [b^3,IdWord], 
+    [(a*b)^5,IdWord]
+  ]
+);
+</pre>
+<p>In a mathematical text this group would probably be presented something like this:
+<div class="prelike">gp &lt;a,b | a<sup>2</sup>=b<sup>3</sup>=(ab)<sup>5</sup>=1&gt;</div>
+<p>It is hoped that you can see the resemblance, perhaps the main point of difference being the appearance of a third generator <code>B</code>. This is typical of MAF, and of KBMAG: the presentations they work with are not really group presentations, but monoid presentations of groups. MAF needs to be told that generators are invertible, (when indeed they are) and also needs for the inverses to be named. It would have been possible to name <code>B</code> <code>b^-1</code> instead, but once you are used to it the convention of using lower and upper case letters for generators and their inverses seems very natural.</p>
+<p>We shall not concern ourselves with the format of this file for the moment (you can find out more in  <a href="input_files.html">Input files</a>), but will process it with MAF.  It is suggested that you now log to the <tt>bin</tt> directory, so that you can easily run the programs it contains. Assuming you have done so, the following command should do just that:</p>
+<p><kbd>automata ../examples/both/d(2_3_5)</kbd><br>
+or if you are running on a Unix like operating system, and don't have . in your path:</p>
+<p><kbd>./automata ../examples/both/d(2_3_5)</kbd></p>
+<p>(Sadly that command line does not work on Windows machines unless you are using a Unix like shell.)</p>
+<p>This should produce some output on your screen that looks more or less like this:
+<pre>
+Looking for new equations using Knuth Bendix process
+All possible primary equations have been deduced
+Building word-acceptor from confluent RWS
+Accepted language contains 60 words. Word-acceptor has 29 states
+Building multiplier
+Multiplier passes checks
+Building L1-acceptor
+The L1 language contains 17 words
+The L1-acceptor has 37 states.
+Building reducer
+The correct difference machine has 34 states.
+Building primary equation recogniser
+Primary equation recogniser has 52 states.
+Correct primary difference machine has 28 states.
+Building equation recogniser
+There are 25 equations in the fast rewriting system
+The equation recogniser has 68 states.
+Elapsed time 0
+</pre>
+<p>Assuming it did, you have successfully run MAF's <tt>automata</tt> for the first time, and it has created a fair number of finite state automata that can be used for various purposes. You may notice that the output contains the line:</p>
+<pre>Accepted language contains 60 words. Word-acceptor has 29 states</pre>
+<p>The "60" should give you some confidence that <tt>automata</tt> has indeed analysed this presentation correctly. If you have any doubts you may like to refer to the file <tt>d(2_3_5).kbprog</tt> which will have appeared in the <tt>examples/both</tt> directory. This contains the correct minimal reduction system for the group. By the way, KBMAG would say that the word-acceptor for this group has 28 states. Internally MAF always counts one more state for FSA than appears in output files, because it counts the 0 failure state that is present in every automaton.</p>
+<p>If you like you can multiply group elements together by entering commands such as the following a few times:</p>
+<p><kbd>reduce ../examples/both/d(2_3_5) b*b*a*b</kbd></p>
+<p>This will print out the correct reduced word for any input word you care to give it. MAF always needs to have the <code>*</code> operator between generators. (It is possible to get MAF to use a syntax without any separators between generators, but only if you are using its C++ API, rather than the ready-built utilities it comes with).</p>
+<p>You can also find out the order of any group element with a command such as the following:</p>
+<p><kbd>gporder ../examples/both/d(2_3_5) a*b*a*B</kbd></p>
+</body>
+</html>

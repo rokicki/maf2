@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Reference : Input, output, piping and redirection</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Prev" type="text/html" href="word_ordering_methods.html" title="Word-ordering methods">
+<link rel="Next" type="text/html" href="exit_codes.html" title="Exit codes">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html">Reference</a> : Piping and redirection
+<h2>Piping and redirection.</h2>
+<p><em>The information in this section pertains especially to the FSA utilities - only a few of the RWS utilities support piping.</em>
+<h4>Redirecting input</h4>
+<p>Many MAF utilities can take their input either from an ordinary disk file, or from the computer's "standard input" (henceforth called <tt>stdin</tt>). The latter behaviour is always enabled through the use of the <kbd>-i</kbd> command line option, which must appear before any command line argument that would otherwise be interpreted as the name of an input file.</p>
+<h4>Redirecting output</h4>
+<p>Similarly, many utilities can send their output either to an ordinary disk file or to "standard output" (henceforth called <tt>stdout</tt>). Usually output is sent to a filename derived from the name of the input file unless an explicit filename is given for the output filename. For those programs that can send output to <tt>stdout</tt>, this is enabled by using the <kbd>-o</kbd> command line option. It is usually better to specify an explicit filename rather than sending output to a redirected <tt>stdout</tt>, because in the latter case you will not be able to see any of the messages that the program may want to produce while it is running, which inform you of its progress so far. When you use the <kbd>-o</kbd> option any progress messages will appear as comments in the output. You can use the <kbd>-silent</kbd> option to ensure that no such messages are produced.</p>
+<h4>Piping</h4>
+The ability to read from <tt>stdin</tt> and write to <tt>stdout</tt> means that MAF utilities can be used with pipes.
+<p>For example, you could minimise and sort an FSA effectively in a single command using a command line such
+as the following:</p>
+<p><kbd>fsamin some_fsa -o | fsabfs -i some_fsa.canonical</kbd></p>
+<p>Alternatively you could rely on the default output filename feature to achieve similar results, like this:</p>
+<p><kbd>fsamin some_fsa<br>
+fsabfs some_fsa.min</kbd></p>
+<p>In this case the final "canonical" fsa is now called <kbd>some_fsa.min.bfs</kbd>.</p>
+<h4>Default output and <kbd>-i</kbd></h4>
+<p>If you use the <kbd>-i</kbd> option and don't specify an explicit filename or <kbd>-o</kbd>, then the output will just be sent to <tt>stdout</tt> anyway, but the output is likely to be invalid, because progress messages may be mixed up with the correct output. However, you can use <kbd>-i</kbd> and <kbd>-o</kbd> together because MAF will then adjust progress output in the usual way.</p>
+<h4>Limitations</h4>
+<p>Most of the more complex programs, notably <tt>automata</tt> itself, only accept input from a file, and can only send output to files. This is usually because the program generates several separate output files, or because later use of their output files also requires the original input file.</p>
+<p>This is one area in which MAF is not entirely compatible with KBMAG, because many KBMAG programs will automatically read <tt>stdin</tt> if no input file is given, and in this case will automatically output to <tt>stdout</tt>. MAF utilities do not do this, because if they did so they would not give usage information if started with no command line arguments. In KBMAG output files cannot usually be given names, and the name will be similar to the default output filename in MAF. It is hoped that this will not cause problems for users familiar with KBMAG. If it does, then it should be possible to remove the incompatibility by the simple expedient of renaming the problematic MAF program and creating a small script program which accepts the equivalent KBMAG command line and then invokes the renamed program. In general MAF executables can replace KBMAG executables with the same name in GAP.</p>
+</body>
+</html>

@@ -1,0 +1,16 @@
+#Braid group b3
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "recursive",
+  generatorOrder := [t1,T1,t2,T2,t,T,s1,s1^-1,s2,s2^-1],
+        inverses := [T1,t1,T2,t2,T,t,s1^-1,s1,s2^-1,s2],
+  equations :=
+  [
+    [s2*s1*s2,s1*s2*s1],
+    [t,s1],
+    [t2,s2*T],
+    [t1,t*t2*T]
+  ]
+);
+

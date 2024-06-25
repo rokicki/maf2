@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF: Background: Alphabets, words and identifiers</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Next" type="text/html" href="fpmonoids.html" title="Finitely presented monoids">
+<link rel="Prev" type="text/html" href="background.html" title="Background material">
+
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="background.html">Background</a> : Alphabets, words and identifiers
+<h2>Alphabets, Words, Identifiers</h2>
+<h4><a name="alphabet"></a>Alphabet</h4>
+<p>An <dfn>alphabet</dfn> is any finite set, and a <dfn>letter</dfn> is any element of an alphabet. In MAF, an
+alphabet usually consists of a small finite set of <a href="#identifier">identifiers</a>; the MAF library also supports the use of alphabets consisting of a subset of the native character set of the computer.</p>
+<p>When, as is usually the case in MAF, an alphabet consists of a set of elements of a group or monoid that generate that group or monoid, the alphabet is usually denoted by the letter <i>X</i>. When <i>H</i> is a subgroup of a group <i>G</i> an alphabet that is a generating set for <i>H</i> is usually denoted by <i>Y</i>.</p>
+<h4><a name="word"></a>Words</h4>
+<p>If <i>X</i> is an <a href="#alphabet">alphabet</a>, a finite sequence of letters from <i>X</i> is called a <dfn>string</dfn> (on <i>X</i>). The term <dfn>word</dfn> is synonymous with string, and is preferred in the MAF documentation, since it is the usual term in the context of group theory, although string is more common in the context of automata theory. </p>
+<p>A word is usually written by concatenating the symbols from the alphabet (so that the word <code>123</code> represents the sequence <code>(1,2,3)</code>. However, in order to avoid possible ambiguity that arises when the underlying alphabet consists of <a href="#identifier">identifiers</a>, the individual symbols in words may be separated with the <code>*</code> symbol, or some other character which cannot be confused with any symbol, or part of a symbol, from the alphabet. This is the notation used for words in MAF when the alphabet consists of identifiers.</p>
+<p>If a symbol <i>a</i> is repeated 2 or more times consecutively in a word, the repeated symbols are often abbreviated to <i>a<sup><i>n</i></sup></i> or <code>a^<i>n</i></code>, where <i>n</i> is the number of consecutive appearances of <i>a</i>. Thus the word <i>aaaa</i> is often represented as <i>a<sup>4</sup></i> or <code>a^4</code>.</p>
+<p>The <dfn>length</dfn> of a word <i>w</i> is defined in the obvious way, by counting its symbols, i.e. it is the value n for which <i>w</i> is an n-tuple. It is usually denoted by <i>l(w)</i>. For example, <i>l(a<sup>5</sup>b<sup>3</sup>)</i> = 8</p>
+<p>The <dfn>empty word</dfn>, the unique 0-tuple, is also considered to be a word, and requires exceptional notation. The symbol &epsilon; is often used. In MAF, the empty word is always represented by the string <code>IdWord</code>, which may not be used as an identifier.</p>
+<p>The set of all finite words on an alphabet <i>X</i> is denoted by <i>X<sup>*</sup></i> and is called the <dfn>star</dfn> of <i>X</i>.</p>
+<p>If a word <i>w</i> is equal to <i>pst</i> for some possibly empty words <i>p</i>, <i>s</i>, <i>t</i> then: <i>p</i> is called a <dfn>prefix</dfn>, <i>s</i> a <dfn>subword</dfn>, and <i>t</i> a <dfn>suffix</dfn> or <dfn>trailing subword</dfn> of <i>w</i>.</p>
+<p>If a word <i>u</i> is a prefix of a word <i>w</i> we shall say that <i>w</i> is an <dfn>extension</dfn> of <i>u</i>. More generally, if <i>u</i> is any subword of <i>w</i> we shall say that <i>w</i> <dfn>contains</dfn> <i>u</i>.</p>
+<h4><a name="identifier"></a>Identifier</h4>
+<p>An <dfn>identifier</dfn> is a non-empty word on some subset of a character set used by a computer. It must satisfy syntactic requirements that enable a particular computer program to recognise the identifier as a significant entity within a stream of characters.</p>
+<p>In MAF, an identifier may only contain the characters 'a'..'z', 'A'..'Z', '0'..'9', '_' and '.' (period). An identifier must not begin with a digit or a period, and must not consist of a single underscore. (Here the exceptional treatment accorded to the sequence <code>^-1</code> is being neglected. See <a href="input_files.html">Input files</a> for the gory details).
+
+</body>
+</html> 

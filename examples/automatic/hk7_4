@@ -1,0 +1,17 @@
+#Hyperbolic Knot 7 4 with Wirtinger presentation
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [x,X,y,Y,z,Z,t,T,u,U,v,V,w,W],
+        inverses := [X,x,Y,y,Z,z,T,t,U,u,V,v,W,w],
+  equations :=
+  [
+    [T*x*z*X,IdWord],
+    [x*v*Y*V,IdWord],
+    [y*u*Y*v,IdWord],
+    [u*y*U*Z,IdWord],
+    [w*t*W*U,IdWord],
+    [t*w*T*X,IdWord],
+  ]
+);

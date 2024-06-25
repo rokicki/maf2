@@ -1,0 +1,4 @@
+_RWS_Sub := rec
+(
+  normalSubGenerators := [a*b*A*B,b*c*B*C,c*a*C*A]
+);

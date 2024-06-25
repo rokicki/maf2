@@ -1,0 +1,22 @@
+_RWS_Sub := rec
+(
+  normalSubGenerators := [u^6]
+);
+  subGenerators :=
+  [
+    u^6,
+    U^6,
+    v^6,
+    V^6,
+    u*v^6*U,
+    u*V^6*U,
+    U*v^6*u,
+    U*V^6*u,
+    u^2*v^6*U^2,
+    u^2*V^6*U^2,
+    U^2*v^6*u^2,
+    U^2*V^6*u^2,
+  ],
+  subGeneratorNames := [a,A,b,B,c,C,d,D,e,E,f,F],
+  subGeneratorInverseNames := [A,a,B,b,C,c,D,d,E,e,F,f]
+);

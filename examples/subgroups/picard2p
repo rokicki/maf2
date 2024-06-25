@@ -1,0 +1,17 @@
+#This is another presentation of PSL(2,Z[i]). See file picardp for details
+_RWS := rec
+(
+  isRWS := true,
+  isConfluent := false,
+  generatorOrder := [a,t,T,u,U,m],
+  ordering := "shortlex",
+  inverses :=       [a,T,t,U,u,m],
+  equations := 
+  [
+    [a*m,m*a],
+    [t*a*t,a*T*a],
+    [t*a*m,a*m*T],
+    [u*a*U,a*u*m],
+    [u*t,t*u],
+  ]
+);

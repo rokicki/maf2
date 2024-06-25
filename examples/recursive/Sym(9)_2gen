@@ -1,0 +1,26 @@
+#A presentation of S9 using two generators of high order.
+#Total size of axioms==69+8 for inverse equations.
+#This presentation was found by adding p,q as extra generators to a coxeter
+#presentation together with equations    [p,a*c*d*f*g*h]=(12)(345)(6789),
+#[q,a*b*c*e*f*g*h]=(1234)(56789)
+#and then using recursive ordering with p,q as the first two generators
+#to find a,b,c,d,e,f,g,h in terms of p and q. The original axioms were
+#then translated into axioms in p,q
+#Afterwards the resulting RWS was used as the basis for this presentation
+#and unnecessary axioms were removed by trial and error, (with help from
+#automata which reports when axioms are obviously superfluous)
+_RWS := rec
+(
+  isRWS := true,
+  generatorOrder := [p,P,q,Q],
+  ordering := "recursive",
+  inverses := [P,p,Q,q],
+  equations := 
+  [
+    [q*p*q*p,P*Q*P*Q],
+    [q*p^4*Q*p,p*Q*P^4*q],
+    [q^4*P^3,p^3*Q^4],
+    [P^4*q^4,p*Q^5*P*Q],
+    [p^4*q*p*Q*p^2,q^2*p*Q^2*P*Q^2]
+  ]
+);

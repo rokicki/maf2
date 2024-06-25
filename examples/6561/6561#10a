@@ -1,0 +1,15 @@
+#This is the same group as #10, but with several changes of
+#generator intended to show the similarity with #8
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,B,C,c],
+  inverses := [A,a,B,b,c,C],
+  equations :=
+  [
+      [a*a*C*a*c,IdWord],
+      [A*B*a*b*C^3,IdWord],
+      [a*c*b^2*A*C*b,IdWord]
+  ]
+);

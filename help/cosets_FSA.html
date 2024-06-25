@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Reference : Output files (coset systems)</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="automata_FSA.html" title="Output files (group and monoids")>
+<link rel="Next" type="text/html" href="word_ordering_methods.html" title="Word-ordering methods">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="reference.html">Reference</a> : <a href="file_formats.html">File names and formats</a> : Output files (coset systems)
+<h2>Output files (coset systems)</h2>
+<p>The table below lists the various types of output file for coset systems, and the circumstances under which they are produced. The details given apply to a coset system called <tt>group.cos</tt>. This is the coset file that will be analysed if <tt>automata</tt> is started with any of the following command lines:</p>
+<p><kbd>automata -cos group [sub]</kbd></p>
+<p>or</p>
+<p><kbd>automata -cos group cos</kbd></p>
+<p>or</p>
+<p><kbd>automata group.cos</kbd></p>
+<p>In the first command line <tt>sub</tt> is shown in square brackets to indicate that it is optional. In fact if the substructure file is called <tt>group.sub</tt> then there is of course no need to supply this; but if you have multiple substructure files <tt>group.sub1</tt>, <tt>group.sub2</tt>,... then it would be required, and as described in <a href="coset_system_names.html">Coset system filenames</a>, the name of the coset system would be altered accordingly too.</p>
+<table class="niceborder" summary="Output files produced by MAF for coset rewriting systems" cellspacing="0">
+<tr><th>File name</th><th>File description</th><th>When produced</th></tr>
+
+<tr><td><tt>group.cos.akbprog</tt></td><td>This is a rewriting system for the coset system which contains at least one equation for every transition that appears either in the word-difference machine of the MIDFA general multiplier for the coset system, or the <tt>.midiff2c</tt> word-difference machine. It also contains
+any axioms which were not eliminated. The automatic structure can be reconstructed quickly from this rewriting system. This rewriting system is not canonical - running <tt>automata</tt> with different options might result in different equations appearing in this rewriting system.</td><td>When  <tt>automata</tt> has proved a coset rewriting system automatic but not confluent.</td></tr>
+
+<tr><td><tt>group.cos.cosets</tt></td><td>This is the coset table for a finite index subgroup. </td><td>When <tt>automata</tt> has proved a subgroup has finite index. This automaton can also be computed using <a href="gp_usage.html#gptcenum><kbd><tt>gptcenum</tt> -table</kbd></a></td></tr>
+
+
+<tr><td><tt>group.cos.fastkbprog</tt></td><td>This is a "fast" rewriting system for the coset system. It
+contains all the equations in the minimal confluent rewriting system, and as many other equations as MAF has discovered of the form [<i>u*g</i>,<i>v</i>] where <i>u</i> and <i>v</i> are accepted words, <i>g</i> is a generator, <i>u*g=v</i> is a true equation (possibly involving the coset symbol), and <i>u</i> and <i>v</i> have no common cancellable prefix or trailing subword. If the coset system is automatic this rewriting system will contain at least one equation for every transition in the <tt>.midiff2c</tt> word difference machine (by which is meant that the every transition in this word-difference machine is taken for at least one equation when the equation is used as input to the word-difference machine). Currently this rewriting system is not canonical - running  <tt>automata</tt> with different options might result in different equations appearing in this rewriting system.</td><td>When <tt>automata</tt> has proved a coset rewriting system confluent.</td></tr>
+
+<tr><td><tt>group.cos.fastreduce</tt></td><td>This is the index automaton for <tt>group.cos.fastkbprog</tt>
+</td><td>When <tt>automata</tt> has proved a coset system confluent.</td></tr>
+
+<tr><td><tt>group.cos.gm</tt></td><td>This the determinised version of the coset general multiplier. In the determinised multiplier, a label can include words that are not equal in the group, something that does not happen either with automatic structures for groups, nor in the <tt>.migm</tt> form of the coset multiplier. This FSA is canonical.</td><td>If coset system is proved automatic by  <tt>automata</tt>, <tt>autgroup</tt> or <tt>autcos</tt>. See the entry below for <tt>group.cos.migm</tt> for reasons why this file might not be produced.
+</td></tr>
+
+<tr><td><tt>group.cos.kbprog</tt></td><td>This may either be the minimal confluent rewriting system for the coset system, or a partially confluent one, or, if you are using either <tt>kbprog</tt> or <tt>kbprogcos</tt>, a provisional rewriting system. </td><td>When either <tt>automata</tt>, or <tt>kbprog</tt>/<tt>kbprogcos</tt> (without <kbd>-wd</kbd> or with <kbd>-both</kbd>) have proved a coset system confluent or partially confluent (with <kbd>-detect_finite_index</kbd> or <kbd>-prove_finite_index</kbd> options).</td></tr>
+
+<tr><td><tt>group.cos.maxkb</tt></td><td>This is the FSA which reaches its single accept state, for just those word  pairs (<i>u</i>,<i>v</i>) in which <i>u</i> is not accepted by <tt>group.cos.wa</tt>, but every prefix of <i>u</i> is accepted, and <i>v</i> is accepted by <tt>group.cos.wa</tt>, and for which <i>u=v</i> is a true equation, and in which <i>u,v</i> have no common prefix.</td><td>If coset system is proved automatic by <tt>automata</tt>.</td></tr>
+
+
+<tr><td><tt>group.cos.midiff1c</tt></td><td>This is the FSA that contains all the word differences needed for the (possibly infinite) minimal confluent coset rewriting system, and just the transitions that arise in this system. This FSA is not canonical. For an explanation of this refer to the <tt>.migm</tt> entry. Note that in the case where subgroup generators are named MAF usually labels the initial states of this and every other word-difference machine with both a <i>G</i>-word and an <i>H</i>-word. KBMAG cannot cope with word-difference machines labelled like this. Therefore, when you use a KBMAG compatibility program the word-difference machines are only labelled with <i>G</i>-words.</td><td>If coset system is proved either confluent or automatic by <tt>automata</tt>, or by <tt>autgroup</tt>/<tt>autcos</tt> with <kbd>-gpminkb</kbd> option, or you run <tt>gpminkb</tt> against a coset system for which an automatic structure has been computed.</td></tr>
+
+<tr><td><tt>group.cos.midiff2c</tt></td><td>This is the FSA that contains all the word differences needed for the coset reduction recogniser, and just the transitions that occur in that word-difference machine. If the input file for the group uses a geodesic word-ordering this is almost the same as the word-difference machine for the general multiplier, but a non-geodesic ordering is used there will be some differences. This FSA is not canonical. For an explanation of this refer to the <tt>.migm</tt> entry. The states are labelled in the same way as for <tt>group.cos.midiff1c</tt>.</td><td>If coset system is proved automatic by <tt>automata</tt>, or <tt>autgroup</tt>/<tt>autcos</tt> with <kbd>-gpminkb</kbd> option, or you run <tt>gpminkb</tt> against a coset system for which an automatic structure has been computed.</td></tr>
+
+<tr><td><tt>group.cos.midiff2</tt></td><td>This is the FSA that contains all the word differences needed for the coset general multiplier, and all possible transitions between them, not just transitions that are actually needed. This FSA may contain word-differences that are not needed for coset reduction but are needed for ordinary reduction, but it does not contain any word differences that do not genuinely arise in one of these two ways, and it will not contain any extra word-differences if <kbd>-detect_finite_index</kbd> or <kbd>-prove_finite_index</kbd> showed that the subgroup had finite index. In KBMAG this FSA often contains spurious word differences. This FSA is not canonical. For an explanation of this refer to the <tt>.migm</tt> entry. The states are labelled in the same way as for <tt>group.cos.midiff1c</tt>.</td><td>If coset system is proved automatic.</td></tr>
+
+<tr><td><tt>group.cos.migm</tt></td><td>The MIDFA coset system general multiplier. This is the FSA that contains an accept state labelled with <i>x</i> equal to the identity element or a generator, reached from an initial state labelled with <i>h</i>, for every coset-reduced <i>u</i> and <i>v</i>, and every <i>x</i>, for which <i>u*x=h*v</i> is a true equation. MAF labels initial states with both the best-known <i>G</i>-word and the best known <i>H</i>-word for the element <i>h</i>, (unless you use a KBMAG compatibility program) whereas KBMAG only uses a best known <i>G</i>-word. This FSA is not canonical because it can easily happen that there is more than one initial state corresponding to the same group element. This can happen if MAF has been able to show that two distinct words, which are in fact equal as group elements, are members of the subgroup, but MAF has not realised that they are equal. When this happens the presentation computed for the subgroup is likely to be "difficult".</td><td>If a coset system is proved automatic. If a group is proved  finite, then any coset system for the group is certainly automatic, but it can happen that the multiplier would have an extremely large number of states before minimisation, (and possibly afterwards as well). In this one case MAF does not generate the general multiplier that is known to exist. If a coset system is proved confluent but the subgroup does not have finite index, then the coset system might not be automatic. MAF will perform a certain number of iterations to try to prove it automatic, but if number of word differences continues to increase it will give up because it probably is not.</td></tr>
+
+<tr><td><tt>group.cos.minkb</tt></td><td>This is the FSA which reaches its single accept state, for just those word  pairs (u,v) in which u is accepts by <tt>group.cos.minred</tt> and v by <tt>group.cos.wa</tt>, and for which u=v is a true equation.</td><td>If coset system is proved automatic by <tt>automata</tt>, or <tt>autgroup</tt>/<tt>autcos</tt> with <kbd>-gpminkb</kbd> option, or you run <tt>gpminkb</tt> against a coset system for which an automatic structure has been computed.</td></tr>
+
+<tr><td><tt>group.cos.minred</tt></td><td>This the FSA that accepts minimally coset reducible words. <tt>automata</tt> will calculate this to prove that the minimal confluent rewriting system is not finite, or as an additional check that a confluent system has been found correctly. A word is minimally coset reducible if no prefix is coset reducible and no trailing subword is reducible as a group element.</td><td>If coset system is proved either confluent or automatic by <tt>automata</tt>, or <tt>autgroup</tt>/<tt>autcos</tt> with <kbd>-gpminkb</kbd> option, or you run <tt>gpminkb</tt> against a coset system for which an automatic structure has been computed.</td></tr>
+
+<tr><td><tt>group.cos.pkbprog</tt></td><td>This is a provisional rewriting system for the coset system. It contains all the equations that were known and not pooled for words which were thought to be minimally reducible at the time MAF was interrupted. <tt>kbprog</tt> and <tt>kbprogcos</tt> will use the <tt>.kbprog</tt> suffix for this file (and <tt>.reduce</tt> for the corresponding index automaton).</td><td>When <tt>automata</tt> was interrupted while trying to prove a minimal rewriting system confluent.</td></tr>
+
+
+<tr><td><tt>group.cos.pmidiff1</tt></td><td>Provisional primary difference machine for the coset system. This contains all the word differences and transitions between them that were thought to be needed for the equations in the minimal rewriting system at the time MAF terminated. There may be equations that the provisional complete difference machine can prove that this cannot. In fact this is more often than not the case. If you use <tt>kbprog</tt>/<tt>kbprogcos</tt> with <kbd>-wd</kbd> option or <tt>autcos</tt> then this file is given the suffix <tt>.midiff1</tt> for compatibility with KBMAG. The states are labelled in the same way as for <tt>group.cos.midiff1c</tt>.</td><td>If <tt>automata</tt> is interrupted while trying to prove a coset system automatic.</td></tr>
+
+<tr><td><tt>group.cos.pmidiff2</tt></td><td>Provisional complete difference machine. It contains all the word differences and transitions between them that were known at the time MAF exited. The states are labelled in the same way as for <tt>group.cos.midiff1c</tt>.
+<p>If you use <tt>kbprog</tt>/<tt>kbprogcos</tt> with <kbd>-wd</kbd> option or <tt>autcos</tt> then this file is given the suffix <tt>.midiff2</tt> for compatibility with KBMAG.</p></td><td>If <tt>automata</tt> is interrupted while trying to prove a coset system automatic.</td></tr>
+
+<tr><td><tt>group.cos.preduce</tt></td><td>This is an index automaton for the provisional rewriting system <tt>group.cos.pkbprog</tt>.</td><td>When <tt>automata</tt> was interrupted while trying to prove a minimal rewriting system confluent.</td></tr>
+
+<tr><td><tt>group.cos.reduce</tt></td><td>This is the index automaton for <tt>group.cos.kbprog</tt>, usually a minimal confluent rewriting system.</td> <td>When <tt>automata</tt>, <tt>kbprog</tt> or <tt>kbprogcos</tt> have also generated the file <tt>group.cos.kbprog</tt>.</td></tr>
+
+<tr><td><tt>group.cos.rr</tt></td><td><a name="rr"></a>This, "the reduction recogniser" is the automaton which reaches its single accept state, starting from an initial state labelled <i>h</i> for just those word pairs (<i>u</i>,<i>v</i>) in which <i>u</i> is not accepted by <tt>group.cos.wa</tt>, but every prefix of <i>u</i> is and <i>v</i> is accepted by <tt>group.cos.wa</tt>, and for which <i>u</i>=<i>h*v</i> is a true equation. It is the automaton from which <tt>group.cos.midiff2c</tt> is computed.</td><td>When <tt>automata</tt> has proved a coset system automatic.</td></tr>
+
+
+<tr><td><tt>group.cos.wa</tt></td><td>This the coset word-acceptor. It is an acceptor in G-words for the coset representatives. It is not the acceptor for the possibly infinite minimal confluent rewriting system for the entire coset system. The size of the accepted language of this automaton is the index of the subgroup.</td><td>If coset system is proved either confluent or automatic by <tt>automata</tt>, or <tt>autgroup</tt>/<tt>autcos</tt>.</td></tr>
+<tr><td><tt>group.sub.pres</tt></td><td>This is a file containing a presentation for the subgroup in the form of GAP source code.</td><td>When <tt>automata</tt> or <tt>autgroup</tt>/<tt>autcos</tt> with <kbd>-p</kbd> or <kbd>-subpres</kbd> have computed a subgroup presentation.</td></tr>
+
+<tr><td><tt>group.sub.rws</tt></td><td>This is the rewriting system for the subgroup, and so contains a presentation for the subgroup. It can be used as an input file directly, but it will often be best to use <tt>simplify</tt> to eliminate redundant generators and relators first.</td><td>When <tt>automata</tt> has computed a subgroup presentation.</td></tr>
+
+<tr><td><tt>group.sub.wa</tt></td><td>This is the subgroup word-acceptor for the subgroup.</td><td>When <tt>automata</tt> has found a subgroup word-acceptor and proved it correct.</td></tr>
+</table>
+
+<p>Several of the automata above can be used for reducing words <i>u</i> to the unique minimal coset representative <i>v</i> in the group under the chosen word-ordering, that is <i>v</i> is the least word in the word-ordering such that <i>Hu</i> and <i>Hv</i> are equal as sets. In particular, this enables the generalised word-problem to be solved for the subgroup <i>H</i> of <i>G</i>. See <a href="gp_usage.html#reduce"><tt>reduce</tt></a> for further information.</p>
+</body>
+</html>

@@ -1,0 +1,15 @@
+#An infinitee quotient of the 2,3,7 Von Dyck group
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,b,c,C],
+  inverses := [A,a,b,C,c],
+  equations :=
+  [
+    [a*b*c,IdWord],
+    [c^3,IdWord],
+    [a^7,IdWord],
+    [(a*b*A*b)^12,IdWord]
+  ]
+);

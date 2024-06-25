@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>MAF : Background : Automatic structures</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="background.html" title="Background material">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Prev" type="text/html" href="fsa_background.html" title="Finite state automata">
+
+<link rel="Next" type="text/html" href="General_multiplier.html" title="The general multiplier and word-differences">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="background.html">Background</a> : Automatic structures
+<h2><a name="automatic"></a>Automatic structures</h2>
+<p>Much of the material in this section is taken from a paper by Sarah Rees, with some slight changes to notation.</p>
+<h3>Automatic groups</h3>
+<p>Let <i>G</i> denote a finitely presented group defined by the presentation <span class="nobr"><i>G</i> = &lang; <i>X</i> | <i>R</i> &rang;</span> where <span class="nobr"><i>X</i> = {<i>g<sub>1</sub>, g<sub>2</sub>,..., g<sub>m</sub></i>}</span> and <span class="nobr"><i>R</i> = {<i>x<sub>1</sub>=y<sub>1</sub>,...,x<sub>k</sub>=y<sub>k</sub></i>}</span>. The term <dfn>generator</dfn> of <i>G</i> will mean any element of the alphabet <i>X</i> &cup; <i>X<sup>-1</sup></i>. <i>l<sub>G</sub>(w)</i> will denote inf <i>l(u)</i> where <i>u =<sub>G</sub> w</i>. For any integer <i>i</i>, <i>w(i)</i> will denote the prefix of <i>w</i> of length <i>i</i> if <span class="nobr"><i>i</i> &lt; <i>l(w)</i></span>, and will otherwise denote the whole of <i>w</i>. We shall use the symbol <code>$</code> to denote the word of length 0, and <i>e</i> to denote the identity element of the group <i>G</i> (which <code>$</code> represents).
+</p>
+<i>G</i> is <dfn>automatic</dfn> if it satsifies the following two conditions:
+<table summary="">
+<col style="width:5ex">
+<tr>
+<td valign="top">(i)<sup>&nbsp;</sup></td>
+<td valign="top">There is a <a href="fsa_background.html">finite state automaton</a> <i>W</i> with alphabet <i>X</i> &cup; <i>X<sup>-1</sup></i> whose language <i>L(W)</i> contains at least one representative of each element of <i>G</i>.</td>
+<tr>
+<td valign="top">(ii)<sup>&nbsp;</sup></td><td valign="top">There is a constant K such that, if <i>v</i>,<i>w</i> &isin; <i>L(W)</i>, and l<sub>G</sub>(<i>v</i><sup>-1</sup>*<i>w</i>) &le; 1, then, &forall;<i>i</i>, l<sub>G</sub>(<i>v</i>(<i>i</i>)<sup>-1</sup>*<i>w</i>(<i>i</i>)) &le; K.
+</td></tr></table>
+<p>Condition (ii) is often called the <dfn>fellow traveller property</dfn>. It can be replaced in
+the definition above (and often is) by the following condition:</p>
+<table summary="">
+<col style="width:3ex">
+<tr>
+<td valign="top">(ii)*<sup>&nbsp;</sup></td>
+<td valign="top">For each element g of the set {<span class="nobr">e,g<sub>1</sub>,..., g<sub>m</sub>,g<sub>1</sub><sup>-1</sup>,..., g<sub>m</sub><sup>-1</sup></span>}, there is a <a href="fsa_background.html#product">2-variable finite state automaton</a> <i>M<sub>g</sub></i>, with base alphabet <span class="nobr"><i>X</i> &cup; <i>X<sup>-1</sup></i></span> whose language is the set of pairs of words <span class="nobr">(<i>v</i>,<i>w</i>)</span> from <i>L(W)</i> such that <span class="nobr"><i>v*g =<sub>G</sub> w</i></span>.
+</td></tr></table>
+<p><i>W</i> is called the <dfn>word-acceptor</dfn>, and <i>M<sub>g</sub></i> the <dfn>multiplier</dfn> for <i>g</i>. The word-acceptor and multipliers together form an <dfn>automatic structure</dfn> for the group <i>G</i>, and <i>L(W)</i>, the associated language. Using the multipliers, any word can be reduced to a representative in the language. In fact, rather than using a separate automaton for each multiplier, it is usual to create an automaton called the <a href="General_multiplier.html">general multiplier</a> that encapsulates all the information from the multipliers for a single generator.</p>
+<p>The above definition of automaticity appears to be dependent on the choice of generators for <i>G</i>. In fact it is not (see <a href="bib.html#ECH92">[ECH+92]</a>). It is straightforward to deduce that <i>G</i> is finitely presented.</p>
+<p>For the purposes of computational verification of an automatic structure, (ii)*
+is sometimes more appropriate than the more geometrical condition (ii).
+<p>Many of the languages associated with automatic structures are naturally associated with an easily described word ordering. Let <i>&le;</i> be a partial ordering of words in <i>X</i>. A group <i>G</i> is said to be <dfn>automatic with respect to <i>&le;</i></dfn> if there is an automatic structure for <i>G</i> for which the language is the set of all irreducible words with respect to <i>&le;</i>.</p>
+
+<h3>Automatic coset systems</h3>
+<p>Let <i>G</i> be a finitely presented group, defined as before, and let <i>H</i> be a subgroup of <i>G</i>. 
+If <i>w</i> is a word on <i>X</i>, then the <dfn>right coset</dfn> of <i>w</i>, <i>H*w</i>, is set the set <span class="nobr">{<i>h*w</i> : <i>h</i> &isin; <i>H</i>}</span>. The notation <i>H*u</i> = <i>H*v</i> denotes that  the cosets <i>H*u</i> and <i>H*v</i> are equal as sets. If a word <i>u</i> &isin; <i>H*w</i> then <i>u</i> is  is called a <dfn>representative</dfn> of <i>H*w</i>. Then <i>G</i> has an automatic coset structure with respect to <i>H</i> if:</p>
+<table summary="">
+<col style="width:3ex">
+<tr>
+<td valign="top">(i)</td>
+<td valign="top">There is a finite state automaton <i>W</i> with alphabet <i>X</i> &cup; <i>X<sup>-1</sup></i> whose language <i>L(W)</i> contains at least one representative of each right coset of <i>H</i>.</td>
+<tr>
+<td valign="top">(ii)*<sup>&nbsp;</sup></td>
+<td valign="top">For each element g of the set <span class="nobr">e,g<sub>1</sub>,..., g<sub>m</sub>,g<sub>1</sub><sup>-1</sup>,..., g<sub>m</sub><sup>-1</sup></span>}, there is a 2-variable finite state automaton <i>M<sub>g</sub></i>, with base alphabet <span class="nobr"><i>X</i> &cup; <i>X<sup>-1</sup></i></span> whose language is the set of pairs of words <span class="nobr">(<i>v</i>,<i>w</i>)</span> from <i>L(W)</i> such that <span class="nobr"><i>H*v*g = H*w</i></span>.
+</td>
+</tr>
+</table>
+
+<h3>Automatic monoids?</h3>
+<p>The concept of automaticity has not here been defined for general monoids. Automaticity was originally defined only for a group. The concept was extended to embrace coset systems in KBMAG, based on work by Ian Redfern. If we try to define an analogous concept for monoids or semigroups we can see immediately that condition (ii) above will need to be modified, since in general elements of monoids are not invertible. However, condition (ii)* works since it makes no mention of inverses (at least, not if we just specify that <i>X</i> should generate <i>G</i> as a monoid). So the concept of automaticity can be extended to monoids and semigroups and a number of results about such structures are known. However, the author does not know of any procedure for actually constructing automatic structures for monoids, or for verifying that they are correct. The author would be interested to learn of any practical method for the construction of automatic structures for monoids. The methods used to construct automatic structures for groups and coset systems depend on the existence of inverses for all the group generators, and so MAF can only construct automatic structures for groups and their coset systems, not for monoids.
+</p> 
+
+
+</body>
+</html> 

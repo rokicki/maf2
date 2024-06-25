@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : Tutorials :  5 - Discovering more about a group</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html"> 
+
+<link rel="Next" type="text/html" href="example6.html" title="Tutorial 6: Intersecting subgroups">
+<link rel="Prev" type="text/html" href="example4.html" title="Tutorial 4: A trick with two generator groups">
+
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="MAF.html#tutorials">Tutorials</a> :  5 - Discovering more about a group <h2>MAF Tutorial 5 : Discovering more about a group</h2>
+<p>In this tutorial we shall use MAF to investigate three more quotients of the 2,3,7, Von Dyck group: the quotients in which the commutator has order 6, 7, and 9. Input files for the three groups can be found in
+<tt>lesson5/7236</tt>, <tt>lesson5/7237</tt>, and <tt>lesson5/7239</tt> and <tt>lesson5/2379</tt>.
+<h3>7236 and 7237 are isomorphic</h3>
+<p><tt>automata</tt> will process both <tt>7236</tt> and <tt>7237</tt> very quickly. The output from <tt>automata</tt> tells us that both groups have order 1092. (If you miss the line of output that tells you the size of a group you can use the command <kbd>fsacount <i>groupname</i>.wa</kbd> or <kbd>fsacount <i>groupname</i>.reduce</kbd> to find the size). So it is natural to wonder if these groups might actually be isomorphic. Since the groups are finite we can use <tt>gpcclass</tt> to compute the conjugacy classes of the elements, using the command <kbd>gpcclass 7236</kbd> or <kbd>gpcclass 7237</kbd>. This program computes an automaton <tt><i>groupname</i>.cclasses</tt> which can be used to find the conjugacy class representative for any group element, and a second file <tt><i>groupname</i>.cc_statistics</tt> which lists the number of elements in each conjugacy class and the order of the elements in each class. This tells us that these two groups also have matching
+conjugacy classes, which suggests that the groups indeed might be isomorphic. The utility <tt>gpmorphism</tt> can be used to find a homomorphism from a group to a group with a known structure. The command</p> <p><kbd>../bin/gpmorphism -check_index lesson5/7236 lesson5/7237</kbd></p>
+<p>will find such a homomorphism. It also reports the image of the index. Clearly, if it can find one of index 1, then we have an isomorphism, and indeed it can do so. Incidentally, even though one could run <tt>gpmorphism</tt> without first running <tt>gpcclass</tt> this is not a particularly good idea: <tt>gpmorphism</tt> will use the output from <tt>gpcclass</tt> to eliminate as many equivalent homomorphisms as possible, and will run faster as a result. <tt>gpmorphism</tt> can take a very long time to run if the group that is the source of the desired homomorphism has many generators, or if the target group is large. In principle, <tt>gpmorphism</tt> can find homomorphisms where the target is infinite. However, in practice such computations will only succeed if the images of all the generators are short words in the generators of the target group.</p>
+<h3>7239</h3>
+<p>If one runs the command <kbd>../bin/automata lesson5/7239 -force_differences</kbd> then it quickly becomes apparent that there is very little hope of finding an automatic structure. On the other hand, if one runs <kbd>../bin/automata lesson5/7239 -confluent</kbd> for a while there is no sign that this will ever succeed. So let us see what, if anything, we can find out about the group using the trick described in the previous tutorial. First of all we move to working with a 2-generator presentation using the generators of order 2 and 3.
+<pre>_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b,B],
+  inverses := [a,B,b],
+  equations :=
+  [
+    [b^3,IdWord],
+    [(a*b)^7,IdWord],
+    [(a*b*a*B)^9,IdWord]
+  ]
+);</pre>
+<p>This input file can be found in <tt>lesson5/2379</tt>. The main reason for abandoning our previous policy for choosing generators, as followed in <tt>lesson5/7239</tt> is that in the new input file our group is a quotient of the modular group. In this group, making a the generator of order 2, and b the generator of order 3, any quotienting word is a product of terms <code>a*b</code> and <code>a*B</code>, which makes it fairly simple to explore possible quotients systematically. In general, the first quotient to try to find is the abelian quotient, which you can create using <tt>simplify -abelian</tt>. There is no point doing that here, because 2,3,7 is a perfect group. However, we can try our trick from the previous tutorial. This suggests the following input file.</p>
+<pre>_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,b,B,x],
+  inverses := [a,B,b,x],
+  equations :=
+  [
+    [x*a*x,a],
+    [x*b*x,B],
+    [(a*b*x)^9,IdWord],
+    [b^3,IdWord],
+    [(a*b)^7,IdWord],
+    [(a*b*a*B)^9,IdWord]
+  ]
+);</pre>
+<p>We expect that it will turn out that <i>x</i> can be expressed as a word in <i>a</i> and <i>b</i>. Therefore we modify the input file slightly to use a wreath product ordering in which a and b are at the same level (so that words in <i>a</i> and <i>b</i> alone are decided on <code>"shortlex"</code> ordering, and <i>x</i> is at a higher level, and so will be eliminated if possible. So we finish up with the following input file, which can be found in <tt>lesson5/2379q</tt>:</p>
+<pre>_RWS := rec
+(
+  isRWS := true,
+  ordering := "wreathprod",
+  generatorOrder := [a,b,B,x],
+  level    := [1,1,1,2],
+  inverses := [a,B,b,x],
+  equations :=
+  [
+    [x*a*x,a],
+    [x*b*x,B],
+    [(a*b*x)^9,IdWord],
+    [b^3,IdWord],
+    [(a*b)^7,IdWord],
+    [(a*b*a*B)^9,IdWord]
+  ]
+);</pre>
+<p>We process this with <tt>automata</tt> using the following command line:</p>
+<p><kbd>../bin/automata -nowd lesson5/2379q</kbd></p>
+<p><tt>automata</tt> will immediately tell us that <i>x</i> can indeed be eliminated; it is <i>(a*b*a*B)^4*a*b</i>, and also that <tt>2379q</tt> is a a finite group of order 504. If we remember the orders of the first few non-abelian simple groups we shall probably suspect that either this quotient is an extension of the simple group of order 168, or it is the simple group of order 504. In fact, if one consults the ATLAS web site, one can find a standard presentation of L2(8) and a little experimentation with <tt>reduce</tt> will make it clear we have the latter group: our input file has all but one of the axioms of the latter group; the missing axiom is <code>[((a*b*a*b*a*B)^2*a*B)^2,IdWord]</code>, and the following command shows that this axiom is true in our quotient:</p>
+<p><kbd>..bin/reduce lesson5/2379q "((a*b*a*b*a*B)^2*a*B)^2)"</kbd></p>
+<p><tt>reduce</tt> produces as output:</p>
+<pre>Word reduces to: IdWord</pre>
+<p>The quotes around the second argument to <tt>reduce</tt> are need because shells often attach a special meaning to non-alpha characters such as ^. This is enough to show that <tt>2379q</tt> is a quotient of L2(8), and since it has the same finite order it is surely isomorphic to it.</p>
+<p>The next step is to discover more about the subgroup which gives us this quotient. We can do this by creating the following substructure file, which you can find in <tt>lesson5/2379.sub</tt>.</p>
+<pre>_RWS_Sub := rec
+(
+  normalSubGenerators := [(a*b*a*B*a*b*a*B*a*b*a*B*a*b*a*B*a*b)^2]
+);</pre>
+<p>Here, the word whose normal closure we are going to look for is <i>x^2</i>, where we have eliminated <i>x</i> and replaced it with the right hand side of the equation that eliminates <i>x</i> in <tt>lesson5/2379q.kbprog</tt>.</p>
+<p>We now process this substructure file as a coset system using the following command line:</p>
+<p><kbd>../bin/automata lesson5/2379 -cos -detect_finite_index</kbd></p>
+<p>Generally the author would also use the <kbd>-confluent</kbd> command line option here as well, but in this particular case, although that makes <tt>automata</tt> run slightly more quickly, the presentation that is output is then a little more redundant. In cases where <tt>automata</tt> can process a coset system quickly it is often worth experimenting with the options used, to try to get the best presentation of the subgroup.</p>
+<p>MAF has now created an input file, <tt>lesson5/2379.sub.rws</tt>, for the normal subgroup which gives <tt>2379q</tt> as its quotient. If you examine this file you will see that it has around 60 monoid generators, which is on the high side. It is appropriate to try to simplify this presentation first. We shall also look for the abelian quotient of our new group.</p>
+<p>Let us do the latter first:</p>
+<p><kbd>../bin/simplify -abelian lesson5/2379.sub.rws</kbd></p>
+<p>This runs very quickly, and produces lots of output like this:</p>
+<pre>Eliminating generators _g64 _g63
+Presentation size is now 58,39,125
+Eliminating generators _g61 _g62
+Presentation size is now 56,38,124
+...
+Eliminating generators _g17 _g18
+Presentation size is now 14,0,0
+Creating new rewriting system</pre>
+<p>The line <tt>Presentation size is now 14,0,0</tt> tells us that the abelian quotient of our subgroup is a free abelian group of rank 7, which you can confirm by examining <tt>lesson5/2379.sub.rws.simplify</tt>. So now we know that <tt>2379</tt> is an infinite group.</p>
+<p>Now we run <tt>simplify</tt> again, this time without the <kbd>-abelian</kbd> option.</p>
+<p><kbd>../bin/simplify lesson5/2379.sub.rws</kbd></p>
+<p>This time the output looks like this:</p>
+<pre>
+Eliminating generators _g64 _g63
+Presentation size is now 58,48,159
+...
+Eliminating generators _g17 _g18
+Presentation size is now 14,23,226
+Creating new rewriting system
+</pre>
+<p>Examining <tt>lesson5/2379.sub.rws.simplify</tt> again, we see that the monoid generators are now 14 of the first 16 generators from the original input file. This means we can easily create a new coset system for the same subgroup, this time using named subgroup generators. This is likely to be a little easier to make sense of. In order to do this you need to understand that the <i>G</i>-words for the subgroup generators are the initial states of the MIDFA coset system general multiplier, as found in <tt>lesson5/2379.cos.migm</tt>. In a coset system without named subgroup generators, the names MAF invents for the generators all take the form <code>_g<i>n</i></code>. The first number used is always 1 more than the number of main group generators, and the subgroup generators are then taken in the order they appear in the coset general multiplier. (MAF goes to quite a lot of trouble to arrange these in a sensible order, whereas in KBMAG they will not be in a useful order).</p>
+<p>The <tt>gpsubmake</tt> utility is able to create the required substructure file. The required command line is
+</p>
+<p><kbd>../bin/gpsubmake -named ../lesson5/2379</kbd></p>
+<p>This generates the file <tt>lesson5/2379.sub_named</tt>, which you might like to compare and contrast with <tt>lesson5/2379.cos.migm</tt>.</p>
+<p>This file can also be processed in the same way as before using the following two commands:</p>
+<p><kbd>../bin/automata lesson5/2379 -cos sub_named -detect_finite_index -no_h</kbd>
+<p><kbd>../bin/simplify lesson5/2379.sub_named.rws</kbd></p>
+<p>Examining the presentation of the subgroup <tt>lesson5/2379.sub_named.rws</tt> makes it clear that several of the generators do commute with each other. In such cases it is often worth experimenting with <code>"recursive"</code> word-ordering. So we copy <tt>lesson5/2379.sub_named.rws.simplify</tt> to <tt>lesson5/2379_i504</tt> and change the word-ordering to <code>"recursive"</code>. Perhaps surprisingly, <tt>automata</tt> can process the new input file almost instantly. Examining the output file <tt>lesson5/2379_i504.kbprog</tt> should lead you to suspect that the group only fails to be abelian because <i>c</i> and <i>e</i> do not commute, and adding <code>[e*c,c*e]</code> as an axiom will quickly confirm this. So we create a new input file for this group <tt>lesson5/2379_i504y</tt>, adding a new pair of generators <code>y,Y</code> and an axiom <code>[y,c*e*C*E]</code>. Once again MAF can process this file very quickly, and it tells us that <i>y</i> is in fact an involution.</p>
+<p>It is now not too difficult to create a new input file <tt>lesson5/2379_recursive</tt>, which uses the subgroup generators as additional generators. In principle this only needs to include the definitions of the new generators. However, for the file to be processed quickly it is necessary to add all the axioms from <tt>lesson5/2379_i504y</tt>. In fact this input file is finely poised between being very difficult and very easy for MAF: if run with no special options against it <tt>automata</tt> will use up vast quantities of memory with no sign that it will ever succeed. However, the following command line finds a confluent rewriting system in a few seconds at most:</p>
+<p><kbd>../bin/automata lesson5/2379_recursive -strategy long -nowd</kbd></p>
+<p>Examining <tt>lesson5/2379_recursive.kbprog</tt> it is easy to see that <i>y</i> is central in the whole group, and also that there are numerous free abelian subgroups of rank 2 and rank 3. This shows that the group cannot possibly be word-hyperbolic. It is also easy to see that <i>y</i> generates the derived subgroup of <tt>lesson5/2379_i504y</tt>, so we have in effect found the derived series of <tt>2379</tt>. </p>
+</body>
+</html>

@@ -1,0 +1,37 @@
+#Subgroup P6 of index 2
+_RWS_Sub:= rec
+(
+  subGenerators:=
+  [
+    #t = horizontal along b*c left and down
+    c*b*c*b*a*b
+    #T 
+    ,b*a*b*c*b*c
+    #u = translation along c*b*c by right and down
+    ,c*b*a*b*c*b
+    #U
+    ,b*c*b*a*b*c
+    #s = 120 degree anti-clockwise rotation about origin
+    ,b*c*b*c
+    #S = 120 degree anti-clockwise rotation about origin
+    ,c*b*c*b                                   
+  ],
+  subGeneratorNames :=
+  [
+    t
+    ,T
+    ,u
+    ,U
+    ,s
+    ,S
+  ],
+  subGeneratorInverseNames :=
+  [
+    T
+    ,t
+    ,U
+    ,u
+    ,S
+    ,s
+  ]
+);

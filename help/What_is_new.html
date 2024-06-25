@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0055)http://www.alunw.freeuk.com/MAF.html -->
+<html>
+<head>
+<title>MAF : Introduction : What's new?</title>
+<link type="text/css" rel="StyleSheet" href="site.css">
+<link rel="Start" type="text/html" href="MAF.html"> 
+<link rel="Chapter" type="text/html" href="Preface.html" title="Introduction">
+<link rel="Chapter" type="text/html" href="overview.html" title="An overview of MAF">
+<link rel="Chapter" type="text/html" href="reference.html" title="MAF Reference">
+<link rel="Chapter" type="text/html" href="MAF.html#tutorials" title="Tutorials">
+<link rel="Chapter" type="text/html" href="MAF.html#appendices" title="Appendices">
+<link rel="Copyright" type="text/html" href="copyright.html"> 
+<link rel="Contents" type="text/html" href="MAF.html">  
+<link rel="Next" type="text/html" href="Obtaining_MAF.html" title="Obtaining MAF">
+<link rel="Prev" type="text/html" href="What_is_MAF.html" title="What is MAF?">
+<script type="text/javascript" language="Javascript" src="site.js">
+</script>
+</head>
+<body onload="OnPageLoad()" onunload="OnPageUnload()">
+<a href="MAF.html">MAF</a> : <a href="MAF.html#introduction">Introduction</a> :  What's new?
+<h2><a name="whatisnew"></a>What's new ?</h2>
+<p><em>This page no longer lists bug-fixes made in patch releases. For information about bug fixes, please refer to the <a href="http://maffsa.sourceforge.net/changes.html">Release Notes</a> on SourceForge.</em></p>
+
+<h3>Known bugs</h3>
+<ul><li>There is a performance problem in the code for performing free abelian word-reduction. This can cause
+<tt>simplify -abelian</tt> to take a very long time to run if a very high number of generators has been eliminated. The work-around is to interrupt <tt>simplify</tt> with Ctrl+C and to restart it.</li>
+<li>When processing a coset system in automata, if a finite index subgroup is detected then the final pass to check the index is correct sometimes takes a very long time. In the next major release MAF will use coset enumeration to verify the index instead.
+</ul>
+<h3>New in version 2.1</h3>
+<p>There are two new utilities:</p>
+<ul>
+<li><a href="gp_usage.html#gpxlatwa"><tt>gpxlatwa</tt></a>, translates a word-acceptor for a group into another word-acceptor using a different set of generators. This may be useful where it is difficult or impossible to compute an automatic structure using a preferred set of generators directly.</li>
+<li><a href="fsa_usage.html#fsaseparate"><tt>fsaseparate</tt></a> is a utility which modifies an FSA so that no state can be reached by two transitions labelled with different symbols of the alphabet. 
+</ul>
+<h3>New in version 2.0</h3>
+<h4>Documentation</h4>
+<p>The single biggest change in MAF 2.0 is in the documentation you are reading now. Although MAF was extensively documented, perhaps too extensively, it was not easy for a beginning user to find the most important information on how to get the best from MAF, nor was there much information on why you might want to use
+some of the many utilities provided. For this release the documentation has been reorganised. Previously the documentation followed the general plan of the standalone documentation for KBMAG (and was in part based on it).
+In the new version the documentation has been divided into smaller, more topic based, sections. The author hopes that users will also find it easier to navigate. The author would welcome suggestions on how to improve the documentation further.</p>
+<h4>Command line syntax</h4>
+<p>There have been a number of changes to the command line options for <tt>automata</tt>. In particular the
+<kbd>-strategy</kbd> option now works in a completely different way, and the <kbd>-tactics n</kbd> option has been removed and replaced with a number of separate options.</p>
+<h4>Coset enumeration</h4>
+<p>MAF now includes a powerful coset enumerator <a href="gp_usage.html#gptcenum"><tt>gptcenum</tt></a>, which can be used as an alternative to <tt>automata</tt> when investigating finite groups and finite-index subgroups. <tt>gptcenum</tt> has a somewhat similar architecture to ACE. Eventually MAF will probably offer the same sort of emulation for ACE as it does for KBMAG.</p>
+<h4>Other new utilities</h4>
+<p>MAF has a number of new utilities that provide additional facilities. These include:</p>
+<ul>
+<li><a href="gp_usage.html#gpcclass"><tt>gpcclass</tt></a>, which can be used to compute automata relating to the conjugacy classes of a finite group,</li>
+<li><a href="gp_usage.html#gpmorphism"><tt>gpmorphism</tt></a>, which can be used to compute homomorphisms from a group or monoid with possibly unknown structure to another with known structure,</li>
+<li><a href="gp_usage.html#gporder"><tt>gporder</tt></a>, which can be used to determine the order of elements of a group or monoid with known structure,</li>
+<li><a href="gp_usage.html#gpsublowindex"><tt>gpsublowindex</tt></a>, which can be used to determine the subgroups up to a specific index of group with unknown structure.</li>
+</ul>
+<h4>KBMAG compatibility</h4>
+<p>An effort has been made to remove as many minor incompatibilities with KBMAG as possible, particularly in the case of those executables which form a prominent part of KBMAG's GAP interface. Where there is a conflict between compatibility and enhanced functionality the KBMAG compatibility programs can be expected to err on the side of compatibility.</p>
+<h4>Performance</h4>
+<p>Successive releases in the MAF 1.x series were mostly concerned with improving MAF's behaviour and performance when constructing very large automatic structures. In MAF 2.0 more attention has been paid to the implementation of the Knuth-Bendix procedure. In particular, the 64-bit version of MAF will use significantly less memory than before in its Knuth-Bendix phase (around 40% less), due to changes in the data structures used to store data about the rewriting system, making it possible to handle somewhat more difficult problems than before. It is also easier to vary MAF's strategy, so that if necessary one can experiment with a range of different strategies with an intractable input file. MAF's heuristics for picking a default set of options have also changed slightly in an attempt to improve typical performance.</p>
+</body>
+</html>

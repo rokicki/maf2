@@ -1,0 +1,122 @@
+_RWS := rec
+(
+  isRWS := true,
+  ordering := "shortlex",
+  generatorOrder := [a,A,d,D,g,G,h,H,b,B,e,E,f,F,i,I,c,C],
+        inverses := [A,a,D,d,G,g,H,h,B,b,E,e,F,f,I,i,C,c],
+  equations :=
+  [
+#put the proper axioms last to get shortest_recent low
+    [a*b,d],
+    [b*c,e],
+    [c*d,f],
+    [d*e,g],
+    [e*f,h],
+    [f*g,i],
+    [g*h,a],
+    [h*i,b],
+    [i*a,c],
+#These relations can be proved, but can be worked out fairly quickly
+    [a*d*g,IdWord],
+    [c*f*i,IdWord],
+    [b*e*h,IdWord],
+    [h*f*a*F,f*a*F*h],
+    [i*g*b*G,g*b*G*i],
+    [a*h*c*H,h*c*H*a],
+    [b*i*d*I,i*d*I*b],
+    [c*a*e*A,a*e*A*c],
+    [d*b*f*B,b*f*B*d],
+    [e*c*g*C,c*g*C*e],
+    [f*d*h*D,d*h*D*f],
+    [g*e*i*E,e*i*E*g],
+
+    [c*H*a*h,H*A*h],
+    [d*I*b*i,I*B*i],
+    [e*A*c*a,A*C*a],
+    [f*B*d*b,B*D*b],
+    [g*C*e*c,C*E*c],
+    [h*D*f*d,D*F*d],
+    [i*E*g*e,E*G*e],
+    [a*F*h*f,F*H*f],
+    [b*G*i*g,G*I*g],
+
+    [H*a*h*c,H*A*h],
+    [I*b*i*d,I*B*i],
+    [A*c*a*e,A*C*a],
+    [B*d*b*f,B*D*b],
+    [C*e*c*g,C*E*c],
+    [D*f*d*h,D*F*d],
+    [E*g*e*i,E*G*e],
+    [F*h*f*a,F*H*f],
+    [G*i*g*b,G*I*g],
+
+    [F*D*B*I*G*E*C*A*H*A,A*F*D*B*I*G*E*C*A*H],
+    [G*E*C*A*H*F*D*B*I*B,B*G*E*C*A*H*F*D*B*I],
+    [H*F*D*B*I*G*E*C*A*C,C*H*F*D*B*I*G*E*C*A],
+    [I*G*E*C*A*H*F*D*B*D,D*I*G*E*C*A*H*F*D*B],
+    [A*H*F*D*B*I*G*E*C*E,E*A*H*F*D*B*I*G*E*C],
+    [B*I*G*E*C*A*H*F*D*F,F*B*I*G*E*C*A*H*F*D],
+    [C*A*H*F*D*B*I*G*E*G,G*C*A*H*F*D*B*I*G*E],
+    [D*B*I*G*E*C*A*H*F*H,H*D*B*I*G*E*C*A*H*F],
+    [E*C*A*H*F*D*B*I*G*I,I*E*C*A*H*F*D*B*I*G],
+    [(F*D*B*I*G*E*C*A*H)^3,IdWord],
+
+    [a^6,h*C*C*C*H],
+    [b^6,i*D*D*D*I],
+    [c^6,a*E*E*E*A],
+    [d^6,b*F*F*F*B],
+    [e^6,c*G*G*G*C],
+    [f^6,d*H*H*H*D],
+    [g^6,e*I*I*I*E],
+    [h^6,f*A*A*A*F],
+    [i^6,g*B*B*B*G],
+
+    [a^8,h*a*e*e*A*H],
+    [b^8,i*b*f*f*B*I],
+    [c^8,a*c*g*g*C*A],
+    [d^8,b*d*h*h*D*B],
+    [e^8,c*e*i*i*E*C],
+    [f^8,d*f*a*a*F*D],
+    [g^8,e*g*b*b*G*E],
+    [h^8,f*h*c*c*H*F],
+    [i^8,g*i*d*d*I*G],
+    [h*a*e*e*A*H*a,a*h*a*e*e*A*H],
+    [i*b*f*f*B*I*b,b*i*b*f*f*B*I],
+    [a*c*g*g*C*A*c,c*a*c*g*g*C*A],
+    [b*d*h*h*D*B*d,d*b*d*h*h*D*B],
+    [c*e*i*i*E*C*e,e*c*e*i*i*E*C],
+    [d*f*a*a*F*D*f,f*d*f*a*a*F*D],
+    [e*g*b*b*G*E*g,g*e*g*b*b*G*E],
+    [f*h*c*c*H*F*h,h*f*h*c*c*H*F],
+    [g*i*d*d*I*G*i,i*g*i*d*d*I*G]
+
+
+#any one of these give a quotient of index 9576
+#    [D*a*D*G*a^2*g*A*D,IdWord]
+#[(a*B)^7,B^9]
+#[a*g*d*d*a*g,g*d*a*a*g*d]
+#(a*e*A*E)^3
+
+#this should be a quotient
+#[a*c*e*g*i*b*d*f*h,IdWord],
+#[(c*a)^7,(a*c)^7],
+#[(d*b)^7,(b*d)^7],
+#[(e*c)^7,(c*e)^7],
+#[(f*d)^7,(d*f)^7],
+#[(g*e)^7,(e*g)^7],
+#[(h*f)^7,(f*h)^7],
+#[(i*g)^7,(g*i)^7],
+#[(a*h)^7,(h*a)^7],
+#[(b*i)^7,(i*b)^7]
+  ]
+);
+#elements that are involutions in the quotient of order 9576
+    a*e*d*h*g*b=a*e*g*i*b,
+    a*i*d*c*g*f=a*c*b*f*h,
+    b*a*e*d*h*g=b*a*e*g*i,
+    b*f*e*i*h*c=b*f*h*a*c,
+    c*b*f*e*i*h=c*b*f*h*a,
+    c*g*f*a*i*d=c*g*i*b*d,
+    d*h*g*b*a*e,
+    e*i*h*c*b*f,
+    f*a*i*d*c*g,
